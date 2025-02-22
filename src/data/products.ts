@@ -3,18 +3,18 @@ import { Product } from '../types';
 export const products: Product[] = [
   {
     id: 1,
-    name: "Cloud Master Pro",
-    price: 129.99,
+    name: "Taijizen JuDo 24k puffs",
+    price: 45.000,
     description: "Premium vaporizer with temperature control and long battery life",
-    image: "https://images.unsplash.com/photo-1571705042748-55feda1cfadc?auto=format&fit=crop&q=80&w=800",
+    image: "src/images/cranberry-sodaTaijiZen-Judo.png",
     category: "vaporizers"
   },
   {
     id: 2,
-    name: "Stealth Pen",
-    price: 79.99,
+    name: "Death Row Vape",
+    price: 20.000,
     description: "Compact and discrete vaporizer perfect for on-the-go use",
-    image: "https://images.unsplash.com/photo-1567861911437-538298e4232c?auto=format&fit=crop&q=80&w=800",
+    image: "src/images/Death_Row_Snoop_Dogg_Vapes_7000_puffs_vape_desechable_vaporsoul_Black_ice.png",
     category: "vaporizers"
   },
   {
