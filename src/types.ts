@@ -5,6 +5,7 @@ export interface Product {
   description: string;
   image: string;
   category: 'vaporizers' | 'clothing';
+  variants: string[] | { name: string; image: string }[];
 }
 
 export interface ContactForm {

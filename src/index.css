@@ -31,3 +31,9 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #7e22ce;
 }
+
+.light .bg-black { background-color: #f3f4f6; }
+.light .bg-gray-900 { background-color: #e5e7eb; }
+.light .text-white { color: #1f2937; }
+.light .text-gray-300 { color: #4b5563; }
+.light .text-purple-400 { color: #7c3aed; }

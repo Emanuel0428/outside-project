@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import Particles from 'react-particles';
 import { loadFull } from "tsparticles";
 import type { Engine } from 'tsparticles-engine';
+import DecryptedText from './DecryptedText';
 
 const Hero = () => {
   const particlesInit = useCallback(async (engine: Engine) => {
@@ -74,16 +75,32 @@ const Hero = () => {
           transition={{ duration: 0.8 }}
           className="text-6xl md:text-8xl font-bold text-white mb-4"
         >
-          Outside
+          <DecryptedText
+              text="OUTSIDE"
+              speed={100}
+              characters="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+"
+              className="text-white"
+              encryptedClassName="text-red-500"
+              parentClassName="font-mono text-3xl"
+              animateOn="view"
+          />
         </motion.h1>
         
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.8 }}
-          className="text-xl md:text-2xl text-purple-200 mb-8"
+          className="text-xl md:text-5xl text-purple-200 mb-8"
         >
-          Redefiniendo el estilo y el vapor
+          <DecryptedText
+            text="Redefiniendo el estilo y el vapor"
+            speed={100}
+            characters="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+"
+            className="text-white"
+            encryptedClassName="text-red-500"
+            parentClassName="font-mono text-3xl"
+            animateOn="view"
+          />
         </motion.p>
         
         <motion.button
