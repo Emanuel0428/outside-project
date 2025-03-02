@@ -16,6 +16,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ArrowUp } from 'lucide-react';
 import { motion } from 'framer-motion';
+import TopText from './components/TopText';
 
 function App() {
   const [showScroll, setShowScroll] = useState(false);
@@ -44,13 +45,15 @@ function App() {
           <Router>
             <div className="min-h-screen bg-black text-white light:bg-gray-100 light:text-black transition-colors">
               <Navbar />
+              
               <Routes>
                 <Route path="/" element={<><Hero /><Products /><Contact /></>} />
                 <Route path="/product/:id" element={<ProductDetail />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/news" element={<News />} />
-                <Route path="/favorites" element={<Favorites />} /> {/* Nueva ruta */}
+                <Route path="/favorites" element={<Favorites />} /> 
               </Routes>
+              <TopText />
               <Footer />
               <ToastContainer position="top-right" autoClose={3000} theme="dark" />
               {showScroll && (
