@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Cloud, Home, Mail, Menu, Newspaper, Package, ShoppingCart, X, Sun, Moon, Heart } from 'lucide-react';
+import { Cloud, Home, Package, ShoppingCart, User, X, Menu, Sun, Moon } from 'lucide-react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useTheme } from '../context/ThemeContext';
+import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { cart } = useCart();
+  const { user, logout, isAdmin } = useAuth();
   const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isAccountOpen, setIsAccountOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
 
   const handleNavigation = (id: string) => {
@@ -24,10 +27,18 @@ const Navbar = () => {
       const element = document.getElementById(id);
       element?.scrollIntoView({ behavior: 'smooth' });
     }
-    setIsOpen(false);
+    setIsMobileOpen(false);
+    setIsAccountOpen(false);
   };
 
-  const isActive = (path: string) => location.pathname === path ? 'text-purple-400' : 'text-white';
+  const isActive = (path: string) => (location.pathname === path ? 'text-purple-400' : 'text-white');
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/');
+    setIsMobileOpen(false);
+    setIsAccountOpen(false);
+  };
 
   return (
     <motion.nav
@@ -57,24 +68,6 @@ const Navbar = () => {
             <Package className="h-5 w-5" /> Products
           </button>
           <Link
-            to="/news"
-            className={`${isActive('/news')} hover:text-purple-400 transition-colors flex items-center gap-2`}
-          >
-            <Newspaper className="h-5 w-5" /> News
-          </Link>
-          <Link
-            to="/favorites"
-            className={`${isActive('/favorites')} hover:text-purple-400 transition-colors flex items-center gap-2`}
-          >
-            <Heart className="h-5 w-5" /> Favorites
-          </Link>
-          <button
-            onClick={() => handleNavigation('contact')}
-            className={`${isActive('/contact')} hover:text-purple-400 transition-colors flex items-center gap-2`}
-          >
-            <Mail className="h-5 w-5" /> Contact
-          </button>
-          <Link
             to="/cart"
             className={`${isActive('/cart')} hover:text-purple-400 transition-colors flex items-center gap-2 relative`}
           >
@@ -85,22 +78,89 @@ const Navbar = () => {
               </span>
             )}
           </Link>
-          <button
-            onClick={toggleTheme}
-            className="text-white hover:text-purple-400 transition-colors light:text-black"
-          >
-            {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-          </button>
+          {/* Menú de cuenta desplegable */}
+          <div className="relative">
+            <button
+              onClick={() => setIsAccountOpen(!isAccountOpen)}
+              className="text-white hover:text-purple-400 transition-colors flex items-center gap-2 light:text-black"
+            >
+              <User className="h-5 w-5" />
+              {user ? `Hola, ${user.user_metadata.name}` : 'Cuenta'}
+            </button>
+            {isAccountOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="absolute right-0 mt-2 w-48 bg-gray-900 rounded-lg shadow-lg p-4 text-white light:bg-gray-200 light:text-black"
+              >
+                {user ? (
+                  <>
+                    <Link to="/profile" className="block py-2 hover:text-purple-400" onClick={() => setIsAccountOpen(false)}>
+                      Perfil
+                    </Link>
+                    {isAdmin && (
+                      <Link to="/admin" className="block py-2 hover:text-purple-400" onClick={() => setIsAccountOpen(false)}>
+                        Admin Dashboard
+                      </Link>
+                    )}
+                    <Link to="/favorites" className="block py-2 hover:text-purple-400" onClick={() => setIsAccountOpen(false)}>
+                      Favoritos
+                    </Link>
+                    <Link to="/news" className="block py-2 hover:text-purple-400" onClick={() => setIsAccountOpen(false)}>
+                      Noticias
+                    </Link>
+                    <button
+                      onClick={() => handleNavigation('contact')}
+                      className="block w-full text-left py-2 hover:text-purple-400"
+                    >
+                      Contacto
+                    </button>
+                    <button onClick={handleLogout} className="block w-full text-left py-2 hover:text-purple-400">
+                      Cerrar Sesión
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <Link to="/login" className="block py-2 hover:text-purple-400" onClick={() => setIsAccountOpen(false)}>
+                      Iniciar Sesión
+                    </Link>
+                    <Link to="/register" className="block py-2 hover:text-purple-400" onClick={() => setIsAccountOpen(false)}>
+                      Registrarse
+                    </Link>
+                    <Link to="/favorites" className="block py-2 hover:text-purple-400" onClick={() => setIsAccountOpen(false)}>
+                      Favoritos
+                    </Link>
+                    <Link to="/news" className="block py-2 hover:text-purple-400" onClick={() => setIsAccountOpen(false)}>
+                      Noticias
+                    </Link>
+                    <button
+                      onClick={() => handleNavigation('contact')}
+                      className="block w-full text-left py-2 hover:text-purple-400"
+                    >
+                      Contacto
+                    </button>
+                  </>
+                )}
+                <button
+                  onClick={toggleTheme}
+                  className="block w-full text-left py-2 hover:text-purple-400 flex items-center gap-2"
+                >
+                  {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                  {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+                </button>
+              </motion.div>
+            )}
+          </div>
         </div>
 
         {/* Botón Hamburguesa para Móvil */}
-        <button className="md:hidden text-white light:text-black" onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        <button className="md:hidden text-white light:text-black" onClick={() => setIsMobileOpen(!isMobileOpen)}>
+          {isMobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
       </div>
 
       {/* Menú Móvil */}
-      {isOpen && (
+      {isMobileOpen && (
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -119,29 +179,9 @@ const Navbar = () => {
             <Package className="h-5 w-5" /> Products
           </button>
           <Link
-            to="/news"
-            className={`${isActive('/news')} hover:text-purple-400 transition-colors flex items-center gap-2`}
-            onClick={() => setIsOpen(false)}
-          >
-            <Newspaper className="h-5 w-5" /> News
-          </Link>
-          <Link
-            to="/favorites"
-            className={`${isActive('/favorites')} hover:text-purple-400 transition-colors flex items-center gap-2`}
-            onClick={() => setIsOpen(false)}
-          >
-            <Heart className="h-5 w-5" /> Favorites
-          </Link>
-          <button
-            onClick={() => handleNavigation('contact')}
-            className={`${isActive('/contact')} hover:text-purple-400 transition-colors flex items-center gap-2`}
-          >
-            <Mail className="h-5 w-5" /> Contact
-          </button>
-          <Link
             to="/cart"
             className={`${isActive('/cart')} hover:text-purple-400 transition-colors flex items-center gap-2 relative`}
-            onClick={() => setIsOpen(false)}
+            onClick={() => setIsMobileOpen(false)}
           >
             <ShoppingCart className="h-5 w-5" /> Cart
             {itemCount > 0 && (
@@ -150,11 +190,63 @@ const Navbar = () => {
               </span>
             )}
           </Link>
+          {user ? (
+            <>
+              <span className="text-white">Hola, {user.user_metadata.name}</span>
+              <Link to="/profile" className="text-white hover:text-purple-400" onClick={() => setIsMobileOpen(false)}>
+                Perfil
+              </Link>
+              {isAdmin && (
+                <Link to="/admin" className="text-white hover:text-purple-400" onClick={() => setIsMobileOpen(false)}>
+                  Admin Dashboard
+                </Link>
+              )}
+              <Link to="/favorites" className="text-white hover:text-purple-400" onClick={() => setIsMobileOpen(false)}>
+                Favoritos
+              </Link>
+              <Link to="/news" className="text-white hover:text-purple-400" onClick={() => setIsMobileOpen(false)}>
+                Noticias
+              </Link>
+              <button
+                onClick={() => handleNavigation('contact')}
+                className="text-white hover:text-purple-400 flex items-center gap-2"
+              >
+                Contacto
+              </button>
+              <button onClick={handleLogout} className="text-white hover:text-purple-400">
+                Cerrar Sesión
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="text-white hover:text-purple-400" onClick={() => setIsMobileOpen(false)}>
+                Iniciar Sesión
+              </Link>
+              <Link to="/register" className="text-white hover:text-purple-400" onClick={() => setIsMobileOpen(false)}>
+                Registrarse
+              </Link>
+              <Link to="/favorites" className="text-white hover:text-purple-400" onClick={() => setIsMobileOpen(false)}>
+                Favoritos
+              </Link>
+              <Link to="/news" className="text-white hover:text-purple-400" onClick={() => setIsMobileOpen(false)}>
+                Noticias
+              </Link>
+              <button
+                onClick={() => handleNavigation('contact')}
+                className="text-white hover:text-purple-400 flex items-center gap-2"
+              >
+                Contacto
+              </button>
+            </>
+          )}
           <button
-            onClick={() => { toggleTheme(); setIsOpen(false); }}
+            onClick={() => {
+              toggleTheme();
+              setIsMobileOpen(false);
+            }}
             className="text-white hover:text-purple-400 transition-colors light:text-black flex items-center gap-2"
           >
-            {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />} 
+            {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
           </button>
         </motion.div>

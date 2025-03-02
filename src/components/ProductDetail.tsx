@@ -19,10 +19,8 @@ const ProductDetail = () => {
     return <div className="min-h-screen bg-black py-20 px-6 text-white">Producto no encontrado</div>;
   }
 
-  // Ahora que "product" está definido, podemos usar su id
   const isFavorite = favorites.includes(product.id);
 
-  // Determinar la imagen a mostrar
   const variantArray = Array.isArray(product.variants) && typeof product.variants[0] === 'object'
     ? product.variants as { name: string; image: string }[]
     : [];
@@ -56,7 +54,7 @@ const ProductDetail = () => {
                 />
               </button>
             </div>
-            <p className="text-purple-400 text-2xl mb-6">${product.price}</p>
+            <p className="text-purple-400 text-2xl mb-6">{product.price.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })}</p>
             
             {/* Variantes/Sabores */}
             {variantArray.length > 0 && (

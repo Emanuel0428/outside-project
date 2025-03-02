@@ -20,4 +20,4 @@ No se permite su uso comercial, modificación o distribución sin autorización 
 Para más información, visita: [Creative Commons BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
 
 
-[Edit in StackBlitz next generation editor ⚡️](https://stackblitz.com/~/github.com/Emanuel0428/outside-project)
+Este proyecto es propiedad de Emanuel Londoño. No se permite la copia, distribución o uso sin permiso explícito.

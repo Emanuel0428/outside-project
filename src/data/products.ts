@@ -4,7 +4,7 @@ export const products: Product[] = [
   {
     id: 1,
     name: "Taijizen JuDo 24k puffs",
-    price: 45.000,
+    price: 45000,
     description: "El TaijiZen Judo 24K de iJOY es un excepcional vaporizador desechable con pantalla táctil y modo Boost. Su innovadora pantalla te permite ajustar la potencia de salida y monitorear el estado del dispositivo con facilidad. En modo normal, ofrece hasta 24,000 puffs, mientras que en modo Boost alcanza las 12,000. Gracias a sus bobinas de malla doble, garantiza un sabor intenso y una producción de vapor abundante. Si buscas un vaporizador desechable confiable, con gran autonomía y funciones intuitivas, esta es la elección ideal.",
     image: "https://i.postimg.cc/htDVJYDg/taijizen-judo-2.webp",
     category: "vaporizers",
@@ -26,7 +26,7 @@ export const products: Product[] = [
   {
     id: 2,
     name: "Lost Orion Bar 10k puffs",
-    price: 30.000,
+    price: 30000,
     description: "El Lost Vape Orion Bar 10000 destaca en el competitivo mercado de los vaporizadores desechables gracias a su diseño, durabilidad y excelente sabor. Ofrece un equilibrio inteligente entre la practicidad de los dispositivos desechables y la intención de minimizar el desperdicio. Para quienes buscan una experiencia de vapeo con gran sabor, larga vida útil y facilidad de uso, sin duda es una opción a tener en cuenta.",
     image: "https://i.postimg.cc/zB7y1zhg/Lost-Vape-Orion-Bar-10000-Disposable-Vape.webp", 
     category: "vaporizers",
@@ -46,7 +46,7 @@ export const products: Product[] = [
   {
     id: 3,
     name: "Urban Hoodie",
-    price: 59.99,
+    price: 120000,
     description: "Comfortable cotton blend hoodie with minimalist design",
     image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&q=80&w=800",
     category: "clothing",
@@ -55,7 +55,7 @@ export const products: Product[] = [
   {
     id: 4,
     name: "Street Tech Jacket",
-    price: 89.99,
+    price: 180000,
     description: "Water-resistant jacket with modern cut and hidden pockets",
     image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&q=80&w=800",
     category: "clothing",
@@ -64,7 +64,7 @@ export const products: Product[] = [
   {
     id: 5,
     name: "Priv Bar Turbo 15k puffs",
-    price: 35.000,
+    price: 35000,
     description: "Un vape innovador con 10,000 puffs y sabores intensos.",
     image: "https://i.postimg.cc/BbN7DKKn/priv-bar-smok-1.png", 
     category: "vaporizers",

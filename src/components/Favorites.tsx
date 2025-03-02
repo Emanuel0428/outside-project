@@ -38,7 +38,7 @@ const Favorites = () => {
               />
               <div className="p-6">
                 <h3 className="text-xl font-bold text-white mb-2 light:text-black">{product.name}</h3>
-                <p className="text-purple-400 text-lg mb-4">${product.price}</p>
+                <p className="text-purple-400 text-lg mb-4">{product.price.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })}</p>
                 <Link
                   to={`/product/${product.id}`}
                   className="block w-full px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-center shadow-md"
