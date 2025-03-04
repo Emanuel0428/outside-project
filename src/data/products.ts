@@ -3,6 +3,21 @@ import { Product } from '../types';
 export const products: Product[] = [
   {
     id: 1,
+    name: "RifBar Turbo X 25k puffs",
+    price: 80000,
+    description: "El Rifbar Turbo X de iJOY es un excepcional vaporizador desechable con pantalla táctil y modo Boost. Su innovadora pantalla te permite ajustar la potencia de salida y monitorear el estado del dispositivo con facilidad. En modo normal, ofrece hasta 24,000 puffs, mientras que en modo Boost alcanza las 12,000. Gracias a sus bobinas de malla doble, garantiza un sabor intenso y una producción de vapor abundante. Si buscas un vaporizador desechable confiable, con gran autonomía y funciones intuitivas, esta es la elección ideal.",
+    image: "https://i.postimg.cc/WbsP2tzt/portada-ritfbar-turbo-x.webp",
+    category: "vaporizers",
+    variants: [ 
+      { name: "Black Ice", image: "https://i.postimg.cc/XYXmJ5bN/black-ice.webp" },
+      { name: "Blue Razz", image: "https://i.postimg.cc/ZKwX4cXD/blue-razz.webp" },
+      { name: "Sour Berry Cotton Candy", image: "https://i.postimg.cc/kgZZt5JQ/sour-berry-coton-candy.webp" },
+      { name: "Strawberry Watermelon", image: "https://i.postimg.cc/s2hLPRxt/strawberry-watermelon.webp" },
+      { name: "Strazz", image: "https://i.postimg.cc/DZ3MBYbm/strazz.webp" },
+    ],
+  },
+  {
+    id: 2,
     name: "Taijizen JuDo 24k puffs",
     price: 45000,
     description: "El TaijiZen Judo 24K de iJOY es un excepcional vaporizador desechable con pantalla táctil y modo Boost. Su innovadora pantalla te permite ajustar la potencia de salida y monitorear el estado del dispositivo con facilidad. En modo normal, ofrece hasta 24,000 puffs, mientras que en modo Boost alcanza las 12,000. Gracias a sus bobinas de malla doble, garantiza un sabor intenso y una producción de vapor abundante. Si buscas un vaporizador desechable confiable, con gran autonomía y funciones intuitivas, esta es la elección ideal.",
@@ -24,45 +39,7 @@ export const products: Product[] = [
     ],
   },
   {
-    id: 2,
-    name: "Lost Orion Bar 10k puffs",
-    price: 30000,
-    description: "El Lost Vape Orion Bar 10000 destaca en el competitivo mercado de los vaporizadores desechables gracias a su diseño, durabilidad y excelente sabor. Ofrece un equilibrio inteligente entre la practicidad de los dispositivos desechables y la intención de minimizar el desperdicio. Para quienes buscan una experiencia de vapeo con gran sabor, larga vida útil y facilidad de uso, sin duda es una opción a tener en cuenta.",
-    image: "https://i.postimg.cc/zB7y1zhg/Lost-Vape-Orion-Bar-10000-Disposable-Vape.webp", 
-    category: "vaporizers",
-    variants: [
-      { name: "Blue razz ice", image: "https://i.postimg.cc/rFdvBhXV/Blue-razz-ice3-1120x.webp" },
-      { name: "Grape Burst", image: "https://i.postimg.cc/Jh8vBMy0/grape-burst-1120x.webp" },
-      { name: "Lush Ice", image: "https://i.postimg.cc/m200BQBQ/lush-ice3-1120x.webp" },
-      { name: "Peach Mango Watermelon", image: "https://i.postimg.cc/3wZ6XVpB/peach-mango-watermelon-1120x.webp" },
-      { name: "Pineapple Lemonade", image: "https://i.postimg.cc/sg7bXvgb/Pineapple-Lemonade3-1120x.webp" },
-      { name: "Raspberry Sour Apple Ice", image: "https://i.postimg.cc/hjPYps1q/Raspberry-Sour-Apple-Ice-1-1120x.webp" },
-      { name: "Strawberry-Summertime", image: "https://i.postimg.cc/cCvbNJz9/strawberry-summertime3-1120x.webp" },
-      { name: "Strawberry Chew", image: "https://i.postimg.cc/hjy5wm2Q/strawberry-chew-1120x.webp" },
-    ],
-  },
-  
-  // Ropa sin cambios por ahora
-  {
     id: 3,
-    name: "Urban Hoodie",
-    price: 120000,
-    description: "Comfortable cotton blend hoodie with minimalist design",
-    image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&q=80&w=800",
-    category: "clothing",
-    variants: ["S", "M", "L", "XL"],
-  },
-  {
-    id: 4,
-    name: "Street Tech Jacket",
-    price: 180000,
-    description: "Water-resistant jacket with modern cut and hidden pockets",
-    image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&q=80&w=800",
-    category: "clothing",
-    variants: ["S", "M", "L", "XL"],
-  },
-  {
-    id: 5,
     name: "Priv Bar Turbo 15k puffs",
     price: 35000,
     description: "Un vape innovador con 10,000 puffs y sabores intensos.",
@@ -88,5 +65,44 @@ export const products: Product[] = [
       { "name": "Watermelon Kiwi", "image": "https://i.postimg.cc/PJdFP4N7/watermelon-kiwi-priv-bar-turbo.png" }
     ],
   },
+  {
+    id: 4,
+    name: "Lost Orion Bar 10k puffs",
+    price: 30000,
+    description: "El Lost Vape Orion Bar 10000 destaca en el competitivo mercado de los vaporizadores desechables gracias a su diseño, durabilidad y excelente sabor. Ofrece un equilibrio inteligente entre la practicidad de los dispositivos desechables y la intención de minimizar el desperdicio. Para quienes buscan una experiencia de vapeo con gran sabor, larga vida útil y facilidad de uso, sin duda es una opción a tener en cuenta.",
+    image: "https://i.postimg.cc/zB7y1zhg/Lost-Vape-Orion-Bar-10000-Disposable-Vape.webp", 
+    category: "vaporizers",
+    variants: [
+      { name: "Blue razz ice", image: "https://i.postimg.cc/rFdvBhXV/Blue-razz-ice3-1120x.webp" },
+      { name: "Grape Burst", image: "https://i.postimg.cc/Jh8vBMy0/grape-burst-1120x.webp" },
+      { name: "Lush Ice", image: "https://i.postimg.cc/m200BQBQ/lush-ice3-1120x.webp" },
+      { name: "Peach Mango Watermelon", image: "https://i.postimg.cc/3wZ6XVpB/peach-mango-watermelon-1120x.webp" },
+      { name: "Pineapple Lemonade", image: "https://i.postimg.cc/sg7bXvgb/Pineapple-Lemonade3-1120x.webp" },
+      { name: "Raspberry Sour Apple Ice", image: "https://i.postimg.cc/hjPYps1q/Raspberry-Sour-Apple-Ice-1-1120x.webp" },
+      { name: "Strawberry-Summertime", image: "https://i.postimg.cc/cCvbNJz9/strawberry-summertime3-1120x.webp" },
+      { name: "Strawberry Chew", image: "https://i.postimg.cc/hjy5wm2Q/strawberry-chew-1120x.webp" },
+    ],
+  },
+  
+  // Ropa sin cambios por ahora
+  {
+    id: 10,
+    name: "Urban Hoodie",
+    price: 120000,
+    description: "Comfortable cotton blend hoodie with minimalist design",
+    image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&q=80&w=800",
+    category: "clothing",
+    variants: ["S", "M", "L", "XL"],
+  },
+  {
+    id: 11,
+    name: "Street Tech Jacket",
+    price: 180000,
+    description: "Water-resistant jacket with modern cut and hidden pockets",
+    image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&q=80&w=800",
+    category: "clothing",
+    variants: ["S", "M", "L", "XL"],
+  },
+  
   
 ];

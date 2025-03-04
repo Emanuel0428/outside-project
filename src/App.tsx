@@ -22,6 +22,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ArrowUp } from 'lucide-react';
 import { motion } from 'framer-motion';
 import TopText from './components/TopText';
+import ResetPassword from './components/ResetPassword';
+import NewReleases from './components/NewReleases';
 
 function App() {
   const [showScroll, setShowScroll] = useState(false);
@@ -53,7 +55,7 @@ function App() {
                 <Navbar />
                 <TopText />
                 <Routes>
-                  <Route path="/" element={<><Hero /><Products /><Contact /></>} />
+                  <Route path="/" element={<><Hero /><NewReleases /><Products /><Contact /></>} />
                   <Route path="/product/:id" element={<ProductDetail />} />
                   <Route path="/cart" element={<Cart />} />
                   <Route path="/news" element={<News />} />
@@ -62,6 +64,7 @@ function App() {
                   <Route path="/register" element={<Register />} />
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/admin" element={<AdminDashboard />} />
+                  <Route path="/reset-password" element={<ResetPassword />} /> {/* Nueva ruta */}
                 </Routes>
                 <Footer />
                 <ToastContainer position="top-right" autoClose={3000} theme="dark" />

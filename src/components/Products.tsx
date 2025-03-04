@@ -8,7 +8,7 @@ const Products = () => {
   const [category, setCategory] = useState<'vaporizers' | 'clothing'>('vaporizers');
   const [searchTerm, setSearchTerm] = useState('');
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 200000]); 
-  const [puffRange, setPuffRange] = useState<[number, number]>([0, 24000]);
+  const [puffRange, setPuffRange] = useState<[number, number]>([0, 30000]);
   const [selectedBrand, setSelectedBrand] = useState<string>('');
   const [selectedVariant, setSelectedVariant] = useState<string>('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -168,7 +168,7 @@ const Products = () => {
                   <input
                     type="range"
                     min="0"
-                    max="24000"
+                    max="30000"
                     step="1000"
                     value={puffRange[0]}
                     onChange={(e) => setPuffRange([+e.target.value, puffRange[1]])}
@@ -177,7 +177,7 @@ const Products = () => {
                   <input
                     type="range"
                     min="0"
-                    max="24000"
+                    max="30000"
                     step="1000"
                     value={puffRange[1]}
                     onChange={(e) => setPuffRange([puffRange[0], +e.target.value])}
