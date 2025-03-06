@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { products } from '../data/products';
+import { products } from '../../data/products';
 import { Search, ChevronDown, ChevronUp } from 'lucide-react';
 
 const Products = () => {
@@ -13,7 +13,7 @@ const Products = () => {
   const [selectedVariant, setSelectedVariant] = useState<string>('');
   const [currentPage, setCurrentPage] = useState(1);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
-  const itemsPerPage = 6;
+  const itemsPerPage = 3;
 
   const filteredProducts = products.filter((product) => {
     const matchesCategory = product.category === category;

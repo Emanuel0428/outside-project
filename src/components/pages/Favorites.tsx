@@ -1,8 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { useFavorites } from '../context/FavoritesContext';
-import { products } from '../data/products';
+import { useFavorites } from '../../context/FavoritesContext';
+import { products } from '../../data/products';
 
 const Favorites = () => {
   const { favorites } = useFavorites();

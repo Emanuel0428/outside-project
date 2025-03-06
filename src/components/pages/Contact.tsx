@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
 import { Instagram, Facebook, Twitter } from 'lucide-react';
-import type { ContactForm } from '../types';
+import type { ContactForm } from '../../types';
 
 const Contact = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<ContactForm>();
@@ -100,7 +100,7 @@ const Contact = () => {
               <h3 className="text-2xl font-bold mb-6">Ubicación</h3>
               <p className="text-gray-300">
                 Medellín, Colombia<br />
-                Tel: +1 234 567 890
+                Tel: +57 304 362 1891
               </p>
             </div>
           </motion.div>

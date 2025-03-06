@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const TopText = () => {
   return (
-    <div className="fixed top-[64px] left-0 w-full bg-black text-white py-2 overflow-hidden z-40">
+    <div className="fixed top-[64px] left-0 w-full bg-black/90 text-white py-2 overflow-hidden z-40">
       <motion.div
         className="inline-block whitespace-nowrap text-center text-sm md:text-base"
         initial={{ x: '100%' }}

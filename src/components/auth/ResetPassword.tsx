@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { motion } from 'framer-motion';
-import { supabase } from '../../lib/supabaseClient';
+import { supabase } from '../../../lib/supabaseClient';
 
 interface ResetPasswordForm {
   password: string;
