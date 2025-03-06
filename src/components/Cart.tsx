@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from './auth/AuthContext';
 import { toast } from 'react-toastify';
 import { supabase } from '../../lib/supabaseClient';
 

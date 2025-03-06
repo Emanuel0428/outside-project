@@ -3,25 +3,27 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { CartProvider } from './context/CartContext';
 import { FavoritesProvider } from './context/FavoritesContext';
 import { ThemeProvider } from './context/ThemeContext';
-import { AuthProvider } from './context/AuthContext';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import Products from './components/Products';
-import Contact from './components/Contact';
-import Footer from './components/Footer';
+import { AuthProvider } from './components/auth/AuthContext';
+import Navbar from './components/assets/Navbar';
+import Hero from './components/assets/Hero';
+import Products from './components/pages/Products';
+import Contact from './components/pages/Contact';
+import Footer from './components/assets/Footer';
 import ProductDetail from './components/ProductDetail';
 import Cart from './components/Cart';
-import News from './components/News';
-import Favorites from './components/Favorites';
-import Login from './components/Login';
-import Register from './components/Register';
-import Profile from './components/Profile';
-import AdminDashboard from './components/AdminDashboard';
+import News from './components/pages/News';
+import Favorites from './components/pages/Favorites';
+import Login from './components/pages/Login';
+import Register from './components/pages/Register';
+import Profile from './components/pages/Profile';
+import AdminDashboard from './components/pages/AdminDashboard';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ArrowUp } from 'lucide-react';
 import { motion } from 'framer-motion';
-import TopText from './components/TopText';
+import ResetPassword from './components/auth/ResetPassword';
+import NewReleases from './components/assets/NewReleases';
+import BrandSection from './components/pages/BrandSection';
 
 function App() {
   const [showScroll, setShowScroll] = useState(false);
@@ -51,9 +53,8 @@ function App() {
             <Router>
               <div className="min-h-screen bg-black text-white light:bg-gray-100 light:text-black transition-colors">
                 <Navbar />
-                <TopText />
                 <Routes>
-                  <Route path="/" element={<><Hero /><Products /><Contact /></>} />
+                  <Route path="/" element={<><Hero /><NewReleases /><Products /><Contact /></>} />
                   <Route path="/product/:id" element={<ProductDetail />} />
                   <Route path="/cart" element={<Cart />} />
                   <Route path="/news" element={<News />} />
@@ -62,7 +63,9 @@ function App() {
                   <Route path="/register" element={<Register />} />
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/admin" element={<AdminDashboard />} />
+                  <Route path="/reset-password" element={<ResetPassword />} /> 
                 </Routes>
+                <BrandSection />
                 <Footer />
                 <ToastContainer position="top-right" autoClose={3000} theme="dark" />
                 {showScroll && (

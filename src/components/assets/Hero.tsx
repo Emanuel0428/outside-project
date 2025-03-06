@@ -3,7 +3,8 @@ import { motion } from 'framer-motion';
 import Particles from 'react-particles';
 import { loadFull } from "tsparticles";
 import type { Engine } from 'tsparticles-engine';
-import DecryptedText from './DecryptedText';
+import DecryptedText from '../DecryptedText';
+import TopText from '../TopText';
 
 const Hero = () => {
   const particlesInit = useCallback(async (engine: Engine) => {
@@ -16,6 +17,7 @@ const Hero = () => {
 
   return (
     <div id="home" className="relative h-screen flex items-center justify-center bg-gradient-to-br from-black via-purple-900 to-black overflow-hidden">
+      <TopText/>
       <Particles
         id="tsparticles"
         init={particlesInit}
@@ -80,7 +82,7 @@ const Hero = () => {
               speed={100}
               characters="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+"
               className="text-white"
-              encryptedClassName="text-red-500"
+              encryptedClassName="text-purple-900"
               parentClassName="font-mono text-3xl"
               animateOn="view"
           />
@@ -97,7 +99,7 @@ const Hero = () => {
             speed={100}
             characters="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+"
             className="text-white"
-            encryptedClassName="text-red-500"
+            encryptedClassName="text-purple-500"
             parentClassName="font-mono text-3xl"
             animateOn="view"
           />

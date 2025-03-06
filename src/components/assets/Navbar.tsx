@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Cloud, Home, Package, ShoppingCart, User, X, Menu, Sun, Moon } from 'lucide-react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
-import { useCart } from '../context/CartContext';
-import { useTheme } from '../context/ThemeContext';
-import { useAuth } from '../context/AuthContext';
+import { useCart } from '../../context/CartContext';
+import { useTheme } from '../../context/ThemeContext';
+import { useAuth } from '../auth/AuthContext';
 
 const Navbar = () => {
   const location = useLocation();
