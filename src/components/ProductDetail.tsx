@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { products } from '../data/products';
 import { useCart } from '../context/CartContext';
 import { Heart } from 'lucide-react';
 import { useFavorites } from '../context/FavoritesContext';
+import { Helmet } from 'react-helmet-async';
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -13,35 +14,63 @@ const ProductDetail = () => {
   const { addToCart } = useCart();
   const { favorites, toggleFavorite } = useFavorites();
 
-  const product = products.find(p => p.id === parseInt(id || '0'));
+  const product = useMemo(() => products.find(p => p.id === parseInt(id || '0')), [id]);
+
+  const variantArray = useMemo(() => {
+    return product && Array.isArray(product.variants) && typeof product.variants[0] === 'object'
+      ? product.variants as { name: string; image: string; alt?: string }[]
+      : [];
+  }, [product]);
+
+  const isFavorite = product ? favorites.includes(product.id) : false;
+
+  const selectedVariantObj = useMemo(() => 
+    variantArray.find(v => v.name === selectedVariant), [selectedVariant, variantArray]
+  );
 
   if (!product) {
     return <div className="min-h-screen bg-black py-20 px-6 text-white">Producto no encontrado</div>;
   }
-
-  const isFavorite = favorites.includes(product.id);
-
-  const variantArray = Array.isArray(product.variants) && typeof product.variants[0] === 'object'
-    ? product.variants as { name: string; image: string }[]
-    : [];
-  const selectedVariantObj = variantArray.find(v => v.name === selectedVariant);
   const displayImage = selectedVariantObj?.image || product.image;
+  const displayAlt = selectedVariantObj?.alt || product.alt || product.name;
 
   return (
     <section className="min-h-screen bg-black py-20 px-6">
+      <Helmet>
+        <title>{product.metaTitle || `${product.name} - Detalles del Producto`}</title>
+        <meta name="description" content={product.metaDescription || product.description.substring(0, 160)} />
+        <meta name="keywords" content={product.keywords?.join(', ') || `${product.name}, vaporizador, ropa`} />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org/",
+            "@type": "Product",
+            "name": product.name,
+            "image": displayImage,
+            "description": product.description,
+            "sku": `PROD-${product.id}`,
+            "offers": {
+              "@type": "Offer",
+              "priceCurrency": "COP",
+              "price": product.price,
+              "priceValidUntil": "2025-12-31",
+              "availability": "https://schema.org/InStock"
+            }
+          })}
+        </script>
+      </Helmet>
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {/* Imagen del producto */}
           <div className="bg-gray-900 rounded-lg p-8">
             <img 
               src={displayImage} 
-              alt={selectedVariant || product.name} 
+              alt={displayAlt}
               className="w-full h-auto object-contain"
+              loading="lazy"
+              width={product.width || 300}
+              height={product.height || 300}
               onError={(e) => (e.currentTarget.src = product.image)}
             />
           </div>
-
-          {/* Detalles del producto */}
           <div className="text-white">
             <div className="flex justify-between items-center mb-4">
               <h1 className="text-3xl font-bold">{product.name}</h1>
@@ -55,8 +84,6 @@ const ProductDetail = () => {
               </button>
             </div>
             <p className="text-purple-400 text-2xl mb-6">{product.price.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })}</p>
-            
-            {/* Variantes/Sabores */}
             {variantArray.length > 0 && (
               <div className="mb-6">
                 <h3 className="text-xl mb-3">Sabores:</h3>
@@ -77,8 +104,6 @@ const ProductDetail = () => {
                 </div>
               </div>
             )}
-
-            {/* Control de cantidad */}
             <div className="mb-6">
               <h3 className="text-xl mb-3">Cantidad:</h3>
               <div className="flex items-center gap-4">
@@ -97,8 +122,6 @@ const ProductDetail = () => {
                 </button>
               </div>
             </div>
-
-            {/* Botón de compra */}
             <button
               onClick={() => {
                 addToCart(product, selectedVariant || (variantArray[0]?.name || ''), quantity);
@@ -108,8 +131,6 @@ const ProductDetail = () => {
             >
               Agregar al carrito
             </button>
-
-            {/* Descripción */}
             <div className="mt-8">
               <h3 className="text-xl mb-3">Descripción:</h3>
               <p className="text-gray-300">{product.description}</p>
@@ -121,4 +142,4 @@ const ProductDetail = () => {
   );
 };
 
-export default ProductDetail;
+export default React.memo(ProductDetail);

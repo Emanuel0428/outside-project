@@ -3,13 +3,23 @@ import { useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
 import { Instagram, Facebook, Twitter } from 'lucide-react';
 import type { ContactForm } from '../../types';
+import { supabase } from '../../../lib/supabaseClient';
 
 const Contact = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<ContactForm>();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<ContactForm>();
 
-  const onSubmit = (data: ContactForm) => {
-    console.log(data);
-    // Here you would typically send the data to your backend
+  const onSubmit = async (data: ContactForm) => {
+    const { name, email, message } = data;
+    const { error } = await supabase
+      .from('messages')
+      .insert([{ name, email, message }]);
+
+    if (error) {
+      console.error('Error al enviar el mensaje:', error);
+    } else {
+      alert('Mensaje enviado correctamente');
+      reset();
+    }
   };
 
   return (
