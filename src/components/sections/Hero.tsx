@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { loadFull } from "tsparticles";
 import { Engine } from 'tsparticles-engine';
 import DecryptedText from '@/components/assets/DecryptedText';
-import TopText from '@/components/assets/TopText';
+import TopText from '@/components/sections/TopText';
 import { Helmet } from 'react-helmet-async';
 
 const Particles = lazy(() => import('react-particles'));
