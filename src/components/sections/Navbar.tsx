@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Cloud, Home, Package, ShoppingCart, User, X, Menu, Sun, Moon, Book } from 'lucide-react';
+import { Cloud, Home, Package, ShoppingCart, User, X, Menu, Sun, Moon, Book  } from 'lucide-react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
 import { useTheme } from '@/context/ThemeContext';
@@ -141,7 +141,7 @@ const Navbar = () => {
                     {isAdmin && <Link to="/admin" className="block py-2 hover:text-purple-400" onClick={() => setIsAccountOpen(false)}>Admin Dashboard</Link>}
                     <Link to="/favorites" className="block py-2 hover:text-purple-400" onClick={() => setIsAccountOpen(false)}>Favoritos</Link>
                     <Link to="/news" className="block py-2 hover:text-purple-400" onClick={() => setIsAccountOpen(false)}>Noticias</Link>
-                    <button onClick={() => handleNavigation('contact')} className="block w-full text-left py-2 hover:text-purple-400">Contacto</button>
+                    <button onClick={() => handleNavigation('contact')} className="block w-full text-left py-2 hover:text-purple-400">Contacto </button>
                     <button onClick={handleLogout} className="block w-full text-left py-2 hover:text-purple-400">Cerrar Sesión</button>
                   </>
                 ) : (

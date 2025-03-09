@@ -4,18 +4,19 @@ import { CartProvider } from '@/context/CartContext';
 import { FavoritesProvider } from '@/context/FavoritesContext';
 import { ThemeProvider } from '@/context/ThemeContext';
 import { AuthProvider } from '@/components/auth/AuthContext';
-import Navbar from '@/components/assets/Navbar';
-import Footer from '@/components/assets/Footer';
+import Navbar from '@/components/sections/Navbar';
+import Footer from '@/components/sections/Footer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ArrowUp } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
 import Loader from '@/components/assets/Loader';
+import NotFound from '@/components/pages/NotFound';
 
-const Hero = lazy(() => import('./components/assets/Hero'));
-const Products = lazy(() => import('./components/pages/Products'));
-const Contact = lazy(() => import('./components/pages/Contact'));
+const Hero = lazy(() => import('./components/sections/Hero'));
+const Products = lazy(() => import('./components/sections/Products'));
+const Contact = lazy(() => import('./components/sections/Contact'));
 const ProductDetail = lazy(() => import('./components/pages/ProductDetail'));
 const Cart = lazy(() => import('./components/assets/Cart'));
 const News = lazy(() => import('./components/pages/News'));
@@ -26,10 +27,9 @@ const Profile = lazy(() => import('./components/pages/Profile'));
 const AdminDashboard = lazy(() => import('./components/pages/AdminDashboard'));
 const Articles = lazy(() => import('./components/pages/Articles'));
 const ResetPassword = lazy(() => import('./components/auth/ResetPassword'));
-const NewReleases = lazy(() => import('./components/assets/NewReleases'));
-const BrandSection = lazy(() => import('./components/pages/BrandSection'));
+const NewReleases = lazy(() => import('./components/sections/NewReleases'));
+const BrandSection = lazy(() => import('./components/sections/BrandSection'));
 
-// Componente para manejar la transición entre rutas
 const AppContent = ({ scrollTop }: { scrollTop: () => void }) => {
   const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
@@ -63,6 +63,7 @@ const AppContent = ({ scrollTop }: { scrollTop: () => void }) => {
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/articles" element={<Articles />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
       <Footer />
