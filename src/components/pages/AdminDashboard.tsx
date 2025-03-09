@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAuth } from '../auth/AuthContext';
+import { useAuth } from '@/components/auth/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -8,6 +8,9 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
   const [statusFilter, setStatusFilter] = useState<string>('');
 
+  console.log('allPurchases en AdminDashboard:', allPurchases);
+  console.log('isAdmin en AdminDashboard:', isAdmin);
+
   if (!user || !isAdmin) {
     navigate('/');
     toast.error('Acceso denegado. Solo administradores.');
@@ -15,16 +18,26 @@ const AdminDashboard = () => {
   }
 
   const filteredPurchases = statusFilter
-    ? allPurchases.filter(purchase => purchase.status === statusFilter)
+    ? allPurchases.filter((purchase) => purchase.status === statusFilter)
     : allPurchases;
 
+  console.log('filteredPurchases:', filteredPurchases);
+
   const handleStatusChange = async (purchaseId: string, newStatus: string) => {
+    console.log('handleStatusChange - purchaseId:', purchaseId, 'newStatus:', newStatus);
     try {
       await updatePurchaseStatus(purchaseId, newStatus);
       toast.success('Estado actualizado con éxito');
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      toast.error(error.message || 'Error al actualizar el estado');
+    } catch (error: unknown) {
+      console.error('Error completo en handleStatusChange:', error);
+      if (error instanceof Error) {
+        console.log('Mensaje de error:', error.message);
+        console.log('Stack trace:', error.stack);
+        toast.error(error.message || 'Error al actualizar el estado');
+      } else {
+        console.log('Error no es una instancia de Error:', error);
+        toast.error('Error al actualizar el estado');
+      }
     }
   };
 
@@ -32,8 +45,6 @@ const AdminDashboard = () => {
     <section className="min-h-screen bg-black py-20 px-6 text-white">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-3xl font-bold mb-8">Panel de Administración</h2>
-        
-        {/* Filtro por estado */}
         <div className="mb-6">
           <label className="block mb-2">Filtrar por estado:</label>
           <select
@@ -47,8 +58,6 @@ const AdminDashboard = () => {
             <option value="shipped">Enviado</option>
           </select>
         </div>
-
-        {/* Lista de órdenes */}
         {filteredPurchases.length === 0 ? (
           <p>No hay órdenes para mostrar.</p>
         ) : (

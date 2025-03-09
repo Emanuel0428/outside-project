@@ -1,10 +1,10 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Cloud, Home, Package, ShoppingCart, User, X, Menu, Sun, Moon, Book } from 'lucide-react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
-import { useCart } from '../../context/CartContext';
-import { useTheme } from '../../context/ThemeContext';
-import { useAuth } from '../auth/AuthContext';
+import { useCart } from '@/context/CartContext';
+import { useTheme } from '@/context/ThemeContext';
+import { useAuth } from '@/components/auth/AuthContext';
 import { debounce } from 'lodash';
 
 const Navbar = () => {
@@ -34,14 +34,14 @@ const Navbar = () => {
     }, 300), [location.pathname, navigate]
   );
 
-  const isActive = (path: string) => (location.pathname === path ? 'text-purple-400' : 'text-white');
+  const isActive = useCallback((path: string) => (location.pathname === path ? 'text-purple-400' : 'text-white'), [location.pathname]);
 
-  const handleLogout = async () => {
+  const handleLogout = useCallback(async () => {
     await logout();
     navigate('/');
     setIsMobileOpen(false);
     setIsAccountOpen(false);
-  };
+  }, [logout, navigate]);
 
   const mobileMenu = useMemo(() => (
     <motion.div
@@ -84,7 +84,6 @@ const Navbar = () => {
           <Link to="/register" className="text-white hover:text-purple-400" onClick={() => setIsMobileOpen(false)}>Registrarse</Link>
           <Link to="/favorites" className="text-white hover:text-purple-400" onClick={() => setIsMobileOpen(false)}>Favoritos</Link>
           <Link to="/news" className="text-white hover:text-purple-400" onClick={() => setIsMobileOpen(false)}>Noticias</Link>
-          <Link to="/articles" target="_blank" rel="noopener noreferrer" className="text-white hover:text-purple-400" onClick={() => setIsMobileOpen(false)}>Artículos</Link>
           <button onClick={() => handleNavigation('contact')} className="text-white hover:text-purple-400 flex items-center gap-2">Contacto</button>
         </>
       )}
@@ -93,7 +92,7 @@ const Navbar = () => {
         {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
       </button>
     </motion.div>
-  ), [user, isActive, itemCount, theme, handleNavigation]);
+  ), [isActive, itemCount, user, isAdmin, handleLogout, theme, handleNavigation, toggleTheme]);
 
   return (
     <motion.nav
@@ -142,7 +141,6 @@ const Navbar = () => {
                     {isAdmin && <Link to="/admin" className="block py-2 hover:text-purple-400" onClick={() => setIsAccountOpen(false)}>Admin Dashboard</Link>}
                     <Link to="/favorites" className="block py-2 hover:text-purple-400" onClick={() => setIsAccountOpen(false)}>Favoritos</Link>
                     <Link to="/news" className="block py-2 hover:text-purple-400" onClick={() => setIsAccountOpen(false)}>Noticias</Link>
-                    <Link to="/articles" target="_blank" rel="noopener noreferrer" className="block py-2 hover:text-purple-400" onClick={() => setIsAccountOpen(false)}>Artículos</Link>
                     <button onClick={() => handleNavigation('contact')} className="block w-full text-left py-2 hover:text-purple-400">Contacto</button>
                     <button onClick={handleLogout} className="block w-full text-left py-2 hover:text-purple-400">Cerrar Sesión</button>
                   </>
@@ -152,11 +150,10 @@ const Navbar = () => {
                     <Link to="/register" className="block py-2 hover:text-purple-400" onClick={() => setIsAccountOpen(false)}>Registrarse</Link>
                     <Link to="/favorites" className="block py-2 hover:text-purple-400" onClick={() => setIsAccountOpen(false)}>Favoritos</Link>
                     <Link to="/news" className="block py-2 hover:text-purple-400" onClick={() => setIsAccountOpen(false)}>Noticias</Link>
-                    <Link to="/articles" target="_blank" rel="noopener noreferrer" className="block py-2 hover:text-purple-400" onClick={() => setIsAccountOpen(false)}>Artículos</Link>
                     <button onClick={() => handleNavigation('contact')} className="block w-full text-left py-2 hover:text-purple-400">Contacto</button>
                   </>
                 )}
-                <button onClick={toggleTheme} className="block w-full text-left py-2 hover:text-purple-400 flex items-center gap-2">
+                <button onClick={toggleTheme} className="w-full text-left py-2 hover:text-purple-400 flex items-center gap-2">
                   {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
                   {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
                 </button>

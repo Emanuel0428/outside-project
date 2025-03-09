@@ -2,8 +2,8 @@ import React, { useCallback, lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { loadFull } from "tsparticles";
 import { Engine } from 'tsparticles-engine';
-import DecryptedText from '../DecryptedText';
-import TopText from '../TopText';
+import DecryptedText from '@/components/assets/DecryptedText';
+import TopText from '@/components/assets/TopText';
 import { Helmet } from 'react-helmet-async';
 
 const Particles = lazy(() => import('react-particles'));

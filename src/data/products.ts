@@ -1,4 +1,4 @@
-import { Product } from '../types';
+import { Product } from '@/types';
 
 
 interface ExtendedVariant {
@@ -24,20 +24,60 @@ export const products: ExtendedProduct[] = [
     price: 80000,
     description:
       "El Rifbar Turbo X de iJOY es un excepcional vaporizador desechable con pantalla táctil y modo Boost. Su innovadora pantalla te permite ajustar la potencia de salida y monitorear el estado del dispositivo con facilidad. En modo normal, ofrece hasta 24,000 puffs, mientras que en modo Boost alcanza las 12,000. Gracias a sus bobinas de malla doble, garantiza un sabor intenso y una producción de vapor abundante. Si buscas un vaporizador desechable confiable, con gran autonomía y funciones intuitivas, esta es la elección ideal.",
-    image: "https://i.postimg.cc/WbsP2tzt/portada-ritfbar-turbo-x.webp",
+    image: "https://i.postimg.cc/VLC8V1ht/outside-portada-ritfbar-turbo-x.png",
     category: "vaporizers",
     variants: [
-      { name: "Black Ice", image: "https://i.postimg.cc/XYXmJ5bN/black-ice.webp", alt: "Vaporizador RifBar Turbo X 25k puffs sabor Black Ice con diseño elegante y pantalla táctil" },
-      { name: "Blue Razz", image: "https://i.postimg.cc/ZKwX4cXD/blue-razz.webp", alt: "Vaporizador RifBar Turbo X 25k puffs sabor Blue Razz con diseño moderno y modo Boost" },
-      { name: "Sour Berry Cotton Candy", image: "https://i.postimg.cc/8kZBFZqM/outside-Rifbar-Turbo-X-sour-grape-cotton-candy.webp", alt: "Vaporizador RifBar Turbo X 25k puffs sabor Sour Berry Cotton Candy con pantalla táctil" },
-      { name: "Strawberry Watermelon", image: "https://i.postimg.cc/s2hLPRxt/strawberry-watermelon.webp", alt: "Vaporizador RifBar Turbo X 25k puffs sabor Strawberry Watermelon con bobinas de malla doble" },
-      { name: "Strazz", image: "https://i.postimg.cc/DZ3MBYbm/strazz.webp", alt: "Vaporizador RifBar Turbo X 25k puffs sabor Strazz con diseño vibrante y modo Boost" },
+      { name: "Alaskan Mint", image: "https://i.postimg.cc/rms6CLWK/outside-rifbar-turbo-x-Alaskan-Mint.png", alt: "Vaporizador RifBar Turbo X 25k puffs sabor Alaskan Mint con diseño vibrante" },
+      { name: "Black Ice", image: "https://i.postimg.cc/0jKLFdVv/outside-Rifbar-Turbo-X-black-ice.png", alt: "Vaporizador RifBar Turbo X 25k puffs sabor Black Ice con pantalla táctil" },
+      { name: "Blue Razz", image: "https://i.postimg.cc/FF2RRP5j/outside-Rifbar-Turbo-X-blue-razz.png", alt: "Vaporizador RifBar Turbo X 25k puffs sabor Blue Razz con modo Boost" },
+      { name: "Blueberry Mint", image: "https://i.postimg.cc/fbBn9bVG/outside-rifbar-turbo-x-Blueberry-Mint.png", alt: "Vaporizador RifBar Turbo X 25k puffs sabor Blueberry Mint con diseño elegante" },
+      { name: "Mint Ice", image: "https://i.postimg.cc/7bvpkGR2/outside-rifbar-turbo-x-mint-ice.png", alt: "Vaporizador RifBar Turbo X 25k puffs sabor Mint Ice con bobinas de malla doble" },
+      { name: "Peach", image: "https://i.postimg.cc/15wzNpsb/outside-Rifbar-Turbo-X-peach.png", alt: "Vaporizador RifBar Turbo X 25k puffs sabor Peach con diseño moderno" },
+      { name: "Piña Colada", image: "https://i.postimg.cc/wB6YMNj5/outside-rifbar-turbo-x-pina-colada.png", alt: "Vaporizador RifBar Turbo X 25k puffs sabor Piña Colada con pantalla táctil" },
+      { name: "Sour Apple", image: "https://i.postimg.cc/6pVNBct5/outside-rifbar-turbo-x-sour-apple.png", alt: "Vaporizador RifBar Turbo X 25k puffs sabor Sour Apple con diseño elegante" },
+      { name: "Sour Grape Cotton Candy", image: "https://i.postimg.cc/FHxsTNfZ/outside-Rifbar-Turbo-X-sour-grape-cotton-candy.png", alt: "Vaporizador RifBar Turbo X 25k puffs sabor Sour Grape Cotton Candy con modo Boost" },
+      { name: "Strawberry Watermelon", image: "https://i.postimg.cc/sfBxsk8j/outside-rifbar-turbo-x-strawberry-watermelon.png", alt: "Vaporizador RifBar Turbo X 25k puffs sabor Strawberry Watermelon con pantalla táctil" },
+      { name: "Strazz", image: "https://i.postimg.cc/B6VrmwcN/outside-rifbar-turbo-x-Strazz.png", alt: "Vaporizador RifBar Turbo X 25k puffs sabor Strazz con diseño moderno" },
+      { name: "Watermelon Bubble Gum", image: "https://i.postimg.cc/sgzgPv2x/outside-Rifbar-Turbo-X-watermelon-bubble-gum.png", alt: "Vaporizador RifBar Turbo X 25k puffs sabor Watermelon Bubble Gum con diseño elegante" },
     ],
     alt: "Imagen del vaporizador RifBar Turbo X de 25.000 caladas con diseño vibrante y acabado en cuero sintético. Destaca por sus botones de turbo boost y watts ajustables de 15 a 25, ofreciendo sabores top. Sabor: Black Ice.",
     metaTitle: "RifBar Turbo X 25k Puffs - Vaporizador Desechable iJOY con Pantalla Táctil",
     metaDescription:
       "Descubre el RifBar Turbo X de iJOY, un vaporizador desechable con 25k puffs, pantalla táctil y modo Boost. Sabores intensos y diseño innovador. ¡Compra ahora!",
     keywords: ["vaporizador desechable", "RifBar Turbo X", "25k puffs", "iJOY vape", "sabores vape", "pantalla táctil vape"],
+    width: 300,
+    height: 300,
+  },
+  {
+    id: 6,
+    name: "AirMez Mars 20k puffs",
+    price: 40000,
+    description:
+      "El AirMez Mars 20K es un excepcional vaporizador desechable con pantalla táctil y modo Boost. Su innovadora pantalla te permite ajustar la potencia de salida y monitorear el estado del dispositivo con facilidad. En modo normal, ofrece hasta 20,000 puffs, mientras que en modo Boost alcanza las 10,000. Gracias a sus bobinas de malla doble, garantiza un sabor intenso y una producción de vapor abundante. Si buscas un vaporizador desechable confiable, con gran autonomía y funciones intuitivas, esta es la elección ideal.",
+    image: "https://i.postimg.cc/525jD8r8/outside-portada-Ai-RMEZ-Mars.webp",
+    category: "vaporizers",
+    variants: [
+      { name: "Berry Lemonade", image: "https://i.postimg.cc/mDkDcJgS/outside-Ai-RMEZ-Mars-berry-lemonade.webp", alt: "Vaporizador AirMez Mars 20k puffs sabor Berry Lemonade con diseño vibrante" },
+      { name: "Blue Razz Shiver", image: "https://i.postimg.cc/cC8Lh3Yg/outside-Ai-RMEZ-Mars-blue-razz-shiver.webp", alt: "Vaporizador AirMez Mars 20k puffs sabor Blue Razz Shiver con pantalla táctil" },
+      { name: "Fabuluxe", image: "https://i.postimg.cc/23R8K5FH/outside-Ai-RMEZ-Mars-fabuluxe.webp", alt: "Vaporizador AirMez Mars 20k puffs sabor Fabuluxe con modo Boost" },
+      { name: "Frosty Apple Zing", image: "https://i.postimg.cc/qMy8MhYv/outside-Ai-RMEZ-Mars-frosty-apple-zing.webp", alt: "Vaporizador AirMez Mars 20k puffs sabor Frosty Apple Zing con diseño elegante" },
+      { name: "Hollywood Cherry", image: "https://i.postimg.cc/gcwVQBHR/outside-Ai-RMEZ-Mars-hollywood-cherry.webp", alt: "Vaporizador AirMez Mars 20k puffs sabor Hollywood Cherry con bobinas de malla doble" },
+      { name: "Mars", image: "https://i.postimg.cc/cJs6Wrq2/outside-Ai-RMEZ-Mars-mars.webp", alt: "Vaporizador AirMez Mars 20k puffs sabor Mars con diseño moderno" },
+      { name: "Mars Pop", image: "https://i.postimg.cc/y6wmHXLG/outside-Ai-RMEZ-Mars-mars-pop.webp", alt: "Vaporizador AirMez Mars 20k puffs sabor Mars Pop con pantalla táctil" },
+      { name: "Miami Mint", image: "https://i.postimg.cc/pdqrLRRT/outside-Ai-RMEZ-Mars-miami-mint.webp", alt: "Vaporizador AirMez Mars 20k puffs sabor Miami Mint con diseño elegante" },
+      { name: "Peachy Ice Splash", image: "https://i.postimg.cc/0Q4N7n61/outside-Ai-RMEZ-Mars-peachy-ice-splash.webp", alt: "Vaporizador AirMez Mars 20k puffs sabor Peachy Ice Splash con modo Boost" },
+      { name: "Purple Dream Pop", image: "https://i.postimg.cc/g2K839G9/outside-Ai-RMEZ-Mars-purple-dream-pop.webp", alt: "Vaporizador AirMez Mars 20k puffs sabor Purple Dream Pop con pantalla táctil" },
+      { name: "Snowy Gummy Chill", image: "https://i.postimg.cc/LXJPdnLR/outside-Ai-RMEZ-Mars-snowy-gummy-chill.webp", alt: "Vaporizador AirMez Mars 20k puffs sabor Snowy Gummy Chill con diseño moderno" },
+      { name: "Strawberry Mango", image: "https://i.postimg.cc/W4WZfMDX/outside-Ai-RMEZ-Mars-strawberry-mango.webp", alt: "Vaporizador AirMez Mars 20k puffs sabor Strawberry Mango con diseño elegante" },
+      { name: "Tropic Color Storm", image: "https://i.postimg.cc/tgCP5rgs/outside-Ai-RMEZ-Mars-tropic-color-storm.webp", alt: "Vaporizador AirMez Mars 20k puffs sabor Tropic Color Storm con pantalla táctil" },
+      { name: "Tropic Tango", image: "https://i.postimg.cc/fRsY3Wnj/outside-Ai-RMEZ-Mars-tropic-tango.webp", alt: "Vaporizador AirMez Mars 20k puffs sabor Tropic Tango con diseño moderno" },
+      { name: "Watermelon Ice", image: "https://i.postimg.cc/JnSkRM5X/outside-Ai-RMEZ-Mars-watermelon-ice.webp", alt: "Vaporizador AirMez Mars 20k puffs sabor Watermelon Ice con diseño elegante " },
+    ],
+    alt: "Imagen del vaporizador AirMez Mars de 20.000 caladas con diseño vibrante y acabado en cuero sintético. Destaca por sus botones de turbo boost y watts ajustables de 15 a 25, ofreciendo sabores top. Sabor: Black Ice.",
+    metaTitle: "AirMez Mars 20k Puffs - Vaporizador Desechable con Pantalla Táctil",
+    metaDescription:
+      "Explora el AirMez Mars 20K, un vaporizador desechable con 20k puffs, pantalla táctil y modo Boost. Sabores intensos y diseño innovador. ¡Adquiere el tuyo!",
+    keywords: ["vaporizador desechable", "AirMez Mars", "20k puffs", "sabores vape", "pantalla táctil vape"],
     width: 300,
     height: 300,
   },
@@ -71,6 +111,12 @@ export const products: ExtendedProduct[] = [
     width: 300,
     height: 300,
   },
+  /*{
+    id: 5,
+    name: "MTRX",
+    price: 45000,
+      
+  },*/
   {
     id: 3,
     name: "Priv Bar Turbo 15k puffs",

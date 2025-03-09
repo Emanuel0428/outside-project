@@ -2,8 +2,8 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
 import { Instagram, Facebook, Twitter } from 'lucide-react';
-import type { ContactForm } from '../../types';
-import { supabase } from '../../../lib/supabaseClient';
+import type { ContactForm } from '@/types';
+import { supabase } from '@/lib/supabaseClient';
 
 const Contact = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm<ContactForm>();

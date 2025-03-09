@@ -1,9 +1,9 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { products } from '../../data/products';
+import { products } from '@/data/products';
 import { Search, ChevronDown, ChevronUp } from 'lucide-react';
-import Loader from '../assets/Loader';
+import Loader from '@/components/assets/Loader';
 
 const Products = () => {
   const [category, setCategory] = useState<'vaporizers' | 'clothing'>('vaporizers');

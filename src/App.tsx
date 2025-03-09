@@ -1,23 +1,23 @@
-import React, { useState, useEffect, lazy, Suspense } from 'react';
+import React, { useState, useEffect, lazy, Suspense, useCallback } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { CartProvider } from './context/CartContext';
-import { FavoritesProvider } from './context/FavoritesContext';
-import { ThemeProvider } from './context/ThemeContext';
-import { AuthProvider } from './components/auth/AuthContext';
-import Navbar from './components/assets/Navbar';
-import Footer from './components/assets/Footer';
+import { CartProvider } from '@/context/CartContext';
+import { FavoritesProvider } from '@/context/FavoritesContext';
+import { ThemeProvider } from '@/context/ThemeContext';
+import { AuthProvider } from '@/components/auth/AuthContext';
+import Navbar from '@/components/assets/Navbar';
+import Footer from '@/components/assets/Footer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ArrowUp } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
-import Loader from './components/assets/Loader'; // Asegúrate de importar el Loader desde la ruta correcta
+import Loader from '@/components/assets/Loader';
 
 const Hero = lazy(() => import('./components/assets/Hero'));
 const Products = lazy(() => import('./components/pages/Products'));
 const Contact = lazy(() => import('./components/pages/Contact'));
-const ProductDetail = lazy(() => import('./components/ProductDetail'));
-const Cart = lazy(() => import('./components/Cart'));
+const ProductDetail = lazy(() => import('./components/pages/ProductDetail'));
+const Cart = lazy(() => import('./components/assets/Cart'));
 const News = lazy(() => import('./components/pages/News'));
 const Favorites = lazy(() => import('./components/pages/Favorites'));
 const Login = lazy(() => import('./components/pages/Login'));
@@ -35,7 +35,7 @@ const AppContent = ({ scrollTop }: { scrollTop: () => void }) => {
   const location = useLocation();
 
   useEffect(() => {
-    // Mostrar el loader durante 1 segundo al cambiar de ruta
+    
     setIsLoading(true);
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -84,13 +84,13 @@ const AppContent = ({ scrollTop }: { scrollTop: () => void }) => {
 function App() {
   const [showScroll, setShowScroll] = useState(false);
 
-  const checkScrollTop = () => {
+  const checkScrollTop = useCallback(() => {
     if (!showScroll && window.pageYOffset > 400) {
       setShowScroll(true);
     } else if (showScroll && window.pageYOffset <= 400) {
       setShowScroll(false);
     }
-  };
+  }, [showScroll]);
 
   const scrollTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -99,7 +99,7 @@ function App() {
   useEffect(() => {
     window.addEventListener('scroll', checkScrollTop);
     return () => window.removeEventListener('scroll', checkScrollTop);
-  }, [showScroll]);
+  }, [checkScrollTop, showScroll]);
 
   return (
     <HelmetProvider>

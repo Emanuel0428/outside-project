@@ -1,10 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { products } from '../data/products';
-import { useCart } from '../context/CartContext';
+import { products } from '@/data/products';
+import { useCart } from '@/context/CartContext';
 import { Heart } from 'lucide-react';
-import { useFavorites } from '../context/FavoritesContext';
+import { useFavorites } from '@/context/FavoritesContext';
 import { Helmet } from 'react-helmet-async';
 
 const ProductDetail = () => {

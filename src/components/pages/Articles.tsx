@@ -6,7 +6,7 @@ import type { Engine } from 'tsparticles-engine';
 import { Helmet } from 'react-helmet-async';
 import { Book, Info, ShoppingCart, Share2, Star, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import Loader from '../assets/Loader';
+import Loader from '@/components/assets/Loader';
 
 const Articles: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
