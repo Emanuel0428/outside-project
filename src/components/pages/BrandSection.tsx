@@ -2,15 +2,15 @@ import React from 'react';
 
 
 const brands = [
-  { name: "Smok Priv Bar", logo: "https://i.postimg.cc/c4PGBFKq/outside-privbar-logo.png" },
-  { name: "Lost Orion Bar", logo: "https://i.postimg.cc/FsYQSMHg/outside-orionbar-logo.png" },
-  { name: "Rifbar", logo: "https://i.postimg.cc/4xtkLptY/outside-rifbar-logo.png"},
-  { name: "Taijizen", logo: "https://i.postimg.cc/ZqSk10FV/outside-taijizen.png"},
+  { name: "Smok Priv Bar", logo: "https://i.postimg.cc/SKL5bPm2/outside-privbar-logo.webp" },
+  { name: "Lost Orion Bar", logo: "https://i.postimg.cc/pT2SWBd0/outside-orionbar-logo.webp" },
+  { name: "Rifbar", logo: "https://i.postimg.cc/Qt0yHW9j/outside-rifbar-logo-1.webp"},
+  { name: "Taijizen", logo: "https://i.postimg.cc/YSBVV7BB/outside-taijizen-logo-1.webp"},
 ];
 
 const BrandSection = () => {
     return (
-            <section className="py-12 text-center">
+            <section className="py-12 text-center bg-white dark:bg-black">
             <h2 className="text-2xl md:text-3xl text-white font-semibold mb-6 light:text-gray-300">
             Nuestras Marcas
             </h2>

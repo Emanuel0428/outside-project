@@ -1,10 +1,12 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
-import Particles from 'react-particles';
 import { loadFull } from "tsparticles";
-import type { Engine } from 'tsparticles-engine';
-import DecryptedText from '../DecryptedText';
-import TopText from '../TopText';
+import { Engine } from 'tsparticles-engine';
+import DecryptedText from '@/components/assets/DecryptedText';
+import TopText from '@/components/assets/TopText';
+import { Helmet } from 'react-helmet-async';
+
+const Particles = lazy(() => import('react-particles'));
 
 const Hero = () => {
   const particlesInit = useCallback(async (engine: Engine) => {
@@ -17,81 +19,59 @@ const Hero = () => {
 
   return (
     <div id="home" className="relative h-screen flex items-center justify-center bg-gradient-to-br from-black via-purple-900 to-black overflow-hidden">
-      <TopText/>
-      <Particles
-        id="tsparticles"
-        init={particlesInit}
-        options={{
-          background: {
-            color: {
-              value: "transparent",
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "url": "https://yourdomain.com/",
+            "name": "Outside",
+            "description": "Redefiniendo el estilo y el vapor con productos innovadores."
+          })}
+        </script>
+      </Helmet>
+      <TopText />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Particles
+          id="tsparticles"
+          init={particlesInit}
+          options={{
+            background: { color: { value: "transparent" } },
+            fpsLimit: 60,
+            particles: {
+              color: { value: "#ffffff" },
+              links: { color: "#ffffff", distance: 150, enable: true, opacity: 0.2, width: 1 },
+              move: { direction: "none", enable: true, outModes: { default: "bounce" }, random: false, speed: 1, straight: false },
+              number: { value: 40, density: { enable: true, area: 800 } },
+              opacity: { value: 0.5 },
+              shape: { type: "circle" },
+              size: { value: { min: 1, max: 3 } },
             },
-          },
-          fpsLimit: 120,
-          particles: {
-            color: {
-              value: "#ffffff",
-            },
-            links: {
-              color: "#ffffff",
-              distance: 150,
-              enable: true,
-              opacity: 0.2,
-              width: 1
-            },
-            move: {
-              direction: "none",
-              enable: true,
-              outModes: {
-                default: "bounce",
-              },
-              random: false,
-              speed: 1,
-              straight: false,
-            },
-            number: {
-              value: 80,
-              density: {
-                enable: true,
-                area: 800
-              }
-            },
-            opacity: {
-              value: 0.5,
-            },
-            shape: {
-              type: "circle",
-            },
-            size: {
-              value: { min: 1, max: 3 },
-            },
-          },
-          detectRetina: true,
-        }}
-      />
+            detectRetina: true,
+          }}
+        />
+      </Suspense>
       <div className="text-center z-10">
-        
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
           className="text-6xl md:text-8xl font-bold text-white mb-4"
         >
           <DecryptedText
-              text="OUTSIDE"
-              speed={100}
-              characters="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+"
-              className="text-white"
-              encryptedClassName="text-purple-900"
-              parentClassName="font-mono text-3xl"
-              animateOn="view"
+            text="OUTSIDE"
+            speed={100}
+            characters="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+"
+            className="text-white"
+            encryptedClassName="text-purple-900"
+            parentClassName="font-mono text-3xl"
+            animateOn="view"
           />
         </motion.h1>
-        
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.8 }}
+          transition={{ delay: 0.3, duration: 0.6 }}
           className="text-xl md:text-5xl text-purple-200 mb-8"
         >
           <DecryptedText
@@ -104,11 +84,10 @@ const Hero = () => {
             animateOn="view"
           />
         </motion.p>
-        
         <motion.button
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1, duration: 0.5 }}
+          transition={{ delay: 0.6, duration: 0.5 }}
           onClick={scrollToProducts}
           className="px-8 py-3 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition-colors"
         >
@@ -119,4 +98,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default React.memo(Hero);

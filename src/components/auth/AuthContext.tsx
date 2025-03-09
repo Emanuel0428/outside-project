@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { supabase } from '../../../lib/supabaseClient';
+import { supabase } from '@/lib/supabaseClient';
 import { Session, User } from '@supabase/supabase-js';
 
 interface Purchase {
@@ -21,7 +21,7 @@ interface AuthContextType {
   allPurchases: Purchase[];
   addPurchase: (items: { productId: number; variant: string; quantity: number; price: number }[], total: number, status?: string) => Promise<void>;
   updatePurchaseStatus: (purchaseId: string, status: string) => Promise<void>;
-  resetPassword: (email: string) => Promise<void>; // Nueva función
+  resetPassword: (email: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -86,9 +86,24 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const { data, error } = await supabase
       .from('purchases')
       .select('*')
-      .order('created_at', { ascending: false });
-    if (error) console.error('Error fetching all purchases:', error);
-    else setAllPurchases(data || []);
+      .order('created_at', { ascending: false});
+  
+    console.log('Datos crudos de Supabase:', data);
+  
+    if (error) {
+      console.error('Error fetching all purchases:', error);
+      setAllPurchases([]);
+    } else {
+      const mappedPurchases = data.map((purchase) => ({
+        id: purchase.id, 
+        date: purchase.date || purchase.created_at,
+        items: purchase.items,
+        total: Number(purchase.total),
+        status: purchase.status,
+      }));
+      console.log('Purchases mapeados:', mappedPurchases);
+      setAllPurchases(mappedPurchases);
+    }
   };
 
   const login = async (email: string, password: string, rememberMe: boolean = false) => {
@@ -124,7 +139,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     total: number,
     status: string = 'pending'
   ) => {
-    if (!user) throw new Error('No user logged in');
+    if (!user) throw new Error('Debe iniciar sesión para realizar una compra');
     const { error } = await supabase
       .from('purchases')
       .insert({
@@ -139,12 +154,29 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const updatePurchaseStatus = async (purchaseId: string, status: string) => {
-    if (!isAdmin) throw new Error('Only admins can update purchase status');
-    const { error } = await supabase
+    if (!isAdmin) throw new Error('Solo los administradores pueden actualizar el estado de las compras');
+  
+    const trimmedStatus = status.trim();
+    console.log('Intentando actualizar - purchaseId:', purchaseId, 'status:', trimmedStatus);
+  
+    const { error, data } = await supabase
       .from('purchases')
-      .update({ status })
-      .eq('id', purchaseId);
-    if (error) throw error;
+      .update({ status: trimmedStatus })
+      .match({ id: purchaseId }) // Usa .match() como alternativa
+      .select('*');
+  
+    console.log('Resultado de la actualización - data:', data, 'error:', error);
+  
+    if (error) {
+      console.error('Error de Supabase:', error);
+      throw error;
+    }
+  
+    if (!Array.isArray(data) || data.length === 0) {
+      console.warn('No se actualizó ningún registro - purchaseId:', purchaseId);
+      throw new Error('No se encontró la compra con el ID proporcionado o no se tiene permiso para actualizar');
+    }
+  
     await fetchPurchases();
     await fetchAllPurchases();
   };

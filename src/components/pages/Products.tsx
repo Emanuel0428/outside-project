@@ -1,49 +1,62 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { products } from '../../data/products';
+import { products } from '@/data/products';
 import { Search, ChevronDown, ChevronUp } from 'lucide-react';
+import Loader from '@/components/assets/Loader';
 
 const Products = () => {
   const [category, setCategory] = useState<'vaporizers' | 'clothing'>('vaporizers');
   const [searchTerm, setSearchTerm] = useState('');
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 200000]); 
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 200000]);
   const [puffRange, setPuffRange] = useState<[number, number]>([0, 30000]);
-  const [selectedBrand, setSelectedBrand] = useState<string>('');
-  const [selectedVariant, setSelectedVariant] = useState<string>('');
+  const [selectedBrand, setSelectedBrand] = useState('');
+  const [selectedVariant, setSelectedVariant] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const itemsPerPage = 3;
 
-  const filteredProducts = products.filter((product) => {
-    const matchesCategory = product.category === category;
-    const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesPrice = product.price >= priceRange[0] && product.price <= priceRange[1];
-    const matchesPuffs =
-      product.category === 'vaporizers' &&
-      product.name.includes('puffs') &&
-      parseInt(product.name.match(/\d+k/i)?.[0] || '0') * 1000 >= puffRange[0] &&
-      parseInt(product.name.match(/\d+k/i)?.[0] || '0') * 1000 <= puffRange[1];
-    const matchesBrand = selectedBrand ? product.name.toLowerCase().includes(selectedBrand.toLowerCase()) : true;
-    const matchesVariant = selectedVariant
-      ? (Array.isArray(product.variants) && typeof product.variants[0] === 'object'
-          ? (product.variants as { name: string; image: string }[]).some(v => v.name === selectedVariant)
-          : (product.variants as string[]).includes(selectedVariant))
-      : true;
-    return (
-      matchesCategory &&
-      matchesSearch &&
-      matchesPrice &&
-      (product.category === 'clothing' || matchesPuffs) &&
-      matchesBrand &&
-      matchesVariant
-    );
-  });
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
-  const suggestions = products
-    .filter(p => p.name.toLowerCase().includes(searchTerm.toLowerCase()) && searchTerm.length > 1)
-    .map(p => p.name)
-    .slice(0, 5);
+  const filteredProducts = useMemo(() => {
+    return products.filter((product) => {
+      const matchesCategory = product.category === category;
+      const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesPrice = product.price >= priceRange[0] && product.price <= priceRange[1];
+      const matchesPuffs =
+        product.category === 'vaporizers' &&
+        product.name.includes('puffs') &&
+        parseInt(product.name.match(/\d+k/i)?.[0] || '0') * 1000 >= puffRange[0] &&
+        parseInt(product.name.match(/\d+k/i)?.[0] || '0') * 1000 <= puffRange[1];
+      const matchesBrand = selectedBrand ? product.name.toLowerCase().includes(selectedBrand.toLowerCase()) : true;
+      const matchesVariant = selectedVariant
+        ? (Array.isArray(product.variants) && typeof product.variants[0] === 'object'
+            ? (product.variants as { name: string; image: string }[]).some((v) => v.name === selectedVariant)
+            : (product.variants as string[]).includes(selectedVariant))
+        : true;
+      return (
+        matchesCategory &&
+        matchesSearch &&
+        matchesPrice &&
+        (product.category === 'clothing' || matchesPuffs) &&
+        matchesBrand &&
+        matchesVariant
+      );
+    });
+  }, [category, searchTerm, priceRange, puffRange, selectedBrand, selectedVariant]);
+
+  const suggestions = useMemo(() => {
+    return products
+      .filter((p) => p.name.toLowerCase().includes(searchTerm.toLowerCase()) && searchTerm.length > 1)
+      .map((p) => p.name)
+      .slice(0, 5);
+  }, [searchTerm]);
 
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
   const paginatedProducts = filteredProducts.slice(
@@ -54,11 +67,11 @@ const Products = () => {
   const allVariants = Array.from(
     new Set(
       products
-        .filter(p => p.category === category)
-        .flatMap(p =>
+        .filter((p) => p.category === category)
+        .flatMap((p) =>
           Array.isArray(p.variants)
             ? typeof p.variants[0] === 'object'
-              ? (p.variants as { name: string; image: string }[]).map(v => v.name)
+              ? (p.variants as { name: string; image: string }[]).map((v) => v.name)
               : (p.variants as string[])
             : []
         )
@@ -66,15 +79,18 @@ const Products = () => {
   );
 
   const allBrands = Array.from(
-    new Set(products.filter(p => p.category === 'vaporizers').map(p => p.name.split(' ')[0]))
+    new Set(products.filter((p) => p.category === 'vaporizers').map((p) => p.name.split(' ')[0]))
   );
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <section id="products" className="min-h-screen bg-black py-20 px-6">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-4xl font-bold text-white text-center mb-12">Nuestros Productos</h2>
 
-        {/* Botones de categoría */}
         <div className="flex justify-center gap-4 mb-6">
           <button
             onClick={() => setCategory('vaporizers')}
@@ -94,7 +110,6 @@ const Products = () => {
           </button>
         </div>
 
-        {/* Filtros compactos */}
         <div className="mb-8">
           <button
             onClick={() => setIsFiltersOpen(!isFiltersOpen)}
@@ -110,7 +125,6 @@ const Products = () => {
               animate={{ opacity: 1, height: 'auto' }}
               className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 bg-gray-900 p-4 rounded-lg text-white"
             >
-              {/* Búsqueda */}
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                 <input
@@ -135,7 +149,6 @@ const Products = () => {
                 )}
               </div>
 
-              {/* Rango de precio */}
               <div>
                 <label className="block mb-1">
                   Precio: {priceRange[0].toLocaleString('es-CO', { style: 'currency', currency: 'COP' })} -{' '}
@@ -144,8 +157,8 @@ const Products = () => {
                 <input
                   type="range"
                   min="0"
-                  max="100000" 
-                  step="1000" 
+                  max="100000"
+                  step="1000"
                   value={priceRange[0]}
                   onChange={(e) => setPriceRange([+e.target.value, priceRange[1]])}
                   className="w-full"
@@ -161,7 +174,6 @@ const Products = () => {
                 />
               </div>
 
-              {/* Rango de puffs (solo vaporizadores) */}
               {category === 'vaporizers' && (
                 <div>
                   <label className="block mb-1">Puffs: {puffRange[0]} - {puffRange[1]}</label>
@@ -186,7 +198,6 @@ const Products = () => {
                 </div>
               )}
 
-              {/* Marca (solo vaporizadores) */}
               {category === 'vaporizers' && (
                 <div>
                   <label className="block mb-1">Marca:</label>
@@ -205,7 +216,6 @@ const Products = () => {
                 </div>
               )}
 
-              {/* Sabor (solo vaporizadores) */}
               {category === 'vaporizers' && (
                 <div>
                   <label className="block mb-1">Sabor:</label>
@@ -227,7 +237,6 @@ const Products = () => {
           )}
         </div>
 
-        {/* Lista de productos */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {paginatedProducts.length === 0 ? (
             <p className="text-white text-center col-span-full">No se encontraron productos.</p>
@@ -241,7 +250,21 @@ const Products = () => {
                 whileHover={{ scale: 1.05 }}
                 className="bg-gray-900 rounded-lg overflow-hidden shadow-lg"
               >
-                <img src={product.image} alt={product.name} className="w-full h-64 object-scale-down" />
+                <picture>
+                  <source srcSet={`${product.image}.webp`} type="image/webp" />
+                  <img
+                    src={product.image}
+                    alt={
+                      product.category === 'vaporizers'
+                        ? `Imagen del vaporizador ${product.name} con diseño vibrante y acabado en cuero sintético. Destaca por sus botones de turbo boost y watts ajustables de 15 a 25, ofreciendo sabores top. Sabor: ${Array.isArray(product.variants) && typeof product.variants[0] === 'object' ? (product.variants as { name: string; image: string }[])[0].name : ''}`
+                        : product.name
+                    }
+                    className="w-full h-64 object-scale-down"
+                    loading="lazy"
+                    width="300"
+                    height="300"
+                  />
+                </picture>
                 <div className="p-6">
                   <h3 className="text-xl font-bold text-white mb-2">{product.name}</h3>
                   <p className="text-purple-400 text-lg mb-4">
@@ -259,11 +282,10 @@ const Products = () => {
           )}
         </div>
 
-        {/* Paginación */}
         {totalPages > 1 && (
           <div className="mt-8 flex justify-center gap-4">
             <button
-              onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+              onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
               disabled={currentPage === 1}
               className="px-4 py-2 bg-gray-800 text-white rounded-lg disabled:opacity-50 shadow-md hover:bg-gray-700"
             >
@@ -271,7 +293,7 @@ const Products = () => {
             </button>
             <span className="text-white self-center">Página {currentPage} de {totalPages}</span>
             <button
-              onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+              onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
               disabled={currentPage === totalPages}
               className="px-4 py-2 bg-gray-800 text-white rounded-lg disabled:opacity-50 shadow-md hover:bg-gray-700"
             >

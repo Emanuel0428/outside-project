@@ -1,17 +1,18 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../auth/AuthContext';
+import { useAuth } from '@/components/auth/AuthContext';
 import { toast } from 'react-toastify';
 
 interface RegisterForm {
   name: string;
   email: string;
   password: string;
+  confirmPassword: string;
 }
 
 const Register = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<RegisterForm>();
+  const { register, handleSubmit, formState: { errors }, watch } = useForm<RegisterForm>();
   const { register: registerUser } = useAuth();
   const navigate = useNavigate();
 
@@ -28,6 +29,8 @@ const Register = () => {
       }
     }
   };
+
+  const password = watch('password');
 
   return (
     <section className="min-h-screen bg-black py-20 px-6">
@@ -58,6 +61,18 @@ const Register = () => {
               className="w-full p-3 bg-gray-800 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
             {errors.password && <span className="text-red-400 text-sm">{errors.password.message}</span>}
+          </div>
+          <div>
+            <label htmlFor="confirmPassword" className="block mb-2">Confirmar contraseña</label>
+            <input
+              type="password"
+              {...register('confirmPassword', {
+                required: 'La confirmación de la contraseña es requerida',
+                validate: value => value === password || 'Las contraseñas no coinciden'
+              })}
+              className="w-full p-3 bg-gray-800 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
+            />
+            {errors.confirmPassword && <span className="text-red-400 text-sm">{errors.confirmPassword.message}</span>}
           </div>
           <button type="submit" className="w-full p-3 bg-purple-600 rounded hover:bg-purple-700 transition-colors">
             Registrarse
