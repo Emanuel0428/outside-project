@@ -34,7 +34,6 @@ const Footer = () => {
             className="flex items-center gap-2 hover:text-purple-400 transition-colors"
             aria-label="GitHub profile of Emanuel0428"
           >
-            <span>@Desarrollado por</span>
             <Github className="h-6 w-6" />
           </a>
         </div>
