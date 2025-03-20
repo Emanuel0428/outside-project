@@ -12,7 +12,7 @@ const NotFound = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-black text-white relative pt-20">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-black to-purple-900 text-white relative pt-20">
       <Helmet>
         <title>404 - Página No Encontrada | Outside Zone</title>
         <meta name="description" content="Lo sentimos, la página que buscas no existe. Regresa a la página principal de Outside Zone para explorar nuestros productos y artículos sobre vaping." />
@@ -23,7 +23,7 @@ const NotFound = () => {
         alt="Outside no encontrado"
         className="relative items-center inset-0 max-w-2xl max-h-lvh object-cover opacity-50 rounded-3xl"
       />
-      <div className="absolute bottom-0 z-10 space-y-6 text-center border-y-2 border-purple-900 p-8 bg-black bg-opacity-70 rounded-3xl">
+      <div className="absolute bottom-1 z-10 space-y-6 text-center border-y-2 border-purple-900 p-8 bg-black bg-opacity-50 rounded-3xl">
         <h1 className="text-4xl font-bold mb-4">404 - ¡No encontrado!</h1>
         <p>Lo sentimos, la página que buscas no existe.</p>
         <Link
