@@ -3,7 +3,7 @@ import { Cloud, Github } from 'lucide-react';
 
 const Footer = () => {
   return (
-    <footer className="bg-black text-white py-12 px-6" role="contentinfo">
+    <footer className="bg-gradient-to-t from-black to-purple-900  text-white py-12 px-6" role="contentinfo">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-center mb-8">
           <div className="flex items-center gap-2 mb-6 md:mb-0">

@@ -73,7 +73,6 @@ const Navbar = () => {
           <Link to="/profile" className="text-white hover:text-purple-400" onClick={() => setIsMobileOpen(false)}>Perfil</Link>
           {isAdmin && <Link to="/admin" className="text-white hover:text-purple-400" onClick={() => setIsMobileOpen(false)}>Admin Dashboard</Link>}
           <Link to="/favorites" className="text-white hover:text-purple-400" onClick={() => setIsMobileOpen(false)}>Favoritos</Link>
-          <Link to="/news" className="text-white hover:text-purple-400" onClick={() => setIsMobileOpen(false)}>Noticias</Link>
           <Link to="/articles" target="_blank" rel="noopener noreferrer" className="text-white hover:text-purple-400" onClick={() => setIsMobileOpen(false)}>Artículos</Link>
           <button onClick={() => handleNavigation('contact')} className="text-white hover:text-purple-400 flex items-center gap-2">Contacto</button>
           <button onClick={handleLogout} className="text-white hover:text-purple-400">Cerrar Sesión</button>
@@ -83,7 +82,6 @@ const Navbar = () => {
           <Link to="/login" className="text-white hover:text-purple-400" onClick={() => setIsMobileOpen(false)}>Iniciar Sesión</Link>
           <Link to="/register" className="text-white hover:text-purple-400" onClick={() => setIsMobileOpen(false)}>Registrarse</Link>
           <Link to="/favorites" className="text-white hover:text-purple-400" onClick={() => setIsMobileOpen(false)}>Favoritos</Link>
-          <Link to="/news" className="text-white hover:text-purple-400" onClick={() => setIsMobileOpen(false)}>Noticias</Link>
           <button onClick={() => handleNavigation('contact')} className="text-white hover:text-purple-400 flex items-center gap-2">Contacto</button>
         </>
       )}
@@ -140,7 +138,6 @@ const Navbar = () => {
                     <Link to="/profile" className="block py-2 hover:text-purple-400" onClick={() => setIsAccountOpen(false)}>Perfil</Link>
                     {isAdmin && <Link to="/admin" className="block py-2 hover:text-purple-400" onClick={() => setIsAccountOpen(false)}>Admin Dashboard</Link>}
                     <Link to="/favorites" className="block py-2 hover:text-purple-400" onClick={() => setIsAccountOpen(false)}>Favoritos</Link>
-                    <Link to="/news" className="block py-2 hover:text-purple-400" onClick={() => setIsAccountOpen(false)}>Noticias</Link>
                     <button onClick={() => handleNavigation('contact')} className="block w-full text-left py-2 hover:text-purple-400">Contacto </button>
                     <button onClick={handleLogout} className="block w-full text-left py-2 hover:text-purple-400">Cerrar Sesión</button>
                   </>
@@ -149,7 +146,6 @@ const Navbar = () => {
                     <Link to="/login" className="block py-2 hover:text-purple-400" onClick={() => setIsAccountOpen(false)}>Iniciar Sesión</Link>
                     <Link to="/register" className="block py-2 hover:text-purple-400" onClick={() => setIsAccountOpen(false)}>Registrarse</Link>
                     <Link to="/favorites" className="block py-2 hover:text-purple-400" onClick={() => setIsAccountOpen(false)}>Favoritos</Link>
-                    <Link to="/news" className="block py-2 hover:text-purple-400" onClick={() => setIsAccountOpen(false)}>Noticias</Link>
                     <button onClick={() => handleNavigation('contact')} className="block w-full text-left py-2 hover:text-purple-400">Contacto</button>
                   </>
                 )}

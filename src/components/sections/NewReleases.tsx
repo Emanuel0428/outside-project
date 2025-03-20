@@ -110,7 +110,7 @@ const NewReleases = () => {
   };
 
   return (
-    <section id="new-releases" className="bg-black py-20 px-6 text-white">
+    <section id="new-releases" className="bg-gradient-to-b from-purple-900 to-black py-20 px-6 text-white min-h-screen">
       <Helmet>
         <title>Nuevos Lanzamientos - Rifbar Turbo X | Outside</title>
         <meta
@@ -136,7 +136,7 @@ const NewReleases = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="rounded-lg overflow-hidden shadow-lg"
+            className="rounded-xl overflow-hidden shadow-lg"
           >
             <iframe
               src={video1Url}

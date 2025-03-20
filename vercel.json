@@ -1,0 +1,15 @@
+{
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "/index.html",
+        "status": 200,
+        "continue": true
+      },
+      {
+        "src": "/(.*)",
+        "status": 404,
+        "dest": "/index.html"
+      }
+    ]
+  }

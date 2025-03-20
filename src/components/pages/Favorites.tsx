@@ -10,7 +10,7 @@ const Favorites = () => {
 
   if (favoriteProducts.length === 0) {
     return (
-      <section className="min-h-screen bg-black py-20 px-6 text-white text-center light:bg-gray-100 light:text-black">
+      <section className="min-h-screen bg-gradient-to-b from-black to-purple-900 py-40 px-6 text-white text-center light:bg-gray-100 light:text-black">
         <h2 className="text-3xl font-bold mb-8">No tienes favoritos aún</h2>
         <Link to="/" className="text-purple-400 hover:underline">Explora productos</Link>
       </section>
@@ -18,7 +18,7 @@ const Favorites = () => {
   }
 
   return (
-    <section className="min-h-screen bg-black py-20 px-6 light:bg-gray-100">
+    <section className="min-h-screen bg-gradient-to-b from-black to-purple-900 py-20 px-6 light:bg-gray-100">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-4xl font-bold text-white text-center mb-12 light:text-black">Tus Favoritos</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

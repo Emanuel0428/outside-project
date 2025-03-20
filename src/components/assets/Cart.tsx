@@ -51,7 +51,7 @@ const Cart = () => {
 
   if (cart.length === 0) {
     return (
-      <section className="min-h-screen bg-black py-20 px-6 text-white text-center">
+      <section className="min-h-screen bg-gradient-to-b from-black to-purple-900 overflow-hidden py-40 px-6 text-white text-center">
         <h2 className="text-3xl font-bold mb-8">Tu carrito está vacío</h2>
         <Link to="/" className="text-purple-400 hover:underline">Volver a productos</Link>
       </section>
@@ -59,7 +59,7 @@ const Cart = () => {
   }
 
   return (
-    <section className="min-h-screen bg-black py-20 px-6">
+    <section className="min-h-screen bg-gradient-to-b from-black to-purple-900 overflow-hidden py-20 px-6">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-3xl font-bold text-white mb-8">Tu Carrito</h2>
         {!isCheckout ? (

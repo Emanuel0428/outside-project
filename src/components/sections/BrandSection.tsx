@@ -10,7 +10,7 @@ const brands = [
 
 const BrandSection = () => {
     return (
-            <section className="py-12 text-center bg-white dark:bg-black">
+            <section className="py-12 text-center bg-purple-900">
             <h2 className="text-2xl md:text-3xl text-white font-medium mb-6 light:text-gray-300">
             Nuestras Marcas
             </h2>

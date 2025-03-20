@@ -61,12 +61,12 @@ const ProductDetail = () => {
   }, [product, displayImage, variantArray]);
 
   if (!product) {
-    return <div className="min-h-screen bg-black py-20 px-6 text-white">Producto no encontrado</div>;
+    return <div className="min-h-screen bg-gradient-to-b from-black to-purple-900 py-20 px-6 text-white">Producto no encontrado</div>;
   }
 
 
   return (
-    <section className="min-h-screen bg-black py-20 px-6  ">
+    <section className="min-h-screen bg-gradient-to-b from-black to-purple-900 py-20 px-6  ">
       <Helmet>
       <title>{product.metaTitle || `${product.name} - Detalles del Producto`}</title>
         <meta
@@ -78,11 +78,11 @@ const ProductDetail = () => {
       </Helmet>
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          <div className="bg-gray-900 rounded-3xl p-8">
+          <div className="bg-gray-900 rounded-3xl p-8 h-fit">
             <img 
               src={displayImage} 
               alt={displayAlt}
-              className="w-full h-auto object-contain"
+              className="w-full h-auto object-contain rounded-3xl"
               loading="lazy"
               width={product.width || 300}
               height={product.height || 300}

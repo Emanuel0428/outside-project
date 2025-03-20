@@ -26,7 +26,7 @@ export const products: ExtendedProduct[] = [
       "El Turbo X de Rifbar combina tecnología avanzada y diseño práctico para ofrecerte la mejor experiencia de vapeo. Su pantalla a color te permite ver el nivel de líquido y batería fácilmente. Con flujo de aire ajustable y bobina de malla doble, cada calada es más intensa y suave.\n" 
       + "Activa el Modo Turbo y disfruta de un vapor más denso y satisfactorio. Además, su batería de 700 mAh te garantiza largas sesiones sin interrupciones.\n" 
       + "¡Redefine tu forma de vapear con Turbo X y lleva tu experiencia al siguiente nivel!",
-    image: "https://i.postimg.cc/VLC8V1ht/outside-portada-ritfbar-turbo-x.png",
+    image: "https://i.postimg.cc/T1CDj1tS/outside-rifbar-turbo-x-portada.webp",
     category: "vaporizers",
     variants: [
       { name: "Alaskan Mint", image: "https://i.postimg.cc/rms6CLWK/outside-rifbar-turbo-x-Alaskan-Mint.png", alt: "Vaporizador RifBar Turbo X 15k puffs sabor Alaskan Mint con diseño vibrante" },

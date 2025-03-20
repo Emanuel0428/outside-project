@@ -52,7 +52,7 @@ const Articles: React.FC = () => {
   }
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-black via-purple-900 to-black text-white overflow-hidden">
+    <div className="relative min-h-screen bg-gradient-to-b from-black to-purple-900 text-white overflow-hidden">
       <Helmet>
         <title>Artículos sobre Vapes - Outside | Todo sobre Vapes y Vaping</title>
         <meta

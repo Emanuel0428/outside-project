@@ -19,7 +19,6 @@ const Products = lazy(() => import('./components/sections/Products'));
 const Contact = lazy(() => import('./components/sections/Contact'));
 const ProductDetail = lazy(() => import('./components/pages/ProductDetail'));
 const Cart = lazy(() => import('./components/assets/Cart'));
-const News = lazy(() => import('./components/pages/News'));
 const Favorites = lazy(() => import('./components/pages/Favorites'));
 const Login = lazy(() => import('./components/pages/Login'));
 const Register = lazy(() => import('./components/pages/Register'));
@@ -55,7 +54,6 @@ const AppContent = ({ scrollTop }: { scrollTop: () => void }) => {
           <Route path="/" element={<><Hero /><NewReleases /><Products /><Contact /><BrandSection /></>} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/news" element={<News />} />
           <Route path="/favorites" element={<Favorites />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
