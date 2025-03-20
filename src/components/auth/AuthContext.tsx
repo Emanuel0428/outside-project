@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import { Session, User } from '@supabase/supabase-js';
 
@@ -29,9 +29,22 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [purchaseHistory, setPurchaseHistory] = useState<Purchase[]>([]);
   const [allPurchases, setAllPurchases] = useState<Purchase[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const checkAdminStatus = async (user_id: string) => {
+    const { data, error } = await supabase
+      .from('user_roles')
+      .select('role')
+      .eq('user_id', user_id)
+      .single();
+    if (error) console.error('Error fetching user role:', error);
+    else setIsAdmin(data?.role === 'admin');
+  };
+  
+
 
   useEffect(() => {
     const savedSession = localStorage.getItem('supabaseSession');
@@ -39,11 +52,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const parsedSession = JSON.parse(savedSession);
       setSession(parsedSession);
       setUser(parsedSession?.user ?? null);
-      supabase.auth.setSession(parsedSession); // Restaurar sesión
+      supabase.auth.setSession(parsedSession);
+      if (parsedSession?.user) {
+        checkAdminStatus(parsedSession.user.id);
+      }
     } else {
       supabase.auth.getSession().then(({ data: { session } }: { data: { session: Session | null } }) => {
         setSession(session);
         setUser(session?.user ?? null);
+        if (session?.user) {
+          checkAdminStatus(session.user.id);
+        }
       });
     }
     setLoading(false);
@@ -53,6 +72,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setUser(session?.user ?? null);
       if (session && localStorage.getItem('rememberMe') === 'true') {
         localStorage.setItem('supabaseSession', JSON.stringify(session));
+      }
+      if (session?.user) {
+        checkAdminStatus(session.user.id);
+      } else {
+        setIsAdmin(false);
       }
       setLoading(false);
     });
@@ -68,9 +92,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setPurchaseHistory([]);
       setAllPurchases([]);
     }
-  }, [user]);
-
-  const isAdmin = user?.user_metadata?.role === 'admin';
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user,isAdmin]);
 
   const fetchPurchases = async () => {
     const { data, error } = await supabase
@@ -199,6 +222,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) throw new Error('useAuth must be used within an AuthProvider');

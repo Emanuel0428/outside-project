@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center mb-8">
           <div className="flex items-center gap-2 mb-6 md:mb-0">
             <Cloud className="h-8 w-8 text-purple-500" />
-            <span className="text-2xl font-bold">Outside</span>
+            <span className="text-2xl font-medium">Outside</span>
           </div>
           <div className="flex flex-wrap justify-center gap-8">
             <a href="/sitemap" className="hover:text-purple-400 transition-colors" aria-label="Sitemap">
