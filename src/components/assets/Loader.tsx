@@ -35,7 +35,7 @@ const Loader: React.FC = () => {
         {word.map((letter, index) => (
           <motion.span
             key={index}
-            className="text-5xl md:text-7xl font-bold font-mono text-purple-400"
+            className="text-5xl md:text-7xl font-medium Oswald text-purple-400"
             custom={index}
             initial="hidden"
             animate="visible"

@@ -28,39 +28,57 @@ const ProductDetail = () => {
     variantArray.find(v => v.name === selectedVariant), [selectedVariant, variantArray]
   );
 
+  const displayImage = selectedVariantObj?.image || product?.image || '';
+  const displayAlt = selectedVariantObj?.alt || product?.alt || product?.name || '';
+
+  const structuredData = useMemo(() => {
+    if (!product) return {};
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name: product.name,
+      image: displayImage,
+      description: product.description,
+      sku: product.id.toString(),
+      brand: {
+        '@type': 'Brand',
+        name: 'Tu Marca',
+      },
+      offers: {
+        '@type': 'Offer',
+        priceCurrency: 'COP',
+        price: product.price.toString(),
+        availability: 'https://schema.org/InStock',
+        url: `https://tu-pagina-outside.com/product/${product.id}`,
+      },
+      hasVariant: variantArray.map((variant) => ({
+        '@type': 'Product',
+        name: `${product.name} - ${variant.name}`,
+        image: variant.image,
+        description: variant.alt || product.description,
+      })),
+    };
+  }, [product, displayImage, variantArray]);
+
   if (!product) {
     return <div className="min-h-screen bg-black py-20 px-6 text-white">Producto no encontrado</div>;
   }
-  const displayImage = selectedVariantObj?.image || product.image;
-  const displayAlt = selectedVariantObj?.alt || product.alt || product.name;
+
 
   return (
-    <section className="min-h-screen bg-black py-20 px-6">
+    <section className="min-h-screen bg-black py-20 px-6  ">
       <Helmet>
-        <title>{product.metaTitle || `${product.name} - Detalles del Producto`}</title>
-        <meta name="description" content={product.metaDescription || product.description.substring(0, 160)} />
+      <title>{product.metaTitle || `${product.name} - Detalles del Producto`}</title>
+        <meta
+          name="description"
+          content={product.metaDescription || product.description.substring(0, 160)}
+        />
         <meta name="keywords" content={product.keywords?.join(', ') || `${product.name}, vaporizador, ropa`} />
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org/",
-            "@type": "Product",
-            "name": product.name,
-            "image": displayImage,
-            "description": product.description,
-            "sku": `PROD-${product.id}`,
-            "offers": {
-              "@type": "Offer",
-              "priceCurrency": "COP",
-              "price": product.price,
-              "priceValidUntil": "2025-12-31",
-              "availability": "https://schema.org/InStock"
-            }
-          })}
-        </script>
+        <script type="application/ld+json">{JSON.stringify(structuredData, null, 2)}</script>
       </Helmet>
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          <div className="bg-gray-900 rounded-lg p-8">
+          <div className="bg-gray-900 rounded-3xl p-8">
             <img 
               src={displayImage} 
               alt={displayAlt}
@@ -73,7 +91,7 @@ const ProductDetail = () => {
           </div>
           <div className="text-white">
             <div className="flex justify-between items-center mb-4">
-              <h1 className="text-3xl font-bold">{product.name}</h1>
+              <h1 className="text-3xl font-medium">{product.name}</h1>
               <button
                 onClick={() => toggleFavorite(product.id)}
                 className="p-2 rounded-full hover:bg-gray-800 transition-colors"
@@ -86,7 +104,7 @@ const ProductDetail = () => {
             <p className="text-purple-400 text-2xl mb-6">{product.price.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })}</p>
             {variantArray.length > 0 && (
               <div className="mb-6">
-                <h3 className="text-xl mb-3">Sabores:</h3>
+                <h3 className="text-xl mb-3 Oswald ">Sabores:</h3>
                 <div className="grid grid-cols-2 gap-2">
                   {variantArray.map((variant) => (
                     <button

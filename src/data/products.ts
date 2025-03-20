@@ -21,7 +21,7 @@ export const products: ExtendedProduct[] = [
   {
     id: 1,
     name: "RifBar Turbo X 15k puffs",
-    price: 80000,
+    price: 45000,
     description:
       "El Turbo X de Rifbar combina tecnología avanzada y diseño práctico para ofrecerte la mejor experiencia de vapeo. Su pantalla a color te permite ver el nivel de líquido y batería fácilmente. Con flujo de aire ajustable y bobina de malla doble, cada calada es más intensa y suave.\n" 
       + "Activa el Modo Turbo y disfruta de un vapor más denso y satisfactorio. Además, su batería de 700 mAh te garantiza largas sesiones sin interrupciones.\n" 
@@ -47,6 +47,38 @@ export const products: ExtendedProduct[] = [
     metaDescription:
       "Descubre el RifBar Turbo X de Rif, un vaporizador desechable con 15k puffs, pantalla táctil y modo Boost. Sabores intensos y diseño innovador. ¡Compra ahora!",
     keywords: ["vaporizador desechable", "RifBar Turbo X", "15k puffs", "RifBar vape", "sabores vape", "pantalla táctil vape"],
+    width: 300,
+    height: 300,
+  },
+  {
+    id: 5,
+    name: "MTRX 25k puffs",
+    price: 35000,
+    description: "Presentamos el MTRX MX25000 Disposable Matrix Vape: la combinación perfecta de comodidad, potencia y diversión. Con una capacidad de 20 mL de e-líquido y una concentración de 5% (50 mg) de nicotina, ofrece hasta 25,000 caladas. Su bobina de malla cuádruple alterna entre dos juegos de resistencias cada 10 segundos, garantizando un sabor intenso y constante. Además, su flujo de aire ajustable proporciona una experiencia de vapeo suave. Este dispositivo no solo es potente, sino también interactivo, con una pantalla lateral que muestra el porcentaje de batería y e-líquido, un sistema de cambio automático de doble bobina y una doble pantalla HD con tres animaciones únicas que le añaden un toque divertido. Su batería recargable de 900mAh con carga rápida Tipo-C asegura que nunca te quedes sin energía. Con 15 sabores increíbles para elegir, seguro encontrarás el ideal para ti. ¡Descubre el MTRX MX25000, el vape más innovador y entretenido del momento! 🚀💨",
+    image: "https://i.postimg.cc/d3DF9PNS/outside-MTRX-portada.webp",
+    category: "vaporizers",
+    variants: [
+      { name: "Blue Razz", image: "https://i.postimg.cc/vTSYRH6s/outside-MTRX-blue-razz.webp", alt: "Vaporizador MTRX MX25000 sabor Blue Razz con pantalla lateral y flujo de aire ajustable" },
+      { name: "Blueberry Air Head", image: "https://i.postimg.cc/d08V7Yg2/outside-MTRX-blueberry-air-head.webp", alt: "Vaporizador MTRX MX25000 sabor Blueberry Air Head con pantalla lateral y flujo de aire ajustable" },
+      { name: "Candied Grape", image: "https://i.postimg.cc/9XxFw1gn/outside-MTRX-candied-grape.webp", alt: "Vaporizador MTRX MX25000 sabor Candied Grape con pantalla lateral y flujo de aire ajustable" },
+      { name: "Fusion Sunset", image: "https://i.postimg.cc/KvRcPLdv/outside-MTRX-fusion-sunset.webp", alt: "Vaporizador MTRX MX25000 sabor Fusion Sunset con pantalla lateral y flujo de aire ajustable" },
+      { name: "Green Apple Watermelon", image: "https://i.postimg.cc/zvfzPRv7/outside-MTRX-green-apple-watermelon.webp", alt: "Vaporizador MTRX MX25000 sabor Green Apple Watermelon con pantalla lateral y flujo de aire ajustable" },
+      { name: "Lime Berry Orange", image: "https://i.postimg.cc/Fs8rDz4b/outside-MTRX-lime-berry-orange.webp", alt: "Vaporizador MTRX MX25000 sabor Lime Berry Orange con pantalla lateral y flujo de aire ajustable" },
+      { name: "Miami Mint", image: "https://i.postimg.cc/jjrsY1CL/outside-MTRX-miami-mint.webp", alt: "Vaporizador MTRX MX25000 sabor Miami Mint con pantalla lateral y flujo de aire ajustable" },
+      { name: "Minty Os", image: "https://i.postimg.cc/V6fmdbqw/outside-MTRX-minty-os.webp", alt: "Vaporizador MTRX MX25000 sabor Minty Os con pantalla lateral y flujo de aire ajustable" },
+      { name: "Pineapple Peach", image: "https://i.postimg.cc/MGbz6Yjt/outside-MTRX-pineapple-peach.webp", alt: "Vaporizador MTRX MX25000 sabor Pineapple Peach con pantalla lateral y flujo de aire ajustable" },
+      { name: "Pink Grapefruit", image: "https://i.postimg.cc/gJgdRksZ/outside-MTRX-pink-grapefruit.webp", alt: "Vaporizador MTRX MX25000 sabor Pink Grapefruit con pantalla lateral y flujo de aire ajustable" },
+      { name: "Raspberry Coconut", image: "https://i.postimg.cc/1XTQCCLR/outside-MTRX-raspberry-coconut.webp", alt: "Vaporizador MTRX MX25000 sabor Raspberry Coconut con pantalla lateral y flujo de aire ajustable" },
+      { name: "Strawberry Ice", image: "https://i.postimg.cc/1RYs3Xfx/outside-MTRX-strawberry-ice.webp", alt: "Vaporizador MTRX MX25000 sabor Strawberry Ice con pantalla lateral y flujo de aire ajustable" },
+      { name: "Strawburst", image: "https://i.postimg.cc/9F62ykdJ/outside-MTRX-strawburst.webp", alt: "Vaporizador MTRX MX25000 sabor Strawburst con pantalla lateral y flujo de aire ajustable" },
+      { name: "Watermelon Ice", image: "https://i.postimg.cc/dVGY69nv/outside-MTRX-watermelon-ice.webp", alt: "Vaporizador MTRX MX25000 sabor Watermelon Ice con pantalla lateral y flujo de aire ajustable" },
+      { name: "Watermelon Sour Batch", image: "https://i.postimg.cc/pdxt6n1j/outside-MTRX-watermelon-sour-batch.webp", alt: "Vaporizador MTRX MX25000 sabor Watermelon Sour Batch con pantalla lateral y flujo de aire ajustable" },
+    ],
+    alt: "Imagen del vaporizador MTRX MX25000 con pantalla lateral y flujo de aire ajustable. Destaca por su batería recargable de 900mAh y pantalla HD con animaciones únicas. Sabor: Green Apple Watermelon.",
+    metaTitle: "MTRX MX25000 - Vaporizador Desechable con Pantalla Lateral y Modo Boost",
+    metaDescription:
+      "Descubre el MTRX MX25000, un vaporizador desechable con pantalla lateral, modo Boost y 25,000 caladas. Sabores intensos y diseño interactivo. ¡Hazte con el tuyo!",
+    keywords: ["vaporizador desechable", "MTRX MX25000", "sabores vape", "pantalla lateral vape", "modo Boost"],
     width: 300,
     height: 300,
   },
@@ -114,16 +146,11 @@ export const products: ExtendedProduct[] = [
     width: 300,
     height: 300,
   },
-  /*{
-    id: 5,
-    name: "MTRX",
-    price: 45000,
-      
-  },*/
+  
   {
     id: 3,
     name: "Priv Bar Turbo 15k puffs",
-    price: 35000,
+    price: 30000,
     description: "Un vape innovador con 15,000 puffs y sabores intensos, ideal para quienes buscan una experiencia de vapeo duradera y de alta calidad.",
     image: "https://i.postimg.cc/BQJk372F/outside-priv-bar-smok-1.png",
     category: "vaporizers",
@@ -157,20 +184,20 @@ export const products: ExtendedProduct[] = [
   {
     id: 4,
     name: "Lost Orion Bar 10k puffs",
-    price: 30000,
+    price: 25000,
     description:
       "El Lost Vape Orion Bar 10000 destaca en el competitivo mercado de los vaporizadores desechables gracias a su diseño, durabilidad y excelente sabor. Ofrece un equilibrio inteligente entre la practicidad de los dispositivos desechables y la intención de minimizar el desperdicio. Para quienes buscan una experiencia de vapeo con gran sabor, larga vida útil y facilidad de uso, sin duda es una opción a tener en cuenta.",
-    image: "https://i.postimg.cc/tg62WFhy/outside-Lost-Vape-Orion-Bar-10000-Disposable-Vape.webp",
+    image: "https://i.postimg.cc/7LWgmcpd/outside-Lost-Vape-Orion-Bar-10000-Disposable-Vape.webp",
     category: "vaporizers",
     variants: [
-      { name: "Blue Razz Ice", image: "https://i.postimg.cc/NFs43VZf/outside-lost-vape-orion-bar-blue-razz-ice.webp", alt: "Vaporizador Lost Orion Bar 10k puffs sabor Blue Razz Ice con diseño elegante" },
-      { name: "Grape Burst", image: "https://i.postimg.cc/7hKVw9y1/outside-lost-vape-orion-bar-grape-burst.webp", alt: "Vaporizador Lost Orion Bar 10k puffs sabor Grape Burst con diseño moderno" },
-      { name: "Lush Ice", image: "https://i.postimg.cc/ydznPWPR/outside-lost-vape-orion-bar-lush-ice3.webp", alt: "Vaporizador Lost Orion Bar 10k puffs sabor Lush Ice con diseño compacto" },
-      { name: "Peach Mango Watermelon", image: "https://i.postimg.cc/PxzyFh3R/outside-lost-vape-orion-bar-peach-mango-watermelon.webp", alt: "Vaporizador Lost Orion Bar 10k puffs sabor Peach Mango Watermelon con diseño vibrante" },
-      { name: "Pineapple Lemonade", image: "https://i.postimg.cc/FFpGyrJf/outside-lost-vape-orion-bar-Pineapple-Lemonade.webp", alt: "Vaporizador Lost Orion Bar 10k puffs sabor Pineapple Lemonade con diseño innovador" },
-      { name: "Raspberry Sour Apple Ice", image: "https://i.postimg.cc/BQvpNrxm/outside-lost-vape-orion-bar-Raspberry-Sour-Apple-Ice.webp", alt: "Vaporizador Lost Orion Bar 10k puffs sabor Raspberry Sour Apple Ice con diseño elegante" },
-      { name: "Strawberry-Summertime", image: "https://i.postimg.cc/Wbfny58T/outside-lost-vape-orion-bar-strawberry-chew.webp", alt: "Vaporizador Lost Orion Bar 10k puffs sabor Strawberry-Summertime con diseño moderno" },
-      { name: "Strawberry Chew", image: "https://i.postimg.cc/L8YTFjQf/outside-lost-vape-orion-bar-strawberry-summertime.webp", alt: "Vaporizador Lost Orion Bar 10k puffs sabor Strawberry Chew con diseño vibrante" },
+      { name: "Blue Razz Ice", image: "https://i.postimg.cc/MTf145wT/outside-lost-vape-orion-bar-blue-razz-ice-1.webp", alt: "Vaporizador Lost Orion Bar 10k puffs sabor Blue Razz Ice con diseño elegante" },
+      { name: "Grape Burst", image: "https://i.postimg.cc/sgnSgqDx/outside-lost-vape-orion-bar-grape-burst.webp", alt: "Vaporizador Lost Orion Bar 10k puffs sabor Grape Burst con diseño moderno" },
+      { name: "Lush Ice", image: "https://i.postimg.cc/vZ8fMbyC/outside-lost-vape-orion-bar-lush-ice.webp", alt: "Vaporizador Lost Orion Bar 10k puffs sabor Lush Ice con diseño compacto" },
+      { name: "Peach Mango Watermelon", image: "https://i.postimg.cc/Fzt0QSFx/outside-lost-vape-orion-bar-peach-mango-watermelon.webp", alt: "Vaporizador Lost Orion Bar 10k puffs sabor Peach Mango Watermelon con diseño vibrante" },
+      { name: "Pineapple Lemonade", image: "https://i.postimg.cc/pdpjhCpZ/outside-lost-vape-orion-bar-Pineapple-Lemonade.webp", alt: "Vaporizador Lost Orion Bar 10k puffs sabor Pineapple Lemonade con diseño innovador" },
+      { name: "Raspberry Sour Apple Ice", image: "https://i.postimg.cc/Lsw1zPPM/outside-lost-vape-orion-bar-Raspberry-Sour-Apple-Ice.webp", alt: "Vaporizador Lost Orion Bar 10k puffs sabor Raspberry Sour Apple Ice con diseño elegante" },
+      { name: "Strawberry-Summertime", image: "https://i.postimg.cc/rsLRHLgn/outside-lost-vape-orion-bar-strawberry-summertime.webp", alt: "Vaporizador Lost Orion Bar 10k puffs sabor Strawberry-Summertime con diseño moderno" },
+      { name: "Strawberry Chew", image: "https://i.postimg.cc/qRKCQ7c6/outside-lost-vape-orion-bar-strawberry-chew.webp", alt: "Vaporizador Lost Orion Bar 10k puffs sabor Strawberry Chew con diseño vibrante" },
     ],
     alt: "Imagen del vaporizador Lost Orion Bar de 10.000 caladas con diseño vibrante y acabado en cuero sintético. Destaca por sus botones de turbo boost y watts ajustables de 15 a 25, ofreciendo sabores top. Sabor: Blue Razz Ice.",
     metaTitle: "Lost Orion Bar 10k Puffs - Vaporizador Desechable de Alta Calidad",
@@ -180,6 +207,7 @@ export const products: ExtendedProduct[] = [
     width: 300,
     height: 300,
   },
+  
   // Ropa
   {
     id: 10,

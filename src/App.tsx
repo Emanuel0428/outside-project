@@ -105,7 +105,7 @@ function App() {
   return (
     <HelmetProvider>
       <Helmet>
-        <link rel="canonical" href="https://yourdomain.com/" />
+        <link rel="canonical" href="https://outside-project.vercel.app" />
       </Helmet>
       <CartProvider>
         <FavoritesProvider>

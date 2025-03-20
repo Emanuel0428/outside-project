@@ -5,6 +5,8 @@ import { Instagram, Facebook, Twitter } from 'lucide-react';
 import type { ContactForm } from '@/types';
 import { supabase } from '@/lib/supabaseClient';
 
+
+
 const Contact = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm<ContactForm>();
 
@@ -25,7 +27,7 @@ const Contact = () => {
   return (
     <section id="contact" className="min-h-screen bg-gradient-to-b from-black to-purple-900 py-20 px-6">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-4xl font-bold text-white text-center mb-12">Contáctanos</h2>
+        <h2 className="text-4xl font-medium text-white text-center mb-12">Contáctanos</h2>
         
         <div className="grid md:grid-cols-2 gap-12">
           <motion.div

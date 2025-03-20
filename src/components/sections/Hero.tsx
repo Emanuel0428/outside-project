@@ -72,10 +72,10 @@ const Hero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.6 }}
-          className="text-xl md:text-5xl text-purple-200 mb-8"
+          className="text-xl md:text-5xl text-purple-200 mb-8 Oswald"
         >
           <DecryptedText
-            text="Redefiniendo el estilo y el vapor"
+            text="Redefiniendo el estilo y el vapor..."
             speed={100}
             characters="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+"
             className="text-white"
@@ -89,7 +89,7 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.5 }}
           onClick={scrollToProducts}
-          className="px-8 py-3 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition-colors"
+          className="px-8 py-3 bg-purple-600 text-white text-lg rounded-3xl hover:bg-purple-700 transition-colors"
         >
           Explorar
         </motion.button>
