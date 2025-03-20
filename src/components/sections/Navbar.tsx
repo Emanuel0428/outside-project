@@ -104,7 +104,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/')}>
           <Cloud className="h-8 w-6 text-purple-500" />
-          <span className="text-2xl font-bold">Outside</span>
+          <span className="text-2xl font-medium">Outside Zone</span>
         </div>
         <div className="hidden md:flex gap-8 items-center">
           <button onClick={() => handleNavigation('home')} className={`${isActive('/')} hover:text-purple-400 transition-colors flex items-center gap-2`}>

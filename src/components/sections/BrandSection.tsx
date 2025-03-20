@@ -11,7 +11,7 @@ const brands = [
 const BrandSection = () => {
     return (
             <section className="py-12 text-center bg-white dark:bg-black">
-            <h2 className="text-2xl md:text-3xl text-white font-semibold mb-6 light:text-gray-300">
+            <h2 className="text-2xl md:text-3xl text-white font-medium mb-6 light:text-gray-300">
             Nuestras Marcas
             </h2>
             <div className="flex flex-wrap justify-center items-center gap-6">

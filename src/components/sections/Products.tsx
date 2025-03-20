@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { products } from '@/data/products';
 import { Search, ChevronDown, ChevronUp } from 'lucide-react';
 import Loader from '@/components/assets/Loader';
+import { Helmet } from 'react-helmet';
 
 const Products = () => {
   const [category, setCategory] = useState<'vaporizers' | 'clothing'>('vaporizers');
@@ -82,6 +83,44 @@ const Products = () => {
     new Set(products.filter((p) => p.category === 'vaporizers').map((p) => p.name.split(' ')[0]))
   );
 
+  const itemListSchema = useMemo(() => ({
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: paginatedProducts.map((product, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: {
+        '@type': 'Product',
+        name: product.name,
+        image: product.image,
+        description: product.description,
+        sku: product.id.toString(),
+        brand: {
+          '@type': 'Brand',
+          name: product.name.split(' ')[0]
+        },
+        offers: {
+          '@type': 'Offer',
+          price: product.price,
+          priceCurrency: 'COP',
+          availability: 'https://schema.org/InStock',
+          url: `/product/${product.id}`
+        },
+        ...(product.category === 'vaporizers' && {
+          hasVariant: product.variants.map((variant) => ({
+            '@type': 'Product',
+            name: `${product.name} - ${(variant as { name: string }).name}`,
+            image: (variant as { name: string; image: string }).image,
+            description: (typeof variant === 'object' && 'alt' in variant ? variant.alt : product.description),
+          })),
+        }),
+        ...(product.category === 'clothing' && {
+          size: product.variants,
+      }),
+      },
+    })),
+  }), [paginatedProducts]);
+
   if (isLoading) {
     return <Loader />;
   }
@@ -89,12 +128,36 @@ const Products = () => {
   return (
     <section id="products" className="min-h-screen bg-black py-20 px-6">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-4xl font-bold text-white text-center mb-12">Nuestros Productos</h2>
+        <Helmet>
+          <title>
+            {category === 'vaporizers'
+              ? 'Vaporizadores - Outside | Tienda Online'
+              : 'Ropa - Outside | Tienda Online'}
+          </title>
+          <meta
+            name="description"
+            content={
+              category === 'vaporizers'
+                ? 'Explora nuestra selección de vaporizadores desechables de alta calidad en Outside. Encuentra los mejores vapes con sabores intensos y diseños innovadores.'
+                : 'Descubre nuestra colección de ropa urbana en Outside. Prendas modernas y cómodas para un estilo casual y funcional.'
+            }
+          />
+          <meta
+            name="keywords"
+            content={
+              category === 'vaporizers'
+                ? 'vaporizadores, vapes, vapeo, sabores vape, tienda de vapes'
+                : 'ropa urbana, sudaderas, camisas, pantalones cargo, moda casual'
+            }
+          />
+          <script type="application/ld+json">{JSON.stringify(itemListSchema, null, 2)}</script>
+        </Helmet>
+        <h2 className="text-4xl font-medium text-white text-center mb-12">Nuestros Productos</h2>
 
         <div className="flex justify-center gap-4 mb-6">
           <button
             onClick={() => setCategory('vaporizers')}
-            className={`px-6 py-2 rounded-full transition-colors shadow-md ${
+            className={`px-6 py-2 rounded-3xl transition-colors shadow-md ${
               category === 'vaporizers' ? 'bg-purple-600 text-white' : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
             }`}
           >
@@ -102,7 +165,7 @@ const Products = () => {
           </button>
           <button
             onClick={() => setCategory('clothing')}
-            className={`px-6 py-2 rounded-full transition-colors shadow-md ${
+            className={`px-6 py-2 rounded-3xl transition-colors shadow-md ${
               category === 'clothing' ? 'bg-purple-600 text-white' : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
             }`}
           >
@@ -180,7 +243,7 @@ const Products = () => {
                   <input
                     type="range"
                     min="0"
-                    max="30000"
+                    max="35000"
                     step="1000"
                     value={puffRange[0]}
                     onChange={(e) => setPuffRange([+e.target.value, puffRange[1]])}

@@ -5,4 +5,7 @@ export default {
     extend: {},
   },
   plugins: [],
+  fontFamily: {
+    Oswald: ['Oswald','cursive', 'sans-serif'],
+  },
 };
