@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
@@ -8,6 +8,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { products } from '../../data/products';
 
 const NewReleases = () => {
+  const [activeSlide, setActiveSlide] = useState<number>(0);
   const video1Url = 'https://www.youtube.com/embed/G0yuFJPMTg4';
   const video2Url = 'https://www.youtube.com/embed/NDlRq_vZcRo';
 
@@ -100,13 +101,24 @@ const NewReleases = () => {
     ],
   }), [rifbarProduct, video1Url, video2Url]);
 
-  const settings = {
+  interface SliderSettings {
+    dots: boolean;
+    infinite: boolean;
+    speed: number;
+    slidesToShow: number;
+    slidesToScroll: number;
+    arrows: boolean;
+    afterChange: (current: number) => void;
+  }
+
+  const settings: SliderSettings = {
     dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: true,
+    afterChange: (current: number) => setActiveSlide(current),
   };
 
   return (
@@ -138,14 +150,19 @@ const NewReleases = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="rounded-xl overflow-hidden shadow-lg"
           >
-            <iframe
-              src={video1Url}
-              title="Rifbar Turbo X Launch"
-              className="w-full h-64 md:h-96"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
+            {activeSlide === 0 ? (
+              <iframe
+                src={video1Url}
+                title="Rifbar Turbo X Launch Video 1"
+                className="w-full h-64 md:h-96"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                loading="lazy"
+              />
+            ) : (
+              <div className="w-full h-64 md:h-96 bg-gray-800" />
+            )}
           </motion.div>
           <motion.div
             initial={{ opacity: 0, x: 50 }}
@@ -154,24 +171,29 @@ const NewReleases = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="rounded-lg overflow-hidden shadow-lg"
           >
-            <iframe
-              src={video2Url}
-              title="Rifbar Turbo X Launch"
-              className="w-full h-64 md:h-96"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
+            {activeSlide === 1 ? (
+              <iframe
+                src={video2Url}
+                title="Rifbar Turbo X Launch Video 2"
+                className="w-full h-64 md:h-96"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                loading="lazy"
+              />
+            ) : (
+              <div className="w-full h-64 md:h-96 bg-gray-800" />
+            )}
           </motion.div>
         </Slider>
-        <motion.p
+        <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.8 }}
           className="text-center mt-8 text-lg text-gray-300"
         >
-          Descubre el Rifbar Turbo X: potencia, estilo y sabor en un solo dispositivo.
+          <p> Descubre el Rifbar Turbo X: potencia, estilo y sabor en un solo dispositivo.</p>
           <p className="text-lg text-gray-300 mb-4">Disponible ahora con 15,000 puffs y nuevos sabores.</p>
           <Link
             to="/product/1"
@@ -180,7 +202,7 @@ const NewReleases = () => {
           >
             Consigue el tuyo!
           </Link>
-        </motion.p>
+        </motion.div>
       </div>
     </section>
   );
