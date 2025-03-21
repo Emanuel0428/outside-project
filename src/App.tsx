@@ -1,5 +1,4 @@
-import React, { useState, useEffect, lazy, Suspense, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect, lazy, Suspense, useCallback } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { CartProvider } from '@/context/CartContext';
 import { FavoritesProvider } from '@/context/FavoritesContext';
@@ -13,7 +12,6 @@ import { motion } from 'framer-motion';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
 import Loader from '@/components/assets/Loader';
 import NotFound from '@/components/pages/NotFound';
-import CookieConsent from 'react-cookie-consent';
 import ProtectedRoute from '@/components/auth/ProtectedRoute'; 
 import { SpeedInsights } from "@vercel/speed-insights/react"
 
@@ -130,25 +128,11 @@ function App() {
         <FavoritesProvider>
             <AuthProvider>
               <Router>
-                <CookieConsent
-                  location="bottom"
-                  buttonText="Aceptar"
-                  declineButtonText="Rechazar"
-                  cookieName="outsideZoneCookieConsent"
-                  style={{ background: '#1F2937', color: '#fff', fontSize: '14px' }}
-                  buttonStyle={{ background: '#9333EA', color: 'white', fontSize: '14px', padding: '8px 16px', borderRadius: '4px' }}
-                  declineButtonStyle={{ background: '#EF4444', color: 'white', fontSize: '14px', padding: '8px 16px', borderRadius: '4px' }}
-                  expires={150}
-                >
-                  Este sitio utiliza cookies para mejorar tu experiencia. Consulta nuestra{' '}
-                  <Link to="/privacy" className="text-purple-400 hover:underline">Política de Privacidad</Link> para más información.
-                </CookieConsent>
                 <div className="min-h-screen bg-black text-white light:bg-gray-100 light:text-black transition-colors">
                   <Navbar />
                   <AppContent scrollTop={scrollTop} />
                 </div>
               </Router>
-              
             </AuthProvider>
         </FavoritesProvider>
       </CartProvider>

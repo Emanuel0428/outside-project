@@ -1,6 +1,3 @@
-import React from 'react';
-
-
 const brands = [
   { name: "Smok Priv Bar", logo: "https://i.postimg.cc/SKL5bPm2/outside-privbar-logo.webp" },
   { name: "Lost Orion Bar", logo: "https://i.postimg.cc/pT2SWBd0/outside-orionbar-logo.webp" },
