@@ -14,7 +14,8 @@ import { HelmetProvider, Helmet } from 'react-helmet-async';
 import Loader from '@/components/assets/Loader';
 import NotFound from '@/components/pages/NotFound';
 import CookieConsent from 'react-cookie-consent';
-import ProtectedRoute from '@/components/auth/ProtectedRoute'; // Importa el componente
+import ProtectedRoute from '@/components/auth/ProtectedRoute'; 
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const Hero = lazy(() => import('./components/sections/Hero'));
 const Products = lazy(() => import('./components/sections/Products'));
@@ -80,6 +81,7 @@ const AppContent = ({ scrollTop }: { scrollTop: () => void }) => {
 
           {/* Ruta para páginas no encontradas */}
           <Route path="*" element={<NotFound />} />
+          <SpeedInsights />
         </Routes>
       </Suspense>
       <Footer />
@@ -145,6 +147,7 @@ function App() {
                   <AppContent scrollTop={scrollTop} />
                 </div>
               </Router>
+              <SpeedInsights />
             </AuthProvider>
         </FavoritesProvider>
       </CartProvider>
