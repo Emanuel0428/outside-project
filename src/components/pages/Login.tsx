@@ -107,7 +107,7 @@ const Login = () => {
             </p>
             <p className="text-center mt-2 text-sm text-gray-400">
               ¿Olvidaste tu email? Contacta a{' '}
-              <a href="mailto:soporte@outside.com" className="text-purple-400 hover:underline">soporte</a>.
+              <a href="mailto:vapesoutside@outside-zone.com" className="text-purple-400 hover:underline">soporte</a>.
             </p>
           </>
         ) : (

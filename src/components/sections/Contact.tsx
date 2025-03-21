@@ -94,9 +94,9 @@ const Contact = () => {
           >
             <h3 className="text-2xl font-bold mb-6">Síguenos</h3>
             <div className="space-y-4">
-              <a href="#" className="flex items-center gap-4 hover:text-purple-400 transition-colors">
+              <a href="https://www.instagram.com/zone.outside" className="flex items-center gap-4 hover:text-purple-400 transition-colors">
                 <Instagram className="h-6 w-6" />
-                <span>@outside.official</span>
+                <span>@zone.outside</span>
               </a>
               <a href="#" className="flex items-center gap-4 hover:text-purple-400 transition-colors">
                 <Facebook className="h-6 w-6" />
@@ -112,7 +112,7 @@ const Contact = () => {
               <h3 className="text-2xl font-bold mb-6">Ubicación</h3>
               <p className="text-gray-300">
                 Medellín, Colombia<br />
-                Tel: +57 304 362 1891
+                Tel: +57 321 790 5526
               </p>
             </div>
           </motion.div>

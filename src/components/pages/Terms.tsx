@@ -111,10 +111,10 @@ const Terms: React.FC = () => {
             </p>
             <ul className="list-disc list-inside space-y-2 mt-2">
               <li>
-                <strong>Correo electrónico</strong>: <a href="mailto:outsidevapes@gmail.com" className="text-purple-400 hover:underline">soporte@outside-zone.com</a>
+                <strong>Correo electrónico</strong>: <a href="mailto:vapesoutside@outside-zone.com" className="text-purple-400 hover:underline">vapesoutside@outside-zone.com</a>
               </li>
               <li>
-                <strong>Teléfono</strong>: +57 3043621891
+                <strong>Teléfono</strong>: +57 321 790 5526
               </li>
               <li>
                 <strong>Dirección</strong>: Medellin, Colombia
