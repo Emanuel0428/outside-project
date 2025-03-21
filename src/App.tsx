@@ -15,7 +15,7 @@ import Loader from '@/components/assets/Loader';
 import NotFound from '@/components/pages/NotFound';
 import CookieConsent from 'react-cookie-consent';
 import ProtectedRoute from '@/components/auth/ProtectedRoute'; 
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import { SpeedInsights } from "@vercel/speed-insights/react"
 
 const Hero = lazy(() => import('./components/sections/Hero'));
 const Products = lazy(() => import('./components/sections/Products'));
