@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import { Session, User } from '@supabase/supabase-js';
 
@@ -13,7 +13,7 @@ interface Purchase {
 interface AuthContextType {
   user: User | null;
   session: Session | null;
-  isAuthenticated: boolean; // Añadimos esta propiedad para mayor claridad
+  isAuthenticated: boolean; 
   isAdmin: boolean;
   login: (email: string, password: string, rememberMe?: boolean) => Promise<void>;
   register: (email: string, name: string, password: string) => Promise<void>;
@@ -30,7 +30,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // Añadimos este estado
+  const [isAuthenticated, setIsAuthenticated] = useState(false); 
   const [isAdmin, setIsAdmin] = useState(false);
   const [purchaseHistory, setPurchaseHistory] = useState<Purchase[]>([]);
   const [allPurchases, setAllPurchases] = useState<Purchase[]>([]);
