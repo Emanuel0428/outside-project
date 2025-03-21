@@ -1,9 +1,8 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Cloud, Home, Package, ShoppingCart, User, X, Menu, Sun, Moon, Book  } from 'lucide-react';
+import { Cloud, Home, Package, ShoppingCart, User, X, Menu, Book  } from 'lucide-react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
-import { useTheme } from '@/context/ThemeContext';
 import { useAuth } from '@/components/auth/AuthContext';
 import { debounce } from 'lodash';
 
@@ -15,7 +14,6 @@ const Navbar = () => {
   const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
-  const { theme, toggleTheme } = useTheme();
 
   const handleNavigation = useMemo(() => 
     debounce((id: string) => {
@@ -85,12 +83,9 @@ const Navbar = () => {
           <button onClick={() => handleNavigation('contact')} className="text-white hover:text-purple-400 flex items-center gap-2">Contacto</button>
         </>
       )}
-      <button onClick={() => { toggleTheme(); setIsMobileOpen(false); }} className="text-white hover:text-purple-400 transition-colors light:text-black flex items-center gap-2">
-        {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-        {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
-      </button>
+
     </motion.div>
-  ), [isActive, itemCount, user, isAdmin, handleLogout, theme, handleNavigation, toggleTheme]);
+  ), [isActive, itemCount, user, isAdmin, handleLogout, handleNavigation]);
 
   return (
     <motion.nav
@@ -149,10 +144,6 @@ const Navbar = () => {
                     <button onClick={() => handleNavigation('contact')} className="block w-full text-left py-2 hover:text-purple-400">Contacto</button>
                   </>
                 )}
-                <button onClick={toggleTheme} className="w-full text-left py-2 hover:text-purple-400 flex items-center gap-2">
-                  {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-                  {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
-                </button>
               </motion.div>
             )}
           </div>

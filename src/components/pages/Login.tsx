@@ -51,7 +51,7 @@ const Login = () => {
   };
 
   return (
-    <section className="min-h-screen bg-black py-20 px-6 flex items-center justify-center">
+    <section className="min-h-screen bg-gradient-to-b from-black to-purple-900 py-20 px-6 flex items-center justify-center">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
