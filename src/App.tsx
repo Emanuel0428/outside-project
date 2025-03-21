@@ -81,8 +81,9 @@ const AppContent = ({ scrollTop }: { scrollTop: () => void }) => {
 
           {/* Ruta para páginas no encontradas */}
           <Route path="*" element={<NotFound />} />
-          <SpeedInsights />
+          
         </Routes>
+        <SpeedInsights />
       </Suspense>
       <Footer />
       <ToastContainer position="top-right" autoClose={3000} theme="dark" />
@@ -147,7 +148,7 @@ function App() {
                   <AppContent scrollTop={scrollTop} />
                 </div>
               </Router>
-              <SpeedInsights />
+              
             </AuthProvider>
         </FavoritesProvider>
       </CartProvider>
