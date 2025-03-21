@@ -1,5 +1,5 @@
 import React from 'react';
-import { Cloud, Github } from 'lucide-react';
+import { Gem, Github } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-center mb-8">
           <div className="flex items-center gap-2 mb-6 md:mb-0">
-            <Cloud className="h-8 w-8 text-purple-500" />
+            <Gem className="h-6 w-6 text-purple-500" />
             <span className="text-2xl font-medium">Outside</span>
           </div>
           <div className="flex flex-wrap justify-center gap-8">

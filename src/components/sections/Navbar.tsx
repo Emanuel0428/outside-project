@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Cloud, Home, Package, ShoppingCart, User, X, Menu, Book  } from 'lucide-react';
+import { Gem, Home, Package, ShoppingCart, User, X, Menu, Book  } from 'lucide-react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/components/auth/AuthContext';
@@ -96,7 +96,7 @@ const Navbar = () => {
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/')}>
-          <Cloud className="h-8 w-6 text-purple-500" />
+          <Gem className="h-6 w-6 text-purple-500" />
           <span className="text-2xl font-medium">Outside Zone</span>
         </div>
         <div className="hidden md:flex gap-8 items-center">

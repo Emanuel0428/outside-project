@@ -64,7 +64,15 @@ const AdminDashboard = () => {
           <div className="space-y-6">
             {filteredPurchases.map((purchase) => (
               <div key={purchase.id} className="bg-gray-900 p-6 rounded-lg">
-                <p><strong>ID:</strong> {purchase.id}</p>
+                <p><strong>ID de compra:</strong> {purchase.id}</p>
+                <p><strong>Items:</strong></p>
+                <ul>
+                  {purchase.items.map((item, index) => (
+                    <li key={index}>
+                      {item.quantity}x {item.variant} ({item.price.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })})
+                    </li>
+                  ))}
+                </ul>
                 <p><strong>Fecha:</strong> {new Date(purchase.date).toLocaleString('es-CO')}</p>
                 <p><strong>Total:</strong> {purchase.total.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })}</p>
                 <p><strong>Estado:</strong> {purchase.status}</p>
