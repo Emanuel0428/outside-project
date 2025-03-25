@@ -13,7 +13,8 @@ import { HelmetProvider, Helmet } from 'react-helmet-async';
 import Loader from '@/components/assets/Loader';
 import NotFound from '@/components/pages/NotFound';
 import ProtectedRoute from '@/components/auth/ProtectedRoute'; 
-import { SpeedInsights } from "@vercel/speed-insights/react"
+import { SpeedInsights } from "@vercel/speed-insights/react";
+import { Analytics } from "@vercel/analytics/react";
 
 const Hero = lazy(() => import('./components/sections/Hero'));
 const Products = lazy(() => import('./components/sections/Products'));
@@ -87,6 +88,7 @@ const AppContent = ({ scrollTop }: { scrollTop: () => void }) => {
           <Route path="*" element={<NotFound />} />
           
         </Routes>
+        <Analytics />
         <SpeedInsights />
       </Suspense>
       <Footer />
