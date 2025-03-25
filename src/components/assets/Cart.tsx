@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -12,6 +13,7 @@ const Cart = () => {
   const navigate = useNavigate();
   const [isCheckout, setIsCheckout] = useState(false);
   const [pendingPurchaseId, setPendingPurchaseId] = useState<string | null>(null);
+  const [loadingPayment, setLoadingPayment] = useState(false); // Agregar el estado loadingPayment
 
   const total = cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
 
@@ -39,13 +41,47 @@ const Cart = () => {
 
   const confirmPurchase = async () => {
     if (!pendingPurchaseId) return;
+    setLoadingPayment(true);
+  
     try {
-      await updatePurchaseStatus(pendingPurchaseId, 'paid');
-      clearCart();
-      toast.success('¡Compra realizada con éxito!');
-      navigate('/');
+      const referenceCode = `OUTSIDE_${pendingPurchaseId}`;
+      const description = cart
+        .map(item => `${item.product.name} (${item.variant}) x ${item.quantity}`)
+        .join(', ');
+      const totalWithShipping = total >= 100000 ? total : total + 10000;
+      const formattedTotal = totalWithShipping.toFixed(2);
+  
+      console.log('Enviando solicitud al backend para Mercado Pago:', {
+        total: formattedTotal,
+        referenceCode,
+        buyerEmail: user?.email || '',
+        description,
+      });
+  
+      const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000';
+      const response = await fetch(`${backendUrl}/create-mercadopago-payment`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          total: formattedTotal,
+          referenceCode,
+          buyerEmail: user?.email || '',
+          description,
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Error al crear la preferencia de pago: ${response.statusText}`);
+      }
+  
+      const { paymentUrl } = await response.json();
+      console.log('Redirigiendo a Mercado Pago:', paymentUrl);
+  
+      window.location.href = paymentUrl;
     } catch (error: any) {
+      console.error('Error al procesar el pago con Mercado Pago:', error);
       toast.error(error.message || 'Error al procesar el pago');
+      setLoadingPayment(false);
     }
   };
 
@@ -99,18 +135,20 @@ const Cart = () => {
         ) : (
           <div className="bg-gray-900 p-8 rounded-lg text-white">
             <h3 className="text-2xl font-bold mb-6">Confirmar Compra</h3>
-            <p>Total: <span className="text-purple-400">{total.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })}</span></p>
+            <p>Subtotal: <span className="text-purple-400">{total.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })}</span></p>
             <p className="mt-4">Envío: {total >= 100000 ? 'Gratis' : '10.000'}</p>
             <p className="mt-4">Total con envío: <span className="text-purple-400">{(total >= 100000 ? total : total + 10000).toLocaleString('es-CO', { style: 'currency', currency: 'COP' })}</span></p>
             <button
               onClick={confirmPurchase}
               className="mt-6 w-full px-6 py-3 bg-purple-600 rounded-lg hover:bg-purple-700 transition-colors"
+              disabled={loadingPayment} // Deshabilitar el botón mientras se procesa el pago
             >
-              Confirmar Pago
+              {loadingPayment ? 'Procesando...' : 'Confirmar Pago'} {/* Mostrar "Procesando..." mientras loadingPayment es true */}
             </button>
             <button
               onClick={() => setIsCheckout(false)}
               className="mt-4 w-full px-6 py-2 bg-gray-700 rounded-lg hover:bg-gray-600"
+              disabled={loadingPayment} // Deshabilitar también este botón mientras se procesa
             >
               Volver al Carrito
             </button>

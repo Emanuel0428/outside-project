@@ -32,6 +32,9 @@ const BrandSection = lazy(() => import('./components/sections/BrandSection'));
 const Privacy = lazy(() => import('./components/pages/Privacy'));
 const Terms = lazy(() => import('./components/pages/Terms'));
 const AccessDenied = lazy(() => import('./components/pages/AccessDenied'));
+const Success = lazy(() => import('./components/pages/Success'));
+const Cancel = lazy(() => import('./components/pages/Cancel'));
+const Pending = lazy(() => import('./components/pages/Pending'));
 
 const AppContent = ({ scrollTop }: { scrollTop: () => void }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -70,6 +73,9 @@ const AppContent = ({ scrollTop }: { scrollTop: () => void }) => {
             <Route path="/cart" element={<Cart />} />
             <Route path="/favorites" element={<Favorites />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/success" element={<Success />} /> 
+            <Route path="/cancel" element={<Cancel />} />   
+            <Route path="/pending" element={<Pending />} />
           </Route>
 
           {/* Rutas protegidas para administradores */}
