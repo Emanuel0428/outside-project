@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 interface FavoritesContextType {
-  favorites: number[]; // Almacena IDs de productos favoritos
+  favorites: number[];
   toggleFavorite: (productId: number) => void;
 }
 

@@ -21,7 +21,7 @@ export const products: ExtendedProduct[] = [
   {
     id: 1,
     name: "RifBar Turbo X 15k puffs",
-    price: 45000,
+    price: 40000,
     description:
       "El Turbo X de Rifbar combina tecnología avanzada y diseño práctico para ofrecerte la mejor experiencia de vapeo. Su pantalla a color te permite ver el nivel de líquido y batería fácilmente. Con flujo de aire ajustable y bobina de malla doble, cada calada es más intensa y suave.\n" 
       + "Activa el Modo Turbo y disfruta de un vapor más denso y satisfactorio. Además, su batería de 700 mAh te garantiza largas sesiones sin interrupciones.\n" 
@@ -53,7 +53,7 @@ export const products: ExtendedProduct[] = [
   {
     id: 5,
     name: "MTRX 25k puffs",
-    price: 35000,
+    price: 40000,
     description: "Presentamos el MTRX MX25000 Disposable Matrix Vape: la combinación perfecta de comodidad, potencia y diversión. Con una capacidad de 20 mL de e-líquido y una concentración de 5% (50 mg) de nicotina, ofrece hasta 25,000 caladas. Su bobina de malla cuádruple alterna entre dos juegos de resistencias cada 10 segundos, garantizando un sabor intenso y constante. Además, su flujo de aire ajustable proporciona una experiencia de vapeo suave. Este dispositivo no solo es potente, sino también interactivo, con una pantalla lateral que muestra el porcentaje de batería y e-líquido, un sistema de cambio automático de doble bobina y una doble pantalla HD con tres animaciones únicas que le añaden un toque divertido. Su batería recargable de 900mAh con carga rápida Tipo-C asegura que nunca te quedes sin energía. Con 15 sabores increíbles para elegir, seguro encontrarás el ideal para ti. ¡Descubre el MTRX MX25000, el vape más innovador y entretenido del momento! 🚀💨",
     image: "https://i.postimg.cc/d3DF9PNS/outside-MTRX-portada.webp",
     category: "vaporizers",
@@ -85,7 +85,7 @@ export const products: ExtendedProduct[] = [
   {
     id: 6,
     name: "AirMez Mars 20k puffs",
-    price: 40000,
+    price: 38000,
     description:
       "El AirMez Mars 20K es un excepcional vaporizador desechable con pantalla táctil y modo Boost. Su innovadora pantalla te permite ajustar la potencia de salida y monitorear el estado del dispositivo con facilidad. En modo normal, ofrece hasta 20,000 puffs, mientras que en modo Boost alcanza las 10,000. Gracias a sus bobinas de malla doble, garantiza un sabor intenso y una producción de vapor abundante. Si buscas un vaporizador desechable confiable, con gran autonomía y funciones intuitivas, esta es la elección ideal.",
     image: "https://i.postimg.cc/525jD8r8/outside-portada-Ai-RMEZ-Mars.webp",
@@ -118,7 +118,7 @@ export const products: ExtendedProduct[] = [
   {
     id: 2,
     name: "Taijizen JuDo 24k puffs",
-    price: 45000,
+    price: 40000,
     description:
       "El TaijiZen Judo 24K de iJOY es un excepcional vaporizador desechable con pantalla táctil y modo Boost. Su innovadora pantalla te permite ajustar la potencia de salida y monitorear el estado del dispositivo con facilidad. En modo normal, ofrece hasta 24,000 puffs, mientras que en modo Boost alcanza las 12,000. Gracias a sus bobinas de malla doble, garantiza un sabor intenso y una producción de vapor abundante. Si buscas un vaporizador desechable confiable, con gran autonomía y funciones intuitivas, esta es la elección ideal.",
     image: "https://i.postimg.cc/k4YzQKpX/outside-taijizen-judo-portada.webp",

@@ -46,7 +46,7 @@ const NewReleases = () => {
                   priceCurrency: 'COP',
                   price: rifbarProduct.price.toString(),
                   availability: 'https://schema.org/InStock',
-                  url: 'https://tu-pagina-outside.com/product/1',
+                  url: 'https://outside-zone.com/product/1',
                 },
                 hasVariant: rifbarProduct.variants.map((variant) => ({
                   '@type': 'Product',
@@ -86,7 +86,7 @@ const NewReleases = () => {
                   priceCurrency: 'COP',
                   price: rifbarProduct.price.toString(),
                   availability: 'https://schema.org/InStock',
-                  url: 'https://tu-pagina-outside.com/product/1',
+                  url: 'https://outside-zone.com/product/1',
                 },
                 hasVariant: rifbarProduct.variants.map((variant) => ({
                   '@type': 'Product',
@@ -132,7 +132,7 @@ const NewReleases = () => {
         <meta name="keywords" content="Rifbar Turbo X, nuevos lanzamientos, vaporizadores, vapes, Outside" />
         <script type="application/ld+json">{JSON.stringify(structuredData, null, 2)}</script>
       </Helmet>
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-10">
         <motion.h2
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}

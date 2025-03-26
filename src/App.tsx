@@ -136,7 +136,7 @@ function App() {
         <FavoritesProvider>
             <AuthProvider>
               <Router>
-                <div className="min-h-screen bg-black text-white light:bg-gray-100 light:text-black transition-colors">
+                <div className="min-h-screen bg-black text-white light:bg-gray-100 light:text-black transition-colors overflow-hidden">
                   <Navbar />
                   <AppContent scrollTop={scrollTop} />
                 </div>
