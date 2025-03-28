@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
@@ -13,7 +11,7 @@ const Cart = () => {
   const navigate = useNavigate();
   const [isCheckout, setIsCheckout] = useState(false);
   const [pendingPurchaseId, setPendingPurchaseId] = useState<string | null>(null);
-  const [loadingPayment, setLoadingPayment] = useState(false); // Agregar el estado loadingPayment
+  const [loadingPayment, setLoadingPayment] = useState(false);
 
   const total = cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
 
@@ -42,7 +40,7 @@ const Cart = () => {
   const confirmPurchase = async () => {
     if (!pendingPurchaseId) return;
     setLoadingPayment(true);
-  
+
     try {
       const referenceCode = `OUTSIDE_${pendingPurchaseId}`;
       const description = cart
@@ -50,16 +48,16 @@ const Cart = () => {
         .join(', ');
       const totalWithShipping = total >= 100000 ? total : total + 10000;
       const formattedTotal = totalWithShipping.toFixed(2);
-  
-      console.log('Enviando solicitud al backend para Mercado Pago:', {
+
+      console.log('Enviando solicitud al backend para PayU:', {
         total: formattedTotal,
         referenceCode,
         buyerEmail: user?.email || '',
         description,
       });
-  
+
       const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000';
-      const response = await fetch(`${backendUrl}/create-mercadopago-payment`, {
+      const response = await fetch(`${backendUrl}/create-payu-payment`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -69,18 +67,36 @@ const Cart = () => {
           description,
         }),
       });
-  
+
       if (!response.ok) {
-        throw new Error(`Error al crear la preferencia de pago: ${response.statusText}`);
+        throw new Error(`Error al crear el pago con PayU: ${response.statusText}`);
       }
-  
-      const { paymentUrl } = await response.json();
-      console.log('Redirigiendo a Mercado Pago:', paymentUrl);
-  
-      window.location.href = paymentUrl;
-    } catch (error: any) {
-      console.error('Error al procesar el pago con Mercado Pago:', error);
-      toast.error(error.message || 'Error al procesar el pago');
+
+      const { paymentUrl, payuParams } = await response.json();
+      console.log('Parámetros de PayU recibidos:', payuParams);
+
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = paymentUrl;
+      form.style.display = 'none';
+
+      Object.keys(payuParams).forEach(key => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = payuParams[key];
+        form.appendChild(input);
+      });
+
+      document.body.appendChild(form);
+      form.submit();
+    } catch (error: unknown) {
+      console.error('Error al procesar el pago con PayU:', error);
+      if (error instanceof Error) {
+        toast.error(error.message || 'Error al procesar el pago');
+      } else {
+        toast.error('Error al procesar el pago');
+      }
       setLoadingPayment(false);
     }
   };
@@ -141,14 +157,14 @@ const Cart = () => {
             <button
               onClick={confirmPurchase}
               className="mt-6 w-full px-6 py-3 bg-purple-600 rounded-lg hover:bg-purple-700 transition-colors"
-              disabled={loadingPayment} // Deshabilitar el botón mientras se procesa el pago
+              disabled={loadingPayment}
             >
-              {loadingPayment ? 'Procesando...' : 'Confirmar Pago'} {/* Mostrar "Procesando..." mientras loadingPayment es true */}
+              {loadingPayment ? 'Procesando...' : 'Confirmar Pago'}
             </button>
             <button
               onClick={() => setIsCheckout(false)}
               className="mt-4 w-full px-6 py-2 bg-gray-700 rounded-lg hover:bg-gray-600"
-              disabled={loadingPayment} // Deshabilitar también este botón mientras se procesa
+              disabled={loadingPayment}
             >
               Volver al Carrito
             </button>
