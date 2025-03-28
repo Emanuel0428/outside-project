@@ -11,6 +11,10 @@ interface RegisterForm {
   email: string;
   password: string;
   confirmPassword: string;
+  fullName: string;
+  phone: string;
+  documentType: string;
+  document: string;
   termsAccepted: boolean;
 }
 
@@ -39,18 +43,17 @@ const Register = () => {
   const isPasswordValid = Object.values(passwordRequirements).every(Boolean);
   const passwordsMatch = password === confirmPassword && confirmPassword.length > 0;
 
-  // Efecto para limpiar el error cuando la contraseña sea válida
+ 
   useEffect(() => {
     if (isPasswordValid) {
       clearErrors('password');
     } else if (password.length > 0 && !isPasswordValid) {
       setError('password', { type: 'manual', message: 'La contraseña no cumple con los requisitos de seguridad' });
     } else {
-      clearErrors('password'); // Limpiar el error si el campo está vacío
+      clearErrors('password'); 
     }
   }, [isPasswordValid, password, setError, clearErrors]);
 
-  // Efecto para validar la coincidencia de contraseñas
   useEffect(() => {
     if (confirmPassword.length > 0 && !passwordsMatch) {
       setError('confirmPassword', { type: 'manual', message: 'Las contraseñas no coinciden' });
@@ -61,15 +64,15 @@ const Register = () => {
 
   const onSubmit = async (data: RegisterForm) => {
     try {
-      if (!isPasswordValid) {
-        setError('password', { type: 'manual', message: 'La contraseña no cumple con los requisitos de seguridad' });
-        return;
-      }
-      if (!passwordsMatch) {
-        setError('confirmPassword', { type: 'manual', message: 'Las contraseñas no coinciden' });
-        return;
-      }
-      await registerUser(data.email, data.name, data.password);
+      await registerUser(
+        data.email, 
+        data.name, 
+        data.password,
+        data.fullName,
+        data.phone,
+        data.documentType,
+        data.document
+      );
       toast.success('¡Registro exitoso! Por favor, inicia sesión.');
       navigate('/login');
     } catch (error: unknown) {
@@ -97,9 +100,9 @@ const Register = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           {/* Campo: Nombre */}
           <div>
-            <label htmlFor="name" className="block mb-2">Nombre</label>
+            <label htmlFor="name" className="block mb-2">Usuario</label>
             <input
-              {...register('name', { required: 'El nombre es requerido', minLength: { value: 2, message: 'Mínimo 2 caracteres' } })}
+              {...register('name', { required: 'El nombre de usuario es requerido', minLength: { value: 2, message: 'Mínimo 2 caracteres' } })}
               className="w-full p-3 bg-gray-800 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
             {errors.name && <span className="text-red-400 text-sm">{errors.name.message}</span>}
@@ -229,6 +232,59 @@ const Register = () => {
             )}
             {errors.confirmPassword && <span className="text-red-400 text-sm">{errors.confirmPassword.message}</span>}
           </div>
+
+          <div>
+            <label htmlFor="fullName" className="block mb-2">Nombre Completo</label>
+            <input
+              {...register('fullName', { required: 'El nombre completo es requerido' })}
+              className="w-full p-3 bg-gray-800 rounded"
+            />
+            {errors.fullName && <span className="text-red-400 text-sm">{errors.fullName.message}</span>}
+          </div>
+
+          <div>
+            <label htmlFor="phone" className="block mb-2">Teléfono</label>
+            <input
+              type="tel"
+              {...register('phone', { 
+                required: 'El teléfono es requerido',
+                pattern: {
+                  value: /^[0-9]{10,15}$/,
+                  message: 'Teléfono inválido'
+                }
+              })}
+              className="w-full p-3 bg-gray-800 rounded"
+            />
+            {errors.phone && <span className="text-red-400 text-sm">{errors.phone.message}</span>}
+          </div>
+
+          <div>
+            <label htmlFor="documentType" className="block mb-2">Tipo de Documento</label>
+            <select
+              {...register('documentType', { required: 'El tipo de documento es requerido' })}
+              className="w-full p-3 bg-gray-800 rounded"
+            >
+              <option value="CC">Cédula de Ciudadanía</option>
+              <option value="CE">Cédula de Extranjería</option>
+              <option value="NIT">NIT</option>
+            </select>
+          </div>
+
+          <div>
+            <label htmlFor="document" className="block mb-2">Número de Documento</label>
+            <input
+              {...register('document', { 
+                required: 'El documento es requerido',
+                pattern: {
+                  value: /^[0-9]{6,20}$/,
+                  message: 'Documento inválido'
+                }
+              })}
+              className="w-full p-3 bg-gray-800 rounded"
+            />
+            {errors.document && <span className="text-red-400 text-sm">{errors.document.message}</span>}
+          </div>
+
 
           {/* Campo: Aceptar términos y condiciones */}
           <div className="flex items-center gap-2">

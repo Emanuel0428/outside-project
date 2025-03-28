@@ -10,25 +10,47 @@ interface Purchase {
   status: string;
 }
 
+interface UserMetadata {
+  name: string;
+  email: string;
+  phone?: string;
+  documentType?: string;
+  document?: string;
+}
+
+interface ExtendedUser extends User {
+  user_metadata: UserMetadata;
+}
+
 interface AuthContextType {
   user: User | null;
   session: Session | null;
   isAuthenticated: boolean; 
   isAdmin: boolean;
   login: (email: string, password: string, rememberMe?: boolean) => Promise<void>;
-  register: (email: string, name: string, password: string) => Promise<void>;
+  register: (
+    email: string, 
+    name: string, 
+    password: string,
+    fullName: string,
+    phone: string,
+    documentType: string,
+    document: string
+  ) => Promise<void>;
   logout: () => Promise<void>;
   purchaseHistory: Purchase[];
   allPurchases: Purchase[];
   addPurchase: (items: { productId: number; variant: string; quantity: number; price: number }[], total: number, status?: string) => Promise<void>;
   updatePurchaseStatus: (purchaseId: string, status: string) => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
+  updateUserProfile: (updates: Partial<UserMetadata>) => Promise<void>;
+  getUserDetails: () => Promise<UserMetadata>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<ExtendedUser | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false); 
   const [isAdmin, setIsAdmin] = useState(false);
@@ -46,12 +68,45 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     else setIsAdmin(data?.role === 'admin');
   };
 
+  const updateUserProfile = async (updates: Partial<UserMetadata>) => {
+    if (!user) throw new Error('User not authenticated');
+    
+    const { data, error } = await supabase.auth.updateUser({
+      data: { ...user.user_metadata, ...updates }
+    });
+    if (error) throw error;
+    if (data.user) {
+      setUser({
+        ...data.user,
+        user_metadata: {
+          name: '',
+          email: '',
+          ...data.user.user_metadata,
+        },
+      });
+    }
+    return;
+  };
+  const getUserDetails = async (): Promise<UserMetadata> => {
+    if (!user) throw new Error('User not authenticated');
+    
+    const { data: { user: currentUser } } = await supabase.auth.getUser();
+    const userMetadata = currentUser?.user_metadata || {};
+    return {
+      name: userMetadata.name || '',
+      email: userMetadata.email || '',
+      phone: userMetadata.phone,
+      documentType: userMetadata.documentType,
+      document: userMetadata.document,
+    };
+  };
+
   useEffect(() => {
     const savedSession = localStorage.getItem('supabaseSession');
     if (savedSession) {
       const parsedSession = JSON.parse(savedSession);
       setSession(parsedSession);
-      setUser(parsedSession?.user ?? null);
+      setUser(parsedSession?.user ? { ...parsedSession.user, user_metadata: { name: '', email: '', ...parsedSession.user.user_metadata } } : null);
       setIsAuthenticated(!!parsedSession?.user); 
       supabase.auth.setSession(parsedSession);
       if (parsedSession?.user) {
@@ -60,7 +115,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     } else {
       supabase.auth.getSession().then(({ data: { session } }: { data: { session: Session | null } }) => {
         setSession(session);
-        setUser(session?.user ?? null);
+        setUser(session?.user ? { ...session.user, user_metadata: { name: '', email: '', ...session.user.user_metadata } } : null);
         setIsAuthenticated(!!session?.user); 
         if (session?.user) {
           checkAdminStatus(session.user.id);
@@ -71,7 +126,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event: string, session: Session | null) => {
       setSession(session);
-      setUser(session?.user ?? null);
+      setUser(session?.user ? { ...session.user, user_metadata: { name: '', email: '', ...session.user.user_metadata } } : null);
       setIsAuthenticated(!!session?.user); 
       if (session && localStorage.getItem('rememberMe') === 'true') {
         localStorage.setItem('supabaseSession', JSON.stringify(session));
@@ -143,11 +198,24 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const register = async (email: string, name: string, password: string) => {
+  const register = async (email: string, name: string, password: string,
+    fullName: string,
+    phone: string,
+    documentType: string,
+    document: string
+  ) => {
     const { error } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { name } },
+      options: { 
+        data: { 
+          name,
+          fullName,
+          phone,
+          documentType,
+          document
+        } 
+      },
     });
     if (error) throw new Error(error.message);
   };
@@ -230,6 +298,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         addPurchase,
         updatePurchaseStatus,
         resetPassword,
+        updateUserProfile,
+        getUserDetails,
       }}
     >
       {children}

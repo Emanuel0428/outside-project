@@ -1,20 +1,63 @@
-import { Link } from 'react-router-dom';
-import { useCart } from '@/context/CartContext';
+import { useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useAuth } from '@/components/auth/AuthContext';
+import { toast } from 'react-toastify';
 
-const Success = () => {
-  const { clearCart } = useCart();
+const SuccessPage = () => {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const { updatePurchaseStatus } = useAuth();
 
-  clearCart();
+  useEffect(() => {
+    const processPayment = async () => {
+      const referenceCode = searchParams.get('referenceCode');
+      const transactionState = searchParams.get('transactionState');
+
+      if (!referenceCode || !transactionState) {
+        navigate('/');
+        return;
+      }
+
+      const purchaseId = referenceCode.replace('OUTSIDE_', '');
+      let status = 'pending';
+
+      switch(transactionState) {
+        case 'APPROVED':
+          status = 'completed';
+          toast.success('¡Pago aprobado! Gracias por tu compra');
+          break;
+        case 'DECLINED':
+          status = 'declined';
+          toast.error('Pago declinado. Por favor intenta nuevamente');
+          break;
+        case 'PENDING':
+          status = 'pending';
+          toast.warning('Pago pendiente. Estamos procesando tu transacción');
+          break;
+        default:
+          status = 'unknown';
+      }
+
+      try {
+        await updatePurchaseStatus(purchaseId, status);
+      } catch (error) {
+        console.error('Error updating purchase:', error);
+      }
+
+      navigate('/profile');
+    };
+
+    processPayment();
+  }, []);
 
   return (
-    <section className="min-h-screen bg-gradient-to-b from-black to-purple-900 overflow-hidden py-40 px-6 text-white text-center">
-      <h2 className="text-3xl font-bold mb-8">¡Pago Exitoso!</h2>
-      <p className="text-lg mb-6">Gracias por tu compra. Recibirás un correo con los detalles de tu pedido.</p>
-      <Link to="/" className="text-purple-400 hover:underline">
-        Volver a la tienda
-      </Link>
-    </section>
+    <div className="min-h-screen bg-black flex items-center justify-center text-white">
+      <div className="text-center p-6 max-w-md">
+        <h1 className="text-3xl font-bold mb-4">Procesando tu pago...</h1>
+        <p>Serás redirigido automáticamente en unos momentos</p>
+      </div>
+    </div>
   );
 };
 
-export default Success;
+export default SuccessPage;
