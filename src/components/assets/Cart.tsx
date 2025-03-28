@@ -69,7 +69,8 @@ const Cart = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`Error al crear el pago con PayU: ${response.statusText}`);
+        const errorText = await response.text();
+        throw new Error(`Error al crear el pago con PayU: ${response.statusText} - ${errorText}`);
       }
 
       const { paymentUrl, payuParams } = await response.json();
@@ -90,13 +91,9 @@ const Cart = () => {
 
       document.body.appendChild(form);
       form.submit();
-    } catch (error: unknown) {
+    } catch (error: any) {
       console.error('Error al procesar el pago con PayU:', error);
-      if (error instanceof Error) {
-        toast.error(error.message || 'Error al procesar el pago');
-      } else {
-        toast.error('Error al procesar el pago');
-      }
+      toast.error(error.message || 'No se pudo conectar con el servidor. Por favor, intenta de nuevo más tarde.');
       setLoadingPayment(false);
     }
   };

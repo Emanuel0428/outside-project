@@ -4,7 +4,6 @@ import { useCart } from '@/context/CartContext';
 const Success = () => {
   const { clearCart } = useCart();
 
-  // Limpiar el carrito después de un pago exitoso
   clearCart();
 
   return (
