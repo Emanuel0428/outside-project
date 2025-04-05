@@ -42,14 +42,14 @@ const ProductDetail = () => {
       sku: product.id.toString(),
       brand: {
         '@type': 'Brand',
-        name: 'Tu Marca',
+        name: 'Outside Zone',
       },
       offers: {
         '@type': 'Offer',
         priceCurrency: 'COP',
         price: product.price.toString(),
         availability: 'https://schema.org/InStock',
-        url: `https://tu-pagina-outside.com/product/${product.id}`,
+        url: `https://outside-zone.com/product/${product.id}`,
       },
       hasVariant: variantArray.map((variant) => ({
         '@type': 'Product',
@@ -66,7 +66,7 @@ const ProductDetail = () => {
 
 
   return (
-    <section className="min-h-screen bg-gradient-to-b from-black to-purple-900 py-20 px-6  ">
+    <section className="min-h-screen bg-gradient-to-b from-black to-purple-900 py-20 px-6 z-10">
       <Helmet>
       <title>{product.metaTitle || `${product.name} - Detalles del Producto`}</title>
         <meta
@@ -76,7 +76,7 @@ const ProductDetail = () => {
         <meta name="keywords" content={product.keywords?.join(', ') || `${product.name}, vaporizador, ropa`} />
         <script type="application/ld+json">{JSON.stringify(structuredData, null, 2)}</script>
       </Helmet>
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <div className="bg-gray-900 rounded-3xl p-8 h-fit">
             <img 

@@ -16,26 +16,26 @@ import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Analytics } from "@vercel/analytics/react";
 
-const Hero = lazy(() => import('./components/sections/Hero'));
-const Products = lazy(() => import('./components/sections/Products'));
-const Contact = lazy(() => import('./components/sections/Contact'));
-const ProductDetail = lazy(() => import('./components/pages/ProductDetail'));
-const Cart = lazy(() => import('./components/assets/Cart'));
-const Favorites = lazy(() => import('./components/pages/Favorites'));
-const Login = lazy(() => import('./components/pages/Login'));
-const Register = lazy(() => import('./components/pages/Register'));
-const Profile = lazy(() => import('./components/pages/Profile'));
-const AdminDashboard = lazy(() => import('./components/pages/AdminDashboard'));
-const Articles = lazy(() => import('./components/pages/Articles'));
-const ResetPassword = lazy(() => import('./components/auth/ResetPassword'));
-const NewReleases = lazy(() => import('./components/sections/NewReleases'));
-const BrandSection = lazy(() => import('./components/sections/BrandSection'));
-const Privacy = lazy(() => import('./components/pages/Privacy'));
-const Terms = lazy(() => import('./components/pages/Terms'));
-const AccessDenied = lazy(() => import('./components/pages/AccessDenied'));
-const Success = lazy(() => import('./components/pages/Success'));
-const Cancel = lazy(() => import('./components/pages/Cancel'));
-const Pending = lazy(() => import('./components/pages/Pending'));
+const Hero = lazy(() => import('@/components/sections/Hero'));
+const Products = lazy(() => import('@/components/sections/Products'));
+const Contact = lazy(() => import('@/components/sections/Contact'));
+const ProductDetail = lazy(() => import('@/components/pages/ProductDetail'));
+const Cart = lazy(() => import('@/components/assets/Cart'));
+const Favorites = lazy(() => import('@/components/pages/Favorites'));
+const Login = lazy(() => import('@/components/pages/Login'));
+const Register = lazy(() => import('@/components/pages/Register'));
+const Profile = lazy(() => import('@/components/pages/Profile'));
+const AdminDashboard = lazy(() => import('@/components/pages/AdminDashboard'));
+const Articles = lazy(() => import('@/components/pages/Articles'));
+const ResetPassword = lazy(() => import('@/components/auth/ResetPassword'));
+const NewReleases = lazy(() => import('@/components/sections/NewReleases'));
+const BrandSection = lazy(() => import('@/components/sections/BrandSection'));
+const Privacy = lazy(() => import('@/components/pages/Privacy'));
+const Terms = lazy(() => import('@/components/pages/Terms'));
+const AccessDenied = lazy(() => import('@/components/pages/AccessDenied'));
+const Success = lazy(() => import('@/components/pages/Success'));
+const Cancel = lazy(() => import('@/components/pages/Cancel'));
+const Pending = lazy(() => import('@/components/pages/Pending'));
 
 const AppContent = ({ scrollTop }: { scrollTop: () => void }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -99,6 +99,7 @@ const AppContent = ({ scrollTop }: { scrollTop: () => void }) => {
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
           className="fixed bottom-8 right-8 p-3 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition-colors shadow-lg"
+          style={{ zIndex: 100 }}
         >
           <ArrowUp className="h-6 w-6" />
         </motion.button>

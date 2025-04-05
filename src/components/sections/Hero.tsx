@@ -6,6 +6,7 @@
   import TopText from '@/components/sections/TopText';
   import { Helmet } from 'react-helmet-async';
 
+
   const Particles = lazy(() => import('react-particles'));
 
   const Hero = () => {
@@ -23,7 +24,7 @@
             {JSON.stringify({
               "@context": "https://schema.org",
               "@type": "WebSite",
-              "url": "https://yourdomain.com/",
+              "url": "https://outside-zone.com/",
               "name": "Outside",
               "description": "Redefiniendo el estilo y el vapor con productos innovadores."
             })}
