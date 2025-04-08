@@ -1,10 +1,14 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { products } from '@/data/products';
 import { Search, ChevronDown, ChevronUp } from 'lucide-react';
 import Loader from '@/components/assets/Loader';
 import { Helmet } from 'react-helmet';
+import { lazy } from 'react';
+
+const NewReleases = lazy(() => import('@/components/sections/NewReleases'));
+const BrandSection = lazy(() => import('@/components/sections/BrandSection'));
 
 const Products = () => {
   const [category, setCategory] = useState<'vaporizers' | 'clothing'>('vaporizers');
@@ -126,7 +130,9 @@ const Products = () => {
   }
 
   return (
-    <section id="products" className="min-h-screen bg-black py-20 px-6">
+    <>
+    <NewReleases />
+    <section id="products" className="min-h-screen bg-gradient-to-b from-black to-purple-900 py-20 px-6">
       <div className="max-w-7xl mx-auto">
         <Helmet>
           <title>
@@ -366,6 +372,8 @@ const Products = () => {
         )}
       </div>
     </section>
+    <BrandSection />
+    </>
   );
 };
 

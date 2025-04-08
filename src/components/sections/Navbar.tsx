@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Gem, Home, Package, ShoppingCart, User, X, Menu, Book  } from 'lucide-react';
+import { Gem, Home, Package, ShoppingCart, User, X, Menu, Book } from 'lucide-react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/components/auth/AuthContext';
@@ -47,13 +47,12 @@ const Navbar = () => {
       animate={{ opacity: 1, y: 0 }}
       className="md:hidden bg-gray-900 p-4 mt-4 flex flex-col gap-4 light:bg-gray-200"
     >
-      {/* Mobile menu items */}
       <button onClick={() => handleNavigation('home')} className={`${isActive('/')} hover:text-purple-400 transition-colors flex items-center gap-2`}>
         <Home className="h-5 w-5" /> Home
       </button>
-      <button onClick={() => handleNavigation('products')} className={`${isActive('/products')} hover:text-purple-400 transition-colors flex items-center gap-2`}>
+      <Link to="/products" className={`${isActive('/products')} hover:text-purple-400 transition-colors flex items-center gap-2`} onClick={() => setIsMobileOpen(false)}>
         <Package className="h-5 w-5" /> Products
-      </button>
+      </Link>
       <Link to="/cart" className={`${isActive('/cart')} hover:text-purple-400 transition-colors flex items-center gap-2 relative`} onClick={() => setIsMobileOpen(false)}>
         <ShoppingCart className="h-5 w-5" /> Cart
         {itemCount > 0 && (
@@ -71,7 +70,6 @@ const Navbar = () => {
           <Link to="/profile" className="text-white hover:text-purple-400" onClick={() => setIsMobileOpen(false)}>Perfil</Link>
           {isAdmin && <Link to="/admin" className="text-white hover:text-purple-400" onClick={() => setIsMobileOpen(false)}>Admin Dashboard</Link>}
           <Link to="/favorites" className="text-white hover:text-purple-400" onClick={() => setIsMobileOpen(false)}>Favoritos</Link>
-          <Link to="/articles" target="_blank" rel="noopener noreferrer" className="text-white hover:text-purple-400" onClick={() => setIsMobileOpen(false)}>Artículos</Link>
           <button onClick={() => handleNavigation('contact')} className="text-white hover:text-purple-400 flex items-center gap-2">Contacto</button>
           <button onClick={handleLogout} className="text-white hover:text-purple-400">Cerrar Sesión</button>
         </>
@@ -83,7 +81,6 @@ const Navbar = () => {
           <button onClick={() => handleNavigation('contact')} className="text-white hover:text-purple-400 flex items-center gap-2">Contacto</button>
         </>
       )}
-
     </motion.div>
   ), [isActive, itemCount, user, isAdmin, handleLogout, handleNavigation]);
 
@@ -103,9 +100,9 @@ const Navbar = () => {
           <button onClick={() => handleNavigation('home')} className={`${isActive('/')} hover:text-purple-400 transition-colors flex items-center gap-2`}>
             <Home className="h-5 w-5" /> Home
           </button>
-          <button onClick={() => handleNavigation('products')} className={`${isActive('/products')} hover:text-purple-400 transition-colors flex items-center gap-2`}>
+          <Link to="/products" className={`${isActive('/products')} hover:text-purple-400 transition-colors flex items-center gap-2`}>
             <Package className="h-5 w-5" /> Products
-          </button>
+          </Link>
           <Link to="/cart" className={`${isActive('/cart')} hover:text-purple-400 transition-colors flex items-center gap-2 relative`}>
             <ShoppingCart className="h-5 w-5" /> Cart
             {itemCount > 0 && (
@@ -133,7 +130,7 @@ const Navbar = () => {
                     <Link to="/profile" className="block py-2 hover:text-purple-400" onClick={() => setIsAccountOpen(false)}>Perfil</Link>
                     {isAdmin && <Link to="/admin" className="block py-2 hover:text-purple-400" onClick={() => setIsAccountOpen(false)}>Admin Dashboard</Link>}
                     <Link to="/favorites" className="block py-2 hover:text-purple-400" onClick={() => setIsAccountOpen(false)}>Favoritos</Link>
-                    <button onClick={() => handleNavigation('contact')} className="block w-full text-left py-2 hover:text-purple-400">Contacto </button>
+                    <button onClick={() => handleNavigation('contact')} className="block w-full text-left py-2 hover:text-purple-400">Contacto</button>
                     <button onClick={handleLogout} className="block w-full text-left py-2 hover:text-purple-400">Cerrar Sesión</button>
                   </>
                 ) : (

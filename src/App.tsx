@@ -17,7 +17,7 @@ import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Analytics } from "@vercel/analytics/react";
 
 const Hero = lazy(() => import('@/components/sections/Hero'));
-const Products = lazy(() => import('@/components/sections/Products'));
+const Products = lazy(() => import('@/components/pages/Products'));
 const Contact = lazy(() => import('@/components/sections/Contact'));
 const ProductDetail = lazy(() => import('@/components/pages/ProductDetail'));
 const Cart = lazy(() => import('@/components/assets/Cart'));
@@ -28,8 +28,6 @@ const Profile = lazy(() => import('@/components/pages/Profile'));
 const AdminDashboard = lazy(() => import('@/components/pages/AdminDashboard'));
 const Articles = lazy(() => import('@/components/pages/Articles'));
 const ResetPassword = lazy(() => import('@/components/auth/ResetPassword'));
-const NewReleases = lazy(() => import('@/components/sections/NewReleases'));
-const BrandSection = lazy(() => import('@/components/sections/BrandSection'));
 const Privacy = lazy(() => import('@/components/pages/Privacy'));
 const Terms = lazy(() => import('@/components/pages/Terms'));
 const AccessDenied = lazy(() => import('@/components/pages/AccessDenied'));
@@ -59,7 +57,8 @@ const AppContent = ({ scrollTop }: { scrollTop: () => void }) => {
       <Suspense fallback={<Loader />}>
         <Routes>
           {/* Rutas públicas */}
-          <Route path="/" element={<><Hero /><NewReleases /><Products /><Contact /><BrandSection /></>} />
+          <Route path="/" element={<><Hero /><Contact /></>} />
+          <Route path="/products" element={<Products />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
