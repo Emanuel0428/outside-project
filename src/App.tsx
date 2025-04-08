@@ -34,6 +34,7 @@ const AccessDenied = lazy(() => import('@/components/pages/AccessDenied'));
 const Success = lazy(() => import('@/components/pages/Success'));
 const Cancel = lazy(() => import('@/components/pages/Cancel'));
 const Pending = lazy(() => import('@/components/pages/Pending'));
+const WhatsappChat = lazy(() => import('@/components/assets/WhatsappChat'));
 
 const AppContent = ({ scrollTop }: { scrollTop: () => void }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -136,6 +137,9 @@ function App() {
         <FavoritesProvider>
             <AuthProvider>
               <Router>
+                <Suspense fallback={<Loader />}>
+                  <WhatsappChat />
+                </Suspense>
                 <div className="min-h-screen bg-black text-white light:bg-gray-100 light:text-black transition-colors overflow-hidden">
                   <Navbar />
                   <AppContent scrollTop={scrollTop} />

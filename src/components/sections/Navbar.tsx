@@ -151,6 +151,7 @@ const Navbar = () => {
       </div>
       {isMobileOpen && mobileMenu}
     </motion.nav>
+    
   );
 };
 

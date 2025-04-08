@@ -5,7 +5,7 @@ import { Engine } from 'tsparticles-engine';
 import DecryptedText from '@/components/assets/DecryptedText';
 import TopText from '@/components/sections/TopText';
 import { Helmet } from 'react-helmet-async';
-import { useNavigate } from 'react-router-dom'; // Importa useNavigate
+import { useNavigate } from 'react-router-dom';
 
 const Particles = lazy(() => import('react-particles'));
 
@@ -14,7 +14,7 @@ const Hero = () => {
     await loadFull(engine);
   }, []);
 
-  const navigate = useNavigate(); // Usa el hook useNavigate
+  const navigate = useNavigate();
 
   return (
     <div id="home" className="relative h-screen flex items-center justify-center bg-gradient-to-b from-black to-purple-900 overflow-hidden">
