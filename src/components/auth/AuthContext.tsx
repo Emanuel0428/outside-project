@@ -168,8 +168,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       .select('*')
       .order('created_at', { ascending: false });
 
-    console.log('Datos crudos de Supabase:', data);
-
     if (error) {
       console.error('Error fetching all purchases:', error);
       setAllPurchases([]);
@@ -181,7 +179,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         total: Number(purchase.total),
         status: purchase.status,
       }));
-      console.log('Purchases mapeados:', mappedPurchases);
       setAllPurchases(mappedPurchases);
     }
   };
@@ -250,7 +247,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (!isAdmin) throw new Error('Solo los administradores pueden actualizar el estado de las compras');
 
     const trimmedStatus = status.trim();
-    console.log('Intentando actualizar - purchaseId:', purchaseId, 'status:', trimmedStatus);
 
     const { error, data } = await supabase
       .from('purchases')
@@ -258,15 +254,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       .match({ id: purchaseId })
       .select('*');
 
-    console.log('Resultado de la actualización - data:', data, 'error:', error);
-
     if (error) {
       console.error('Error de Supabase:', error);
       throw error;
     }
 
     if (!Array.isArray(data) || data.length === 0) {
-      console.warn('No se actualizó ningún registro - purchaseId:', purchaseId);
       throw new Error('No se encontró la compra con el ID proporcionado o no se tiene permiso para actualizar');
     }
 
