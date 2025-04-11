@@ -17,20 +17,6 @@
         "sizes": "512x512",
         "type": "image/png"
     }
-    ],
-    "screenshots": [
-    {
-        "src": "/outside-working-404-720x1280.webp",
-        "sizes": "720x1280",
-        "type": "image/webp",
-        "form_factor": "narrow"
-    },
-    {
-        "src": "/outside-working-404-1280x720.webp",
-        "sizes": "1280x720",
-        "type": "image/webp",
-        "form_factor": "wide"
-    }
     ]
 }
   
