@@ -11,7 +11,7 @@ const Footer = () => {
             <span className="text-2xl font-medium">Outside</span>
           </div>
           <div className="flex flex-wrap justify-center gap-8">
-            <a href="/sitemap" className="hover:text-purple-400 transition-colors" aria-label="Sitemap">
+            <a href="/sitemap.xml" className="hover:text-purple-400 transition-colors" aria-label="Sitemap">
               Sitemap
             </a>
             <a href="/terms" className="hover:text-purple-400 transition-colors" aria-label="Terms and Conditions">

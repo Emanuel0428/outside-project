@@ -41,7 +41,7 @@ const Hero = () => {
               color: { value: "#ffffff" },
               links: { color: "#ffffff", distance: 150, enable: true, opacity: 0.2, width: 1 },
               move: { direction: "none", enable: true, outModes: { default: "bounce" }, random: false, speed: 1, straight: false },
-              number: { value: 40, density: { enable: true, area: 800 } },
+              number: { value: 30, density: { enable: true, area: 800 } },
               opacity: { value: 0.3 },
               shape: { type: "circle" },
               size: { value: { min: 1, max: 3 } },

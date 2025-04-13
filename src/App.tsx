@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Suspense, useCallback } from 'react';
+import { useState, useEffect, lazy, Suspense, useCallback, Component } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { CartProvider } from '@/context/CartContext';
 import { FavoritesProvider } from '@/context/FavoritesContext';
@@ -16,6 +16,7 @@ import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Analytics } from "@vercel/analytics/react";
 
+// Componentes cargados dinámicamente
 const Hero = lazy(() => import('@/components/sections/Hero'));
 const Products = lazy(() => import('@/components/pages/Products'));
 const Contact = lazy(() => import('@/components/sections/Contact'));
@@ -35,6 +36,32 @@ const Success = lazy(() => import('@/components/pages/Success'));
 const Cancel = lazy(() => import('@/components/pages/Cancel'));
 const Pending = lazy(() => import('@/components/pages/Pending'));
 const WhatsappChat = lazy(() => import('@/components/assets/WhatsappChat'));
+const FeatureCardsAnimation = lazy(() => import('@/components/assets/FeatureCards'));
+const AboutUs = lazy(() => import('@/components/assets/AboutUs'));
+
+// Error Boundary para capturar errores de renderizado
+class ErrorBoundary extends Component<{ children: React.ReactNode }> {
+  state: { hasError: boolean; error: Error | null } = { hasError: false, error: null };
+
+  static getDerivedStateFromError(error: any) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: any, errorInfo: any) {
+    console.error("Error capturado por ErrorBoundary:", error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen bg-black text-white flex items-center justify-center">
+          <h1 className="text-2xl">Algo salió mal: {this.state.error?.message || 'Error desconocido'}</h1>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 const AppContent = ({ scrollTop }: { scrollTop: () => void }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -58,7 +85,7 @@ const AppContent = ({ scrollTop }: { scrollTop: () => void }) => {
       <Suspense fallback={<Loader />}>
         <Routes>
           {/* Rutas públicas */}
-          <Route path="/" element={<><Hero /><Contact /></>} />
+          <Route path="/" element={<><Hero /><FeatureCardsAnimation /><AboutUs /><Contact /></>} />
           <Route path="/products" element={<Products />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/login" element={<Login />} />
@@ -86,24 +113,12 @@ const AppContent = ({ scrollTop }: { scrollTop: () => void }) => {
 
           {/* Ruta para páginas no encontradas */}
           <Route path="*" element={<NotFound />} />
-          
         </Routes>
         <Analytics />
         <SpeedInsights />
       </Suspense>
       <Footer />
       <ToastContainer position="top-right" autoClose={3000} theme="dark" />
-      {onscroll && (
-        <motion.button
-          onClick={() => scrollTop()}
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="fixed bottom-8 right-8 p-3 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition-colors shadow-lg"
-          style={{ zIndex: 100 }}
-        >
-          <ArrowUp className="h-6 w-6" />
-        </motion.button>
-      )}
     </>
   );
 };
@@ -135,17 +150,30 @@ function App() {
       </Helmet>
       <CartProvider>
         <FavoritesProvider>
-            <AuthProvider>
-              <Router>
+          <AuthProvider>
+            <Router>
+              <ErrorBoundary>
                 <Suspense fallback={<Loader />}>
                   <WhatsappChat />
                 </Suspense>
                 <div className="min-h-screen bg-black text-white light:bg-gray-100 light:text-black transition-colors overflow-hidden">
                   <Navbar />
                   <AppContent scrollTop={scrollTop} />
+                  {showScroll && (
+                    <motion.button
+                      onClick={() => scrollTop()}
+                      initial={{ opacity: 0, scale: 0 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className="fixed bottom-8 left-8 p-3 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition-colors shadow-lg"
+                      style={{ zIndex: 100 }}
+                    >
+                      <ArrowUp className="h-6 w-6" />
+                    </motion.button>
+                  )}
                 </div>
-              </Router>
-            </AuthProvider>
+              </ErrorBoundary>
+            </Router>
+          </AuthProvider>
         </FavoritesProvider>
       </CartProvider>
     </HelmetProvider>

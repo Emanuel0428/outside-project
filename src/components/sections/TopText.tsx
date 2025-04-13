@@ -7,9 +7,9 @@ const TopText = () => {
         className="inline-block whitespace-nowrap text-center text-sm md:text-base"
         initial={{ x: '100%' }}
         animate={{ x: '-100%' }}
-        transition={{ duration: 20 , repeat: Infinity, ease: 'linear' }}
+        transition={{ duration: 30 , repeat: Infinity, ease: 'linear' }}
       >
-       -- ENVÍOS EN MEDELLIN Y ALREDEDORES, GRATIS EN PEDIDOS SUPERIORES A 60.000COP -- NACIONALES GRATIS EN PEDIDOS SUPERIORES A 120.000COP --
+       -- ENVÍOS EN MEDELLIN Y ALREDEDORES, GRATIS EN PEDIDOS SUPERIORES A 120.000COP -- NACIONALES GRATIS EN PEDIDOS SUPERIORES A 250.000COP --
       </motion.div>
     </div>
   );

@@ -15,6 +15,8 @@ interface ExtendedProduct extends Product {
   width?: number; 
   height?: number; 
   variants: string[] | ExtendedVariant[];
+  rating?: number;
+  isNew?: boolean;
 }
 
 export const products: ExtendedProduct[] = [
@@ -49,6 +51,8 @@ export const products: ExtendedProduct[] = [
     keywords: ["vaporizador desechable", "RifBar Turbo X", "15k puffs", "RifBar vape", "sabores vape", "pantalla táctil vape"],
     width: 300,
     height: 300,
+    rating: 4.5,
+    isNew: true,
   },
   {
     id: 5,
@@ -81,6 +85,8 @@ export const products: ExtendedProduct[] = [
     keywords: ["vaporizador desechable", "MTRX MX25000", "sabores vape", "pantalla lateral vape", "modo Boost"],
     width: 300,
     height: 300,
+    rating: 4.8,
+    isNew: true,
   },
   {
     id: 6,
@@ -114,6 +120,8 @@ export const products: ExtendedProduct[] = [
     keywords: ["vaporizador desechable", "AirMez Mars", "20k puffs", "sabores vape", "pantalla táctil vape"],
     width: 300,
     height: 300,
+    rating: 4.7,
+    isNew: true,
   },
   {
     id: 2,
@@ -145,6 +153,8 @@ export const products: ExtendedProduct[] = [
     keywords: ["vaporizador desechable", "Taijizen JuDo", "24k puffs", "iJOY vape", "sabores vape", "pantalla táctil vape"],
     width: 300,
     height: 300,
+    rating: 4.6,
+    isNew: true,
   },
   
   {
@@ -180,6 +190,8 @@ export const products: ExtendedProduct[] = [
     keywords: ["vaporizador desechable", "Priv Bar Turbo", "15k puffs", "sabores vape", "vapeo de calidad"],
     width: 300,
     height: 300,
+    rating: 4.5,
+    isNew: true,
   },
   {
     id: 4,
@@ -206,6 +218,8 @@ export const products: ExtendedProduct[] = [
     keywords: ["vaporizador desechable", "Lost Orion Bar", "10k puffs", "Lost Vape", "sabores vape", "vapeo duradero"],
     width: 300,
     height: 300,
+    rating: 4.4,
+    isNew: true,
   },
   
   // Ropa
@@ -224,6 +238,8 @@ export const products: ExtendedProduct[] = [
     keywords: ["sudadera minimalista", "Urban Hoodie", "ropa urbana", "estilo casual", "sudadera de algodón"],
     width: 300,
     height: 300,
+    rating: 4.5,
+    isNew: true,
   },
   {
     "id": 11,
@@ -238,7 +254,9 @@ export const products: ExtendedProduct[] = [
     "metaDescription": "Descubre la Camisa Urbana Tech, una prenda moderna y cómoda, perfecta para cualquier ocasión. Disponible en varias tallas. ¡Compra ahora!",
     "keywords": ["camisa urbana", "ropa moderna", "moda masculina", "camisa algodón", "camisa casual"],
     "width": 300,
-    "height": 300
+    "height": 300,
+    "rating": 4.6,
+    "isNew": true,
   },
   {
     "id": 12,
@@ -253,7 +271,9 @@ export const products: ExtendedProduct[] = [
     "metaDescription": "Compra el Pantalón Cargo Tech con bolsillos funcionales y diseño urbano. Disponible en varias tallas y colores. ¡Consigue el tuyo hoy!",
     "keywords": ["pantalón cargo", "ropa urbana", "pantalón funcional", "moda masculina", "cargo pants"],
     "width": 300,
-    "height": 300
+    "height": 300,
+    "rating": 4.7,
+    "isNew": true,
   },
   {
     "id": 13,
@@ -268,6 +288,8 @@ export const products: ExtendedProduct[] = [
     "metaDescription": "Protege tu estilo con la Gorra Urbana, un accesorio versátil y cómodo para cualquier ocasión. Disponible en varias tallas. ¡Compra la tuya hoy!",
     "keywords": ["gorra urbana", "gorra casual", "accesorios de moda", "ropa urbana", "moda masculina"],
     "width": 300,
-    "height": 300
+    "height": 300,
+    "rating": 4.4,
+    "isNew": true,
   }
 ];

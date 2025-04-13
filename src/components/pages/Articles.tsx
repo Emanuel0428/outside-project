@@ -122,7 +122,7 @@ const Articles: React.FC = () => {
               speed: 1,
               straight: false,
             },
-            number: { value: 80, density: { enable: true, area: 800 } },
+            number: { value: 30, density: { enable: true, area: 800 } },
             opacity: { value: 0.5 },
             shape: { type: 'circle' },
             size: { value: { min: 1, max: 3 } },
