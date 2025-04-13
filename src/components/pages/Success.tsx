@@ -55,6 +55,13 @@ const SuccessPage = () => {
       <div className="text-center p-6 max-w-md">
         <h1 className="text-3xl font-bold mb-4">Procesando tu pago...</h1>
         <p>Serás redirigido automáticamente en unos momentos</p>
+        <p className="mt-2">Si no eres redirigido, haz clic en el botón de abajo</p>
+        <button
+          onClick={() => navigate('/')}
+          className="mt-4 bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition-colors"
+        >
+          Ir a Inicio
+        </button>
       </div>
     </div>
   );

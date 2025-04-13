@@ -19,7 +19,13 @@ const Cart = () => {
   const [deliveryDetails, setDeliveryDetails] = useState({
     address: '',
     phone: '',
+    city: '',
+    state: '',
+    postalCode: '',
   });
+
+  const [paymentMethod] = useState('payu'); // PayU será el método por defecto
+  const [loading, setLoading] = useState(false);
 
   const total = cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
 
@@ -35,7 +41,6 @@ const Cart = () => {
           documentType: details.documentType || 'CC',
           document: details.document || '',
         });
-        // Pre-fill the phone number in delivery details if available
         setDeliveryDetails((prev) => ({
           ...prev,
           phone: details.phone || '',
@@ -49,7 +54,7 @@ const Cart = () => {
     loadUserDetails();
   }, [isAuthenticated, user, getUserDetails]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: { target: { name: any; value: any; }; }) => {
     const { name, value } = e.target;
     setDeliveryDetails((prev) => ({
       ...prev,
@@ -57,61 +62,106 @@ const Cart = () => {
     }));
   };
 
-  const handleCheckout = () => {
+  const handleUserDetailsChange = (e: { target: { name: any; value: any; }; }) => {
+    const { name, value } = e.target;
+    setUserDetails((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleCheckout = async () => {
     if (!isAuthenticated || !user) {
       toast.error('Por favor, inicia sesión para completar la compra');
       navigate('/login');
       return;
     }
 
-    // Verificar datos requeridos
     if (!userDetails.fullName) {
       toast.error('Por favor completa tu información personal (nombre) antes de continuar');
       return;
     }
 
-    // Generar el mensaje para WhatsApp
-    const cartDetails = cart
-      .map(
-        (item) =>
-          `${item.product.name} (${item.variant}) x ${item.quantity} - ${(
-            item.product.price * item.quantity
-          ).toLocaleString('es-CO', { style: 'currency', currency: 'COP' })}`
-      )
-      .join('\n');
+    if (!user.email) {
+      toast.error('No se pudo obtener el correo del usuario. Por favor verifica tu perfil.');
+      return;
+    }
 
-    const shippingCost = total >= 100000 ? 0 : 10000;
-    const totalWithShipping = total + shippingCost;
+    if (
+      !userDetails.phone ||
+      !userDetails.document ||
+      !deliveryDetails.address ||
+      !deliveryDetails.city ||
+      !deliveryDetails.state ||
+      !deliveryDetails.postalCode
+    ) {
+      toast.error(
+        'Por favor completa todos los campos obligatorios (teléfono, documento, dirección, ciudad, departamento, código postal).'
+      );
+      return;
+    }
 
-    // Include delivery details in the message if provided
-    const deliveryInfo = deliveryDetails.address
-      ? `\nDirección de entrega: ${deliveryDetails.address}`
-      : '\nEntrega: Recoger en persona';
-    const phoneInfo = deliveryDetails.phone
-      ? `\nTeléfono: ${deliveryDetails.phone}`
-      : userDetails.phone
-      ? `\nTeléfono: ${userDetails.phone}`
-      : '';
+    setLoading(true);
 
-    const message = `Hola, quiero realizar un pedido:\n\n${cartDetails}\n\nSubtotal: ${total.toLocaleString(
-      'es-CO',
-      { style: 'currency', currency: 'COP' }
-    )}\nEnvío: ${
-      shippingCost === 0
-        ? 'Gratis'
-        : shippingCost.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })
-    }\nTotal: ${totalWithShipping.toLocaleString('es-CO', {
-      style: 'currency',
-      currency: 'COP',
-    })}\n\nNombre: ${userDetails.fullName}${phoneInfo}${deliveryInfo}`;
+    try {
+      const referenceCode = `OUTSIDE_${Date.now()}`;
 
-    const phoneNumber = '573217905526';
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+      // Preparar los datos para enviar al backend
+      const paymentData = {
+        total: total.toString(),
+        referenceCode,
+        description: `Compra en Outside - Ref ${referenceCode}`,
+        userId: user.id,
+        payerFullName: userDetails.fullName,
+        payerEmail: user.email,
+        payerPhone: userDetails.phone,
+        payerDocumentType: userDetails.documentType,
+        payerDocument: userDetails.document,
+        buyerFullName: userDetails.fullName,
+        buyerEmail: user.email,
+        buyerDocumentType: userDetails.documentType,
+        buyerDocument: userDetails.document,
+        telephone: userDetails.phone,
+      };
 
-    window.open(whatsappUrl, '_blank');
+      // Enviar los datos al backend
+      const response = await fetch('http://localhost:4000/create-payu-payment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(paymentData),
+      });
 
-    clearCart();
-    toast.success('Redirigiendo a WhatsApp para completar tu compra');
+      if (!response.ok) {
+        throw new Error('Error al procesar el pago');
+      }
+
+      const { paymentUrl, payuParams } = await response.json();
+
+      // Crear un formulario dinámico para redirigir a PayU
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = paymentUrl;
+
+      // Agregar todos los parámetros como campos ocultos
+      Object.keys(payuParams).forEach((key) => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = payuParams[key];
+        form.appendChild(input);
+      });
+
+      // Agregar el formulario al DOM y enviarlo automáticamente
+      document.body.appendChild(form);
+      form.submit();
+    } catch (error) {
+      console.error('Error al procesar el pago:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Error desconocido';
+      toast.error('Error al procesar el pago: ' + errorMessage);
+      setLoading(false);
+    }
   };
 
   if (cart.length === 0) {
@@ -166,12 +216,40 @@ const Cart = () => {
             </span>
           </p>
 
-          {/* Delivery Details Section */}
+          {/* Detalles del Comprador */}
           <div className="mt-6 bg-gray-900 p-6 rounded-lg">
-            <h3 className="text-lg font-bold text-white mb-4">
-              Detalles de Entrega
-            </h3>
+            <h3 className="text-lg font-bold text-white mb-4">Detalles del Comprador</h3>
             <div className="space-y-4">
+              <div>
+                <label htmlFor="documentType" className="block text-white mb-2">
+                  Tipo de Documento
+                </label>
+                <select
+                  id="documentType"
+                  name="documentType"
+                  value={userDetails.documentType}
+                  onChange={handleUserDetailsChange}
+                  className="w-full px-4 py-2 bg-gray-800 text-white rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
+                >
+                  <option value="CC">Cédula de Ciudadanía (CC)</option>
+                  <option value="CE">Cédula de Extranjería (CE)</option>
+                  <option value="PPN">Pasaporte (PPN)</option>
+                </select>
+              </div>
+              <div>
+                <label htmlFor="document" className="block text-white mb-2">
+                  Número de Documento
+                </label>
+                <input
+                  type="text"
+                  id="document"
+                  name="document"
+                  value={userDetails.document}
+                  onChange={handleUserDetailsChange}
+                  placeholder="Ej: 12345678"
+                  className="w-full px-4 py-2 bg-gray-800 text-white rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
               <div>
                 <label htmlFor="phone" className="block text-white mb-2">
                   Teléfono de Contacto
@@ -180,15 +258,22 @@ const Cart = () => {
                   type="text"
                   id="phone"
                   name="phone"
-                  value={deliveryDetails.phone}
-                  onChange={handleInputChange}
+                  value={userDetails.phone}
+                  onChange={handleUserDetailsChange}
                   placeholder="Ej: +57 300 123 4567"
                   className="w-full px-4 py-2 bg-gray-800 text-white rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
                 />
               </div>
+            </div>
+          </div>
+
+          {/* Detalles de Entrega */}
+          <div className="mt-6 bg-gray-900 p-6 rounded-lg">
+            <h3 className="text-lg font-bold text-white mb-4">Detalles de Entrega</h3>
+            <div className="space-y-4">
               <div>
                 <label htmlFor="address" className="block text-white mb-2">
-                  Dirección de Entrega (Opcional - Deja en blanco si prefieres recoger en persona)
+                  Dirección de Entrega
                 </label>
                 <input
                   type="text"
@@ -196,7 +281,49 @@ const Cart = () => {
                   name="address"
                   value={deliveryDetails.address}
                   onChange={handleInputChange}
-                  placeholder="Ej: Calle 123 #45-67, Medellín"
+                  placeholder="Ej: Calle 123 #45-67"
+                  className="w-full px-4 py-2 bg-gray-800 text-white rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
+              <div>
+                <label htmlFor="city" className="block text-white mb-2">
+                  Ciudad
+                </label>
+                <input
+                  type="text"
+                  id="city"
+                  name="city"
+                  value={deliveryDetails.city}
+                  onChange={handleInputChange}
+                  placeholder="Ej: Medellín"
+                  className="w-full px-4 py-2 bg-gray-800 text-white rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
+              <div>
+                <label htmlFor="state" className="block text-white mb-2">
+                  Departamento
+                </label>
+                <input
+                  type="text"
+                  id="state"
+                  name="state"
+                  value={deliveryDetails.state}
+                  onChange={handleInputChange}
+                  placeholder="Ej: Antioquia"
+                  className="w-full px-4 py-2 bg-gray-800 text-white rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
+              <div>
+                <label htmlFor="postalCode" className="block text-white mb-2">
+                  Código Postal
+                </label>
+                <input
+                  type="text"
+                  id="postalCode"
+                  name="postalCode"
+                  value={deliveryDetails.postalCode}
+                  onChange={handleInputChange}
+                  placeholder="Ej: 050001"
                   className="w-full px-4 py-2 bg-gray-800 text-white rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
                 />
               </div>
@@ -213,15 +340,14 @@ const Cart = () => {
 
             <button
               onClick={handleCheckout}
-              className="px-6 py-2 bg-purple-600 rounded-lg hover:bg-purple-700"
+              disabled={loading}
+              className={`px-6 py-2 rounded-lg ${
+                loading ? 'bg-gray-600 cursor-not-allowed' : 'bg-purple-600 hover:bg-purple-700'
+              }`}
             >
-              Proceder al Pago
+              {loading ? 'Procesando...' : 'Proceder al Pago'}
             </button>
           </div>
-
-          <p className="text-gray-400 mt-4">
-            Serás redirigido a WhatsApp para completar tu compra. Si no tienes WhatsApp, contáctanos al +57 321 790 5526.
-          </p>
         </div>
       </div>
     </section>

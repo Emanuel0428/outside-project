@@ -12,10 +12,11 @@ import { motion } from 'framer-motion';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
 import Loader from '@/components/assets/Loader';
 import NotFound from '@/components/pages/NotFound';
-import ProtectedRoute from '@/components/auth/ProtectedRoute'; 
+import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Analytics } from "@vercel/analytics/react";
 
+// Importación de páginas
 const Hero = lazy(() => import('@/components/sections/Hero'));
 const Products = lazy(() => import('@/components/pages/Products'));
 const Contact = lazy(() => import('@/components/sections/Contact'));
@@ -34,6 +35,7 @@ const AccessDenied = lazy(() => import('@/components/pages/AccessDenied'));
 const Success = lazy(() => import('@/components/pages/Success'));
 const Cancel = lazy(() => import('@/components/pages/Cancel'));
 const Pending = lazy(() => import('@/components/pages/Pending'));
+const Response = lazy(() => import('@/components/pages/response'));
 const WhatsappChat = lazy(() => import('@/components/assets/WhatsappChat'));
 
 const AppContent = ({ scrollTop }: { scrollTop: () => void }) => {
@@ -68,14 +70,16 @@ const AppContent = ({ scrollTop }: { scrollTop: () => void }) => {
           <Route path="/terms" element={<Terms />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/access-denied" element={<AccessDenied />} />
+          {/* Ruta pública para la respuesta de PayU */}
+          <Route path="/response" element={<Response />} />
 
           {/* Rutas protegidas para usuarios autenticados */}
           <Route element={<ProtectedRoute requireAuth={true} />}>
             <Route path="/cart" element={<Cart />} />
             <Route path="/favorites" element={<Favorites />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/success" element={<Success />} /> 
-            <Route path="/cancel" element={<Cancel />} />   
+            <Route path="/success" element={<Success />} />
+            <Route path="/cancel" element={<Cancel />} />
             <Route path="/pending" element={<Pending />} />
           </Route>
 
@@ -86,7 +90,6 @@ const AppContent = ({ scrollTop }: { scrollTop: () => void }) => {
 
           {/* Ruta para páginas no encontradas */}
           <Route path="*" element={<NotFound />} />
-          
         </Routes>
         <Analytics />
         <SpeedInsights />
@@ -135,17 +138,17 @@ function App() {
       </Helmet>
       <CartProvider>
         <FavoritesProvider>
-            <AuthProvider>
-              <Router>
-                <Suspense fallback={<Loader />}>
-                  <WhatsappChat />
-                </Suspense>
-                <div className="min-h-screen bg-black text-white light:bg-gray-100 light:text-black transition-colors overflow-hidden">
-                  <Navbar />
-                  <AppContent scrollTop={scrollTop} />
-                </div>
-              </Router>
-            </AuthProvider>
+          <AuthProvider>
+            <Router>
+              <Suspense fallback={<Loader />}>
+                <WhatsappChat />
+              </Suspense>
+              <div className="min-h-screen bg-black text-white light:bg-gray-100 light:text-black transition-colors overflow-hidden">
+                <Navbar />
+                <AppContent scrollTop={scrollTop} />
+              </div>
+            </Router>
+          </AuthProvider>
         </FavoritesProvider>
       </CartProvider>
     </HelmetProvider>
