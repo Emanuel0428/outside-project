@@ -72,7 +72,6 @@ const AppContent = ({ scrollTop }: { scrollTop: () => void }) => {
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 1000);
-
     return () => clearTimeout(timer);
   }, [location.pathname]);
 

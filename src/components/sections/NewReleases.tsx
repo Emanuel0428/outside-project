@@ -122,7 +122,7 @@ const NewReleases = () => {
   };
 
   return (
-    <section id="new-releases" className="bg-gradient-to-b from-purple-900 to-black py-20 px-6 text-white min-h-screen">
+    <section id="new-releases" className=" bg-gradient-to-b from-purple-900 to-black py-20 px-6  text-white min-h-screen">
       <Helmet>
         <title>Nuevos Lanzamientos - Rifbar Turbo X | Outside</title>
         <meta
@@ -132,7 +132,7 @@ const NewReleases = () => {
         <meta name="keywords" content="Rifbar Turbo X, nuevos lanzamientos, vaporizadores, vapes, Outside" />
         <script type="application/ld+json">{JSON.stringify(structuredData, null, 2)}</script>
       </Helmet>
-      <div className="max-w-7xl mx-10">
+      <div className="max-w-4xl  mx-auto text-center">
         <motion.h2
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -197,7 +197,7 @@ const NewReleases = () => {
           <p className="text-lg text-gray-300 mb-4">Disponible ahora con 15,000 puffs y nuevos sabores.</p>
           <Link
             to="/product/1"
-            className="inline-block px-12 py-4 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+            className="inline-block px-5 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
             aria-label="Get your Rifbar Turbo X now"
           >
             Consigue el tuyo!

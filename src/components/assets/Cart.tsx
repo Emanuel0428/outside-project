@@ -8,6 +8,7 @@ const Cart = () => {
   const { cart, removeFromCart, clearCart } = useCart();
   const { user, isAuthenticated, getUserDetails } = useAuth();
   const navigate = useNavigate();
+  const [paymentMethod, setPaymentMethod] = useState<'whatsapp' | 'payu'>('whatsapp');
 
   const [userDetails, setUserDetails] = useState({
     fullName: '',
@@ -57,68 +58,114 @@ const Cart = () => {
     }));
   };
 
-  const handleCheckout = () => {
+  const handleCheckout = async () => {
     if (!isAuthenticated || !user) {
       toast.error('Por favor, inicia sesión para completar la compra');
       navigate('/login');
       return;
     }
-
-    // Verificar datos requeridos
+  
     if (!userDetails.fullName) {
       toast.error('Por favor completa tu información personal (nombre) antes de continuar');
       return;
     }
-
-    // Generar el mensaje para WhatsApp
-    const cartDetails = cart
-      .map(
-        (item) =>
-          `${item.product.name} (${item.variant}) x ${item.quantity} - ${(
-            item.product.price * item.quantity
-          ).toLocaleString('es-CO', { style: 'currency', currency: 'COP' })}`
-      )
-      .join('\n');
-
-    const shippingCost = total >= 100000 ? 0 : 10000;
-    const totalWithShipping = total + shippingCost;
-
-    // Include delivery details in the message if provided
-    const deliveryInfo = deliveryDetails.address
-      ? `\nDirección de entrega: ${deliveryDetails.address}`
-      : '\nEntrega: Recoger en persona';
-    const phoneInfo = deliveryDetails.phone
-      ? `\nTeléfono: ${deliveryDetails.phone}`
-      : userDetails.phone
-      ? `\nTeléfono: ${userDetails.phone}`
-      : '';
-
-    const message = `Hola, quiero realizar un pedido:\n\n${cartDetails}\n\nSubtotal: ${total.toLocaleString(
-      'es-CO',
-      { style: 'currency', currency: 'COP' }
-    )}\nEnvío: ${
-      shippingCost === 0
-        ? 'Gratis'
-        : shippingCost.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })
-    }\nTotal: ${totalWithShipping.toLocaleString('es-CO', {
-      style: 'currency',
-      currency: 'COP',
-    })}\n\nNombre: ${userDetails.fullName}${phoneInfo}${deliveryInfo}`;
-
-    const phoneNumber = '573217905526';
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-
-    window.open(whatsappUrl, '_blank');
-
-    clearCart();
-    toast.success('Redirigiendo a WhatsApp para completar tu compra');
+  
+    if (paymentMethod === 'whatsapp') {
+      const cartDetails = cart.map((item) =>
+        `${item.product.name} (${item.variant}) x ${item.quantity} - ${(
+          item.product.price * item.quantity
+        ).toLocaleString('es-CO', { style: 'currency', currency: 'COP' })}`
+      ).join('\n');
+  
+      const shippingCost = total >= 100000 ? 0 : 10000;
+      const totalWithShipping = total + shippingCost;
+  
+      const deliveryInfo = deliveryDetails.address
+        ? `\nDirección de entrega: ${deliveryDetails.address}`
+        : '\nEntrega: Recoger en persona';
+      const phoneInfo = deliveryDetails.phone
+        ? `\nTeléfono: ${deliveryDetails.phone}`
+        : userDetails.phone
+        ? `\nTeléfono: ${userDetails.phone}`
+        : '';
+  
+      const message = `Hola, quiero realizar un pedido:\n\n${cartDetails}\n\nSubtotal: ${total.toLocaleString(
+        'es-CO',
+        { style: 'currency', currency: 'COP' }
+      )}\nEnvío: ${
+        shippingCost === 0
+          ? 'Gratis'
+          : shippingCost.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })
+      }\nTotal: ${totalWithShipping.toLocaleString('es-CO', {
+        style: 'currency',
+        currency: 'COP',
+      })}\n\nNombre: ${userDetails.fullName}${phoneInfo}${deliveryInfo}`;
+  
+      const phoneNumber = '573217905526';
+      const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+  
+      window.open(whatsappUrl, '_blank');
+      clearCart();
+      toast.success('Redirigiendo a WhatsApp para completar tu compra');
+    }
+  
+    else if (paymentMethod === 'payu') {
+      try {
+        const referenceCode = `OUTSIDE_${Date.now()}`;
+        const payload = {
+          total: total.toFixed(2),
+          referenceCode,
+          description: 'Compra en Outside',
+          payerFullName: userDetails.fullName,
+          payerEmail: user.email,
+          payerPhone: userDetails.phone,
+          payerDocumentType: userDetails.documentType,
+          payerDocument: userDetails.document,
+          buyerFullName: userDetails.fullName,
+          buyerEmail: user.email,
+          buyerDocumentType: userDetails.documentType,
+          buyerDocument: userDetails.document,
+          telephone: deliveryDetails.phone || userDetails.phone,
+        };
+  
+        const response = await fetch('http://localhost:4000/create-payu-payment', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
+        });
+  
+        const data = await response.json();
+  
+        // Redirige al usuario al formulario de pago
+        const form = document.createElement('form');
+        form.action = data.paymentUrl;
+        form.method = 'POST';
+        form.style.display = 'none';
+  
+        Object.entries(data.payuParams).forEach(([key, value]) => {
+          const input = document.createElement('input');
+          input.name = key;
+          input.value = value as string;
+          form.appendChild(input);
+        });
+  
+        document.body.appendChild(form);
+        form.submit();
+      } catch (error) {
+        console.error('Error al crear pago PayU:', error);
+        toast.error('No se pudo iniciar el pago con tarjeta');
+      }
+    }
   };
+  
 
   if (cart.length === 0) {
     return (
       <section className="min-h-screen bg-gradient-to-b from-black to-purple-900 overflow-hidden py-40 px-6 text-white text-center">
         <h2 className="text-3xl font-bold mb-8">Tu carrito está vacío</h2>
-        <Link to="/" className="text-purple-400 hover:underline">
+        <Link to="/products" className="text-purple-400 hover:underline">
           Volver a productos
         </Link>
       </section>
@@ -210,6 +257,18 @@ const Cart = () => {
             >
               Vaciar Carrito
             </button>
+
+            <div className="mb-4">
+              <label className="block text-white mb-2">Método de pago:</label>
+              <select
+                className="w-full p-2 rounded text-white"
+                value={paymentMethod}
+                onChange={(e) => setPaymentMethod(e.target.value as 'whatsapp' | 'payu')}
+              >
+                <option value="whatsapp">Pago por WhatsApp</option>
+                <option value="payu">Pago con Tarjeta (PayU)</option>
+              </select>
+            </div>
 
             <button
               onClick={handleCheckout}
