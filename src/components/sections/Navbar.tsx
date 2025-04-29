@@ -48,13 +48,13 @@ const Navbar = () => {
       className="md:hidden bg-gray-900 p-4 mt-4 flex flex-col gap-4 light:bg-gray-200"
     >
       <button onClick={() => handleNavigation('home')} className={`${isActive('/')} hover:text-purple-400 transition-colors flex items-center gap-2`}>
-        <Home className="h-5 w-5" /> Home
+        <Home className="h-5 w-5" /> Inicio
       </button>
       <Link to="/products" className={`${isActive('/products')} hover:text-purple-400 transition-colors flex items-center gap-2`} onClick={() => setIsMobileOpen(false)}>
-        <Package className="h-5 w-5" /> Products
+        <Package className="h-5 w-5" /> Productos
       </Link>
       <Link to="/cart" className={`${isActive('/cart')} hover:text-purple-400 transition-colors flex items-center gap-2 relative`} onClick={() => setIsMobileOpen(false)}>
-        <ShoppingCart className="h-5 w-5" /> Cart
+        <ShoppingCart className="h-5 w-5" /> Carrito
         {itemCount > 0 && (
           <span className="absolute -top-2 -right-4 bg-purple-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
             {itemCount}
@@ -98,13 +98,13 @@ const Navbar = () => {
         </div>
         <div className="hidden md:flex gap-8 items-center">
           <button onClick={() => handleNavigation('home')} className={`${isActive('/')} hover:text-purple-400 transition-colors flex items-center gap-2`}>
-            <Home className="h-5 w-5" /> Home
+            <Home className="h-5 w-5" /> Inicio
           </button>
           <Link to="/products" className={`${isActive('/products')} hover:text-purple-400 transition-colors flex items-center gap-2`}>
-            <Package className="h-5 w-5" /> Products
+            <Package className="h-5 w-5" /> Productos
           </Link>
           <Link to="/cart" className={`${isActive('/cart')} hover:text-purple-400 transition-colors flex items-center gap-2 relative`}>
-            <ShoppingCart className="h-5 w-5" /> Cart
+            <ShoppingCart className="h-5 w-5" /> Carrito
             {itemCount > 0 && (
               <span className="absolute -top-2 -right-4 bg-purple-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
                 {itemCount}

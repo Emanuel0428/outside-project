@@ -21,7 +21,7 @@ const Footer = () => {
               Política de Privacidad
             </a>
             <a href="/faq" className="hover:text-purple-400 transition-colors" aria-label="FAQ">
-              FAQ
+              PQRS
             </a>
           </div>
         </div>

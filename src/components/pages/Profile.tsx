@@ -66,14 +66,14 @@ const Profile = () => {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-black py-20 px-6 text-white text-center">
+      <div className="min-h-screen bg-gradient-to-b from-black to-purple-900 py-20 px-6 text-white text-center">
         Por favor, inicia sesión.
       </div>
     );
   }
 
   return (
-    <section className="min-h-screen bg-black py-20 px-6 text-white">
+    <section className="min-h-screen bg-gradient-to-b from-black to-purple-900 py-20 px-6 text-white">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-3xl font-bold">Mi Perfil</h2>
