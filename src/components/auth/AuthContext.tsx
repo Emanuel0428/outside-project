@@ -60,7 +60,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const checkAdminStatus = async (user_id: string) => {
     const { data, error } = await supabase
-      .from('user_roles')
+      .from('roles')
       .select('role')
       .eq('user_id', user_id)
       .single();

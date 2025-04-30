@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { useEffect, useState, useRef, useCallback, memo } from 'react';
 import { motion } from 'framer-motion';
 
 interface DecryptedTextProps {
@@ -12,10 +12,12 @@ interface DecryptedTextProps {
     [key: string]: unknown;
 }
 
-export default function DecryptedText({
+const DEFAULT_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+';
+
+function DecryptedText({
     text,
     speed = 50,
-    characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+',
+    characters = DEFAULT_CHARS,
     className = '',
     parentClassName = '',
     encryptedClassName = '',
@@ -23,111 +25,95 @@ export default function DecryptedText({
     ...props
 }: DecryptedTextProps) {
     const [displayText, setDisplayText] = useState<string>('');
-    const [isHovering, setIsHovering] = useState<boolean>(false);
+    const [isActive, setIsActive] = useState<boolean>(false);
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const containerRef = useRef<HTMLSpanElement>(null);
-
-    // Función para obtener un carácter aleatorio
+    const charsArray = useRef<string[]>(characters.split('')).current;
+    
     const getRandomChar = useCallback(() => {
-        const chars = characters.split('');
-        return chars[Math.floor(Math.random() * chars.length)];
-    }, [characters]);
+        return charsArray[Math.floor(Math.random() * charsArray.length)];
+    }, [charsArray]);
 
-    // Efecto para manejar la animación de escritura
+    const generateRandomText = useCallback((decryptedIndex: number) => {
+        return text
+            .split('')
+            .map((char, i) => (i < decryptedIndex ? char : getRandomChar()))
+            .join('');
+    }, [text, getRandomChar]);
+
     useEffect(() => {
-        let interval: ReturnType<typeof setInterval>;
+        if (!isActive || currentIndex >= text.length) return;
+        
+        const interval = setInterval(() => {
+            setCurrentIndex(prevIndex => {
+                const nextIndex = prevIndex + 1;
+                if (nextIndex <= text.length) {
+                    setDisplayText(generateRandomText(nextIndex));
+                }
+                return nextIndex;
+            });
+        }, speed);
+        
+        return () => clearInterval(interval);
+    }, [isActive, currentIndex, text, speed, generateRandomText]);
 
-        if (isHovering && currentIndex < text.length) {
-            interval = setInterval(() => {
-                setCurrentIndex((prevIndex) => {
-                    const nextIndex = prevIndex + 1;
-                    if (nextIndex <= text.length) {
-                        // Construir el texto actual con cifrado para las letras no reveladas
-                        const newText = text
-                            .split('')
-                            .map((char, i) => (i < nextIndex ? char : getRandomChar()))
-                            .join('');
-                        setDisplayText(newText);
-                    }
-                    return nextIndex;
-                });
-            }, speed);
-        }
-
-        return () => {
-            if (interval) clearInterval(interval);
-        };
-    }, [isHovering, currentIndex, text, speed, characters,getRandomChar]);
-
-    // Reiniciar la animación cuando se deja de hacer hover
     useEffect(() => {
-        if (!isHovering) {
+        if (!isActive) {
             setCurrentIndex(0);
-            setDisplayText('');
+            setDisplayText(generateRandomText(0));
         }
-    }, [isHovering]);
+    }, [isActive, generateRandomText]);
 
-    // Animación basada en la visibilidad
+    useEffect(() => {
+        setDisplayText(generateRandomText(0));
+    }, [text, generateRandomText]);
+
     useEffect(() => {
         if (animateOn !== 'view') return;
 
         const observerCallback = (entries: IntersectionObserverEntry[]) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    setIsHovering(true);
-                } else {
-                    // Reiniciar cuando el elemento sale de la vista
-                    setIsHovering(false);
-                    setCurrentIndex(0);
-                    setDisplayText('');
-                }
-            });
+            const isIntersecting = entries[0]?.isIntersecting;
+            setIsActive(!!isIntersecting);
         };  
 
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
+        const observer = new IntersectionObserver(observerCallback, {
             threshold: 0.1,
-        };
-
-        const observer = new IntersectionObserver(observerCallback, observerOptions);
-        const currentRef = containerRef.current;
-
-        if (currentRef) {
-            observer.observe(currentRef);
+        });
+        
+        if (containerRef.current) {
+            observer.observe(containerRef.current);
         }
 
-        return () => {
-            if (currentRef) observer.unobserve(currentRef);
-        };
+        return () => observer.disconnect();
     }, [animateOn]);
 
-    const hoverProps =
-        animateOn === 'hover'
-            ? {
-                  onMouseEnter: () => setIsHovering(true),
-                  onMouseLeave: () => setIsHovering(false),
-              }
-            : {};
+    const hoverProps = animateOn === 'hover' 
+        ? {
+            onMouseEnter: () => setIsActive(true),
+            onMouseLeave: () => setIsActive(false),
+        } 
+        : {};
 
-            return (
-                <motion.span
-                    ref={containerRef}
-                    className={`inline-block whitespace-pre-wrap text-5xl Oswald ${parentClassName}`}
-                    {...hoverProps}
-                    {...props}
-                >
-                    <span className="sr-only">{text}</span>
-                    <span aria-hidden="true">
-                        {displayText.split('').map((char, index) => (
-                            <span
-                                key={index}
-                                className={`${index < currentIndex ? className : encryptedClassName} tracking-wide`}
-                            >
-                                {char}
-                            </span>
-                        ))}
+    return (
+        <motion.span
+            ref={containerRef}
+            className={`inline-block whitespace-pre-wrap text-5xl Oswald ${parentClassName}`}
+            {...hoverProps}
+            {...props}
+        >
+            <span className="sr-only">{text}</span>
+            <span aria-hidden="true">
+                {displayText && displayText.split('').map((char, index) => (
+                    <span
+                        key={`${index}-${char}`}
+                        className={`${index < currentIndex ? className : encryptedClassName} tracking-wide`}
+                    >
+                        {char}
                     </span>
-                </motion.span>
+                ))}
+            </span>
+        </motion.span>
     );
 }
+
+export default memo(DecryptedText);
