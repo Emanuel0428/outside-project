@@ -146,6 +146,40 @@ function App() {
     <HelmetProvider>
       <Helmet>
         <link rel="canonical" href="https://outside-project.vercel.app" />
+        <meta name="author" content="Outside Zone" />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Outside Zone" />
+        <meta property="og:title" content="Outside Zone - Tienda de Vaporizadores y Ropa Urbana" />
+        <meta property="og:description" content="Outside Zone es una marca que fusiona estilo urbano y cultura alternativa, ofreciendo una selección premium de vaporizadores y ropa de estilo urbano." />
+        <meta property="og:image" content="https://outside-project.vercel.app/logo.webp" />
+        <meta property="og:url" content="https://outside-project.vercel.app" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Outside Zone - Vaporizadores y Ropa Urbana" />
+        <meta name="twitter:description" content="Outside Zone es una marca que fusiona estilo urbano y cultura alternativa, con productos premium en vaporizadores y moda urbana." />
+        <meta name="twitter:image" content="https://outside-project.vercel.app/logo.webp" />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "Outside Zone",
+          "url": "https://outside-project.vercel.app",
+          "logo": "https://outside-project.vercel.app/logo.webp",
+          "sameAs": [
+            "https://www.instagram.com/zone.outside",
+            "https://github.com/Emanuel0428"
+          ],
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+57-321-790-5526",
+            "contactType": "customer service",
+            "areaServed": "CO",
+            "availableLanguage": "Spanish"
+          },
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Medellín",
+            "addressCountry": "CO"
+          }
+        })}</script>
       </Helmet>
       <CartProvider>
         <FavoritesProvider>
@@ -165,6 +199,7 @@ function App() {
                       animate={{ opacity: 1, scale: 1 }}
                       className="fixed bottom-8 left-8 p-3 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition-colors shadow-lg"
                       style={{ zIndex: 100 }}
+                      aria-label="Volver arriba"
                     >
                       <ArrowUp className="h-6 w-6" />
                     </motion.button>

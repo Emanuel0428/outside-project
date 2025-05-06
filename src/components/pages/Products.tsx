@@ -142,26 +142,86 @@ const Products = () => {
           <Helmet>
             <title>
               {category === 'vaporizers'
-                ? 'Vaporizadores - Outside | Tienda Online'
-                : 'Ropa - Outside | Tienda Online'}
+                ? 'Vaporizadores y Vapes Premium - Outside Zone | Tienda Online'
+                : 'Ropa Urbana y Streetwear - Outside Zone | Tienda Online'}
             </title>
             <meta
               name="description"
               content={
                 category === 'vaporizers'
-                  ? 'Explora nuestra selección de vaporizadores desechables de alta calidad en Outside. Encuentra los mejores vapes con sabores intensos y diseños innovadores.'
-                  : 'Descubre nuestra colección de ropa urbana en Outside. Prendas modernas y cómodas para un estilo casual y funcional.'
+                  ? 'Explora nuestra selección de vaporizadores desechables de alta calidad en Outside Zone. Encuentra los mejores vapes con sabores intensos, diseños innovadores y entrega en toda Colombia.'
+                  : 'Descubre nuestra colección de ropa urbana en Outside Zone. Prendas modernas y cómodas para un estilo casual y funcional con envíos a todo Colombia.'
               }
             />
             <meta
               name="keywords"
               content={
                 category === 'vaporizers'
-                  ? 'vaporizadores, vapes, vapeo, sabores vape, tienda de vapes'
-                  : 'ropa urbana, sudaderas, camisas, pantalones cargo, moda casual'
+                  ? 'vaporizadores, vapes, vapeo, sabores vape, tienda de vapes, vapes desechables, vapes en Colombia, Rifbar, Taijizen, Orion Bar, Priv Bar'
+                  : 'ropa urbana, sudaderas, camisas, pantalones cargo, moda casual, moda urbana Colombia, streetwear'
               }
             />
+            <link rel="canonical" href={`https://outside-project.vercel.app/products?category=${category}`} />
+            <meta property="og:title" content={category === 'vaporizers' ? 'Vaporizadores Premium | Outside Zone' : 'Ropa Urbana | Outside Zone'} />
+            <meta 
+              property="og:description" 
+              content={category === 'vaporizers' 
+                ? 'Explora nuestra selección premium de vaporizadores con los mejores sabores y envíos en toda Colombia.' 
+                : 'Descubre nuestra línea de ropa urbana con diseños exclusivos y calidad premium.'}
+            />
+            <meta property="og:url" content={`https://outside-project.vercel.app/products?category=${category}`} />
+            <meta property="og:type" content="website" />
             <script type="application/ld+json">{JSON.stringify(itemListSchema, null, 2)}</script>
+            <script type="application/ld+json">
+              {JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                  {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Inicio",
+                    "item": "https://outside-project.vercel.app/"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": category === 'vaporizers' ? "Vaporizadores" : "Ropa",
+                    "item": `https://outside-project.vercel.app/products?category=${category}`
+                  }
+                ]
+              })}
+            </script>
+            <script type="application/ld+json">
+              {JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "FAQPage",
+                "mainEntity": [
+                  {
+                    "@type": "Question",
+                    "name": category === 'vaporizers' 
+                      ? "¿Cuánto duran los vaporizadores desechables?" 
+                      : "¿Qué tallas están disponibles en la ropa?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": category === 'vaporizers'
+                        ? "La duración depende del modelo. Los vaporizadores con 10k puffs duran aproximadamente 2-3 semanas con uso moderado, mientras que los de 15k-24k puffs pueden durar hasta un mes."
+                        : "Todas nuestras prendas están disponibles en tallas S, M, L y XL. Consulta la guía de tallas en cada producto para encontrar tu ajuste perfecto."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": category === 'vaporizers'
+                      ? "¿Hacen envíos de vaporizadores a toda Colombia?"
+                      : "¿Realizan envíos de ropa a todo Colombia?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Sí, realizamos envíos a toda Colombia. Los envíos en Medellín y alrededores son gratuitos en pedidos superiores a 120.000 COP, mientras que los envíos nacionales son gratuitos en pedidos superiores a 250.000 COP."
+                    }
+                  }
+                ]
+              })}
+            </script>
           </Helmet>
           <h2 className="text-4xl font-medium text-white text-center mb-12">Nuestros Productos</h2>
 

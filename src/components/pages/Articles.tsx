@@ -54,15 +54,30 @@ const Articles: React.FC = () => {
   return (
     <div className="relative min-h-screen bg-gradient-to-b from-black to-purple-900 text-white overflow-hidden">
       <Helmet>
-        <title>Artículos sobre Vapes - Outside | Todo sobre Vapes y Vaping</title>
+        <title>Guía Completa de Vapes y Vaporizadores 2025 | Outside Zone</title>
         <meta
           name="description"
-          content="Explora los mejores artículos sobre vapes: desde qué son los vapes, tipos de vapers, precios y dónde comprarlos, hasta sus consecuencias y los mejores sabores. Descubre vapes desechables, recargables y más en Colombia y el mundo."
+          content="Todo lo que necesitas saber sobre vapes: tipos, sabores, precios, durabilidad y consejos para principiantes. La guía definitiva sobre vaporizadores en Colombia para 2025."
         />
         <meta
           name="keywords"
-          content="vapes, mejores vapes, vapes desechables, vapes recargables, vaping, vapes en Colombia, precios de vapes, dónde comprar vapes, vapes saludables, consecuencias de los vapes, sabores de vapes, vapes para principiantes"
+          content="vapes, mejores vapes, vapes desechables, vapes recargables, vaping, vapes en Colombia, precios de vapes, dónde comprar vapes, vapes saludables, consecuencias de los vapes, sabores de vapes, vapes para principiantes, vapes 2025, vaporizadores"
         />
+        <link rel="canonical" href="https://outside-project.vercel.app/articles" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="Guía Completa de Vapes y Vaporizadores 2025 | Outside Zone" />
+        <meta property="og:description" content="Todo lo que necesitas saber sobre vapes: tipos, sabores, precios y consejos. Descubre los mejores vaporizadores en Colombia." />
+        <meta property="og:url" content="https://outside-project.vercel.app/articles" />
+        <meta property="og:image" content="https://i.postimg.cc/DZMQBTZT/articulo-1-outsidezone.png" />
+        <meta property="og:type" content="article" />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Guía Definitiva de Vapes 2025 | Outside Zone" />
+        <meta name="twitter:description" content="Los mejores vapes, sabores y consejos para vaping. Todo lo que debes saber sobre vaporizadores en Colombia y Latinoamérica." />
+        <meta name="twitter:image" content="https://i.postimg.cc/DZMQBTZT/articulo-1-outsidezone.png" />
+        
         {/* Datos estructurados para FAQ */}
         <script type="application/ld+json">
           {JSON.stringify({
@@ -82,7 +97,7 @@ const Articles: React.FC = () => {
                 "name": "¿Cuánto cuestan los vapes?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Los precios varían: los vapes desechables cuestan entre $150 y $300 MXN, mientras que los vapes recargables suelen estar entre $500 y $1,500 MXN, dependiendo de la marca y las características."
+                  "text": "Los precios varían: los vapes desechables cuestan entre 30.000 y 90.000 COP, mientras que los vapes recargables suelen estar entre 60.000 y 150.000 COP, dependiendo de la marca y las características."
                 }
               },
               {
@@ -92,6 +107,74 @@ const Articles: React.FC = () => {
                   "@type": "Answer",
                   "text": "Aunque son menos dañinos que los cigarrillos tradicionales, los vapes contienen nicotina y químicos que pueden afectar los pulmones. Optar por vapes sin nicotina puede ser una opción más saludable."
                 }
+              },
+              {
+                "@type": "Question",
+                "name": "¿Cuánto duran los vapes desechables?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "La duración depende del modelo. Los vaporizadores con 5000 puffs duran aproximadamente 1-2 semanas, los de 10000 puffs entre 2-3 semanas, y los de 15000 puffs pueden durar hasta un mes con uso moderado."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "¿Cuáles son los mejores sabores de vapes?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Los sabores más populares incluyen Blue Razz Ice, Strawberry Mango, Mint, Watermelon y Mixed Berries. La preferencia depende del gusto personal, pero los sabores frutales y mentolados son los favoritos."
+                }
+              }
+            ]
+          })}
+        </script>
+        
+        {/* Datos estructurados para Article */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": "Guía Completa de Vapes y Vaporizadores para 2025",
+            "description": "Todo lo que necesitas saber sobre vapes: tipos, sabores, precios, durabilidad y consejos para principiantes.",
+            "image": "https://i.postimg.cc/DZMQBTZT/articulo-1-outsidezone.png",
+            "datePublished": "2023-09-15T08:00:00+08:00",
+            "dateModified": "2025-05-01T08:00:00+08:00",
+            "author": {
+              "@type": "Organization",
+              "name": "Outside Zone",
+              "url": "https://outside-project.vercel.app/"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Outside Zone",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://outside-project.vercel.app/logo.webp"
+              }
+            },
+            "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": "https://outside-project.vercel.app/articles"
+            }
+          })}
+        </script>
+        
+        {/* Datos estructurados para BreadcrumbList */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Inicio",
+                "item": "https://outside-project.vercel.app/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Artículos",
+                "item": "https://outside-project.vercel.app/articles"
               }
             ]
           })}

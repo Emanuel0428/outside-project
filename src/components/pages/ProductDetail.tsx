@@ -68,13 +68,81 @@ const ProductDetail = () => {
   return (
     <section className="min-h-screen bg-gradient-to-b from-black to-purple-900 py-20 px-6 z-10">
       <Helmet>
-      <title>{product.metaTitle || `${product.name} - Detalles del Producto`}</title>
+        <title>{product.metaTitle || `${product.name} | Vaporizador Premium - Outside Zone`}</title>
         <meta
           name="description"
-          content={product.metaDescription || product.description.substring(0, 160)}
+          content={product.metaDescription || `${product.description.substring(0, 150)}. Envíos a toda Colombia, ¡haz tu pedido ahora!`}
         />
-        <meta name="keywords" content={product.keywords?.join(', ') || `${product.name}, vaporizador, ropa`} />
+        <meta name="keywords" content={product.keywords?.join(', ') || `${product.name}, vaporizador, vape, vaping, ${product.category}, Outside Zone, Colombia`} />
+        <link rel="canonical" href={`https://outside-project.vercel.app/product/${product.id}`} />
+        <meta property="og:title" content={product.metaTitle || `${product.name} - Outside Zone`} />
+        <meta property="og:description" content={product.metaDescription || product.description.substring(0, 160)} />
+        <meta property="og:image" content={displayImage} />
+        <meta property="og:url" content={`https://outside-project.vercel.app/product/${product.id}`} />
+        <meta property="og:type" content="product" />
+        <meta property="product:price:amount" content={product.price.toString()} />
+        <meta property="product:price:currency" content="COP" />
+        <meta property="product:availability" content="in stock" />
+        <meta property="product:category" content={product.category} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={product.metaTitle || `${product.name} - Outside Zone`} />
+        <meta name="twitter:description" content={product.metaDescription || product.description.substring(0, 160)} />
+        <meta name="twitter:image" content={displayImage} />
         <script type="application/ld+json">{JSON.stringify(structuredData, null, 2)}</script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Inicio",
+                "item": "https://outside-project.vercel.app/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": product.category === 'vaporizers' ? "Vaporizadores" : "Ropa",
+                "item": `https://outside-project.vercel.app/products?category=${product.category}`
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": product.name,
+                "item": `https://outside-project.vercel.app/product/${product.id}`
+              }
+            ]
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": `¿Cómo es la entrega del ${product.name}?`,
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": `Realizamos envíos del ${product.name} a toda Colombia. Los envíos en Medellín y alrededores son gratuitos en pedidos superiores a 120.000 COP, mientras que los envíos nacionales son gratuitos en pedidos superiores a 250.000 COP.`
+                }
+              },
+              {
+                "@type": "Question",
+                "name": product.category === 'vaporizers' 
+                  ? `¿Qué sabores están disponibles para el ${product.name}?` 
+                  : `¿Qué tallas están disponibles para ${product.name}?`,
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": product.category === 'vaporizers'
+                    ? `El ${product.name} está disponible en varios sabores, incluyendo ${variantArray.slice(0, 3).map(v => v.name).join(', ')} y más.`
+                    : `El ${product.name} está disponible en tallas ${product.variants.join(', ')}.`
+                }
+              }
+            ]
+          })}
+        </script>
       </Helmet>
       <div className="max-w-7xl mx-auto z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">

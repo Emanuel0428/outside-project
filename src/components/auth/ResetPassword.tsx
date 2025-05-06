@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -18,7 +18,6 @@ const ResetPassword = () => {
   const [isValidLink, setIsValidLink] = useState(false);
   const [passwordMismatch, setPasswordMismatch] = useState(false);
 
-  // Observar los valores de los campos en tiempo real
   const password = watch('password', '');
   const confirmPassword = watch('confirmPassword', '');
 
@@ -53,7 +52,6 @@ const ResetPassword = () => {
     handleResetFlow();
   }, [location, navigate]);
 
-  // Validar coincidencia de contraseñas en tiempo real
   useEffect(() => {
     if (password && confirmPassword && password !== confirmPassword) {
       setPasswordMismatch(true);
@@ -116,7 +114,7 @@ const ResetPassword = () => {
           </div>
           <button
             type="submit"
-            disabled={passwordMismatch} // Deshabilitar si no coinciden
+            disabled={passwordMismatch}
             className={`w-full p-3 rounded transition-colors ${passwordMismatch ? 'bg-gray-600 cursor-not-allowed' : 'bg-purple-600 hover:bg-purple-700'}`}
           >
             Actualizar Contraseña

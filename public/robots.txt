@@ -1,4 +1,21 @@
 User-agent: *
 Allow: /
+Disallow: /admin/
+Disallow: /profile/
+Disallow: /success
+Disallow: /cancel
+Disallow: /pending
+Disallow: /access-denied
 
-Sitemap: https://outside-zone.com/sitemap.xml
+# Permitir a todos los bots rastrear estas páginas importantes
+Allow: /articles
+Allow: /products
+Allow: /product/
+Allow: /terms
+Allow: /privacy
+
+# Sitemap
+Sitemap: https://outside-project.vercel.app/sitemap.xml
+
+# Velocidad de rastreo
+Crawl-delay: 10
