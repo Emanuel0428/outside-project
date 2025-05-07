@@ -1,50 +1,31 @@
 import { useRef, useMemo } from "react";
-import { Users, Zap, Award } from "lucide-react";
+import { Users, Sparkles, ShieldCheck, Leaf } from "lucide-react";
 import { motion, useInView } from "framer-motion";
 
-const features = [
+const brandValues = [
   {
-    icon: Users,
-    title: "Comunidad Vibrante",
-    description: "Únete a miles de entusiastas del estilo urbano en toda Colombia.",
+    icon: <Sparkles className="h-12 w-12 text-purple-400" />,
+    title: "Innovación Continua",
+    description: "Buscamos constantemente nuevas formas de mejorar la experiencia de nuestros clientes, desde la tecnología de nuestros vaporizadores hasta el diseño de nuestras prendas urbanas."
   },
   {
-    icon: Zap,
-    title: "Productos Premium",
-    description: "Calidad garantizada en cada producto que ofrecemos.",
+    icon: <ShieldCheck className="h-12 w-12 text-purple-400" />,
+    title: "Calidad Premium",
+    description: "Cada producto Outside ha sido diseñado y probado bajo rigurosos estándares de calidad, asegurando una experiencia excepcional en cada uso."
   },
   {
-    icon: Award,
-    title: "Diseños Exclusivos",
-    description: "Colaboraciones únicas con artistas y diseñadores locales.",
+    icon: <Leaf className="h-12 w-12 text-purple-400" />,
+    title: "Sostenibilidad",
+    description: "Comprometidos con el medio ambiente, implementamos prácticas responsables en nuestra cadena de producción para minimizar nuestro impacto ecológico."
   },
+  {
+    icon: <Users className="h-12 w-12 text-purple-400" />,
+    title: "Comunidad y Cultura",
+    description: "Más que una marca, somos una comunidad que celebra la diversidad y el estilo único, uniendo personas a través de experiencias compartidas."
+  }
 ];
 
-interface FeatureCardProps {
-  icon: React.ComponentType<{ className?: string }>;
-  title: string;
-  description: string;
-}
-
-const FeatureCard = ({ icon: Icon, title, description }: FeatureCardProps) => (
-  <div className="bg-purple-dark p-6 rounded-lg shadow-lg flex flex-col items-center text-center transition-transform duration-300 hover:scale-105">
-    <div className="p-3 bg-purple-600/20 rounded-full mb-4">
-      <Icon className="h-8 w-8 text-purple-600" />
-    </div>
-    <h3 className="text-xl font-semibold text-white mb-2">{title}</h3>
-    <p className="text-gray-400 text-sm md:text-base">{description}</p>
-  </div>
-);
-
 const AboutUs = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
-
-  const animationProps = useMemo(() => ({
-    initial: { opacity: 0, y: 20 },
-    animate: isInView ? { opacity: 1, y: 0 } : {},
-    transition: { duration: 0.5, staggerChildren: 0.1 }
-  }), [isInView]);
 
   return (
     <section className="bg-black p-8 py-16 flex flex-col items-center justify-center">
@@ -65,38 +46,40 @@ const AboutUs = () => {
         {/* Sección Derecha: Texto */}
         <article className="flex-1 p-4 md:pl-8">
           <h1 className="text-2xl md:text-3xl font-bold text-purple-600 mb-4 text-center">
-            Sobre Outside
+            Nuestra Filosofía
           </h1>
           <p className="text-gray-300 text-base md:text-lg leading-relaxed text-center">
-            Outside es más que una marca: somos una comunidad que vive y respira el estilo urbano y la cultura alternativa. 
-            Conectamos a personas que valoran la autenticidad, la creatividad y la innovación. 
-            Nuestra misión es revolucionar el mundo del vapeo y la moda urbana, ofreciendo productos de alta calidad y experiencias únicas 
-            que vibren con una comunidad en constante evolución.
+            En Outside creemos que la autenticidad es el verdadero lujo en un mundo de tendencias pasajeras. Cada producto que creamos está pensado para personas que aprecian la calidad y el diseño distintivo sin comprometer la funcionalidad.
+            <br />
+            <br />
+            Nacidos en las calles de Medellín, nos inspiramos en la rica diversidad cultural de Colombia para crear experiencias que trascienden más allá de simples productos: creamos conexiones, momentos y recuerdos.
           </p>
         </article>
       </main>
       
-      {/* Features Section */}
-      <motion.div
-        ref={ref}
-        {...animationProps}
-        className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12"
-      >
-        {features.map((feature, index) => (
-          <motion.div
-            key={feature.title}
-            variants={{
-              hidden: { opacity: 0, y: 20 },
-              visible: { opacity: 1, y: 0 }
-            }}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            transition={{ duration: 0.5, delay: index * 0.2 }}
-          >
-            <FeatureCard {...feature} />
-          </motion.div>
-        ))}
-      </motion.div>
+      {/* Valores de la marca */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+          {brandValues.map((value, index) => (
+            <motion.div
+              key={value.title}
+              initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 * index }}
+              className="bg-purple-900/30 backdrop-blur-sm rounded-xl p-6 border border-purple-800/40 hover:bg-purple-800/40 transition-colors"
+                >
+                <div className="flex items-start gap-4">
+                    <div className="p-3 bg-black/30 rounded-lg">
+                      {value.icon}
+                    </div>
+                  <div>
+                    <h3 className="text-xl font-bold mb-2 text-white">{value.title}</h3>
+                    <p className="text-gray-300">{value.description}</p>
+                  </div>
+                </div>
+            </motion.div>
+          ))}
+      </div>
     </section>
   );
 };

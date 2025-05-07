@@ -221,11 +221,15 @@ const Profile = () => {
                   </p>
                 </div>
                 <ul className="mt-3 space-y-1">
-                  {purchase.items.map((item, index) => (
-                    <li key={index} className="text-gray-300">
-                      - {item.quantity}x {item.variant} ({item.price.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })})
-                    </li>
-                  ))}
+                  {Array.isArray(purchase.items) ? (
+                    purchase.items.map((item, index) => (
+                      <li key={index} className="text-gray-300">
+                        - {item.quantity}x {item.variant} ({item.price.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })})
+                      </li>
+                    ))
+                  ) : (
+                    <li className="text-gray-300">No hay información detallada de los productos</li>
+                  )}
                 </ul>
               </div>
             ))}

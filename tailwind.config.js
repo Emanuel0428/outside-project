@@ -47,6 +47,6 @@ export default {
   },
   plugins: [require("tailwindcss-animate")],
   fontFamily: {
-    Oswald: ['Oswald','cursive', 'sans-serif'],
+    Oswald: ['Oswald', 'sans-serif', 'cursive'],
   },
 };

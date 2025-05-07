@@ -2,6 +2,7 @@
 
 import React from "react";
 import { ShieldCheck, Truck, CreditCard, Users } from "lucide-react";
+import { motion} from 'framer-motion';
 
 interface Feature {
   icon: React.ReactNode;
@@ -34,7 +35,21 @@ export default function FeatureCards() {
   ];
 
   return (
-    <div className="bg-gradient-to-b from-purple-900 to-black py-32 px-6 min-h-screen">
+    <div className="bg-gradient-to-b from-purple-900 to-black py-4 px-6 min-h-screen">
+      <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-purple-100">
+              El Estilo Outside
+            </h2>
+            <p className="text-xl text-gray-300 max-w-4xl mx-auto">
+              Fusionamos la cultura urbana con un toque alternativo para crear productos que no solo satisfacen necesidades, sino que definen un estilo de vida auténtico y vibrante.
+            </p>
+        </motion.div>
       <div className="container mx-auto px-4 md:px-8 max-w-7xl max-h-full">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature, index) => (

@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 
 const Cart = () => {
   const { cart, removeFromCart, clearCart } = useCart();
-  const { user, isAuthenticated, getUserDetails } = useAuth();
+  const { user, isAuthenticated, getUserDetails, addPurchase } = useAuth();
   const navigate = useNavigate();
   const [paymentMethod, setPaymentMethod] = useState<'whatsapp' | 'payu'>('whatsapp');
 
@@ -69,94 +69,110 @@ const Cart = () => {
       toast.error('Por favor completa tu información personal (nombre) antes de continuar');
       return;
     }
+
+    // Preparar los items en el formato que espera Supabase
+    const purchaseItems = cart.map(item => ({
+      productId: item.product.id,
+      variant: item.variant,
+      quantity: item.quantity,
+      price: item.product.price
+    }));
   
-    if (paymentMethod === 'whatsapp') {
-      const cartDetails = cart.map((item) =>
-        `${item.product.name} (${item.variant}) x ${item.quantity} - ${(
-          item.product.price * item.quantity
-        ).toLocaleString('es-CO', { style: 'currency', currency: 'COP' })}`
-      ).join('\n');
-  
-      const shippingCost = total >= 100000 ? 0 : 10000;
-      const totalWithShipping = total + shippingCost;
-  
-      const deliveryInfo = deliveryDetails.address
-        ? `\nDirección de entrega: ${deliveryDetails.address}`
-        : '\nEntrega: Recoger en persona';
-      const phoneInfo = deliveryDetails.phone
-        ? `\nTeléfono: ${deliveryDetails.phone}`
-        : userDetails.phone
-        ? `\nTeléfono: ${userDetails.phone}`
-        : '';
-  
-      const message = `Hola, quiero realizar un pedido:\n\n${cartDetails}\n\nSubtotal: ${total.toLocaleString(
-        'es-CO',
-        { style: 'currency', currency: 'COP' }
-      )}\nEnvío: ${
-        shippingCost === 0
-          ? 'Gratis'
-          : shippingCost.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })
-      }\nTotal: ${totalWithShipping.toLocaleString('es-CO', {
-        style: 'currency',
-        currency: 'COP',
-      })}\n\nNombre: ${userDetails.fullName}${phoneInfo}${deliveryInfo}`;
-  
-      const phoneNumber = '573217905526';
-      const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-  
-      window.open(whatsappUrl, '_blank');
-      clearCart();
-      toast.success('Redirigiendo a WhatsApp para completar tu compra');
-    }
-  
-    else if (paymentMethod === 'payu') {
-      try {
-        const referenceCode = `OUTSIDE_${Date.now()}`;
-        const payload = {
-          total: total.toFixed(2),
-          referenceCode,
-          description: 'Compra en Outside',
-          payerFullName: userDetails.fullName,
-          payerEmail: user.email,
-          payerPhone: userDetails.phone,
-          payerDocumentType: userDetails.documentType,
-          payerDocument: userDetails.document,
-          buyerFullName: userDetails.fullName,
-          buyerEmail: user.email,
-          buyerDocumentType: userDetails.documentType,
-          buyerDocument: userDetails.document,
-          telephone: deliveryDetails.phone || userDetails.phone,
-        };
-  
-        const response = await fetch('http://localhost:4000/create-payu-payment', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(payload),
-        });
-  
-        const data = await response.json();
-  
-        // Redirige al usuario al formulario de pago
-        const form = document.createElement('form');
-        form.action = data.paymentUrl;
-        form.method = 'POST';
-        form.style.display = 'none';
-  
-        Object.entries(data.payuParams).forEach(([key, value]) => {
-          const input = document.createElement('input');
-          input.name = key;
-          input.value = value as string;
-          form.appendChild(input);
-        });
-  
-        document.body.appendChild(form);
-        form.submit();
-      } catch (error) {
-        console.error('Error al crear pago PayU:', error);
-        toast.error('No se pudo iniciar el pago con tarjeta');
+    try {
+      // Guardar la compra en Supabase
+      await addPurchase(purchaseItems, total, 'pending');
+      
+      if (paymentMethod === 'whatsapp') {
+        const cartDetails = cart.map((item) =>
+          `${item.product.name} (${item.variant}) x ${item.quantity} - ${(
+            item.product.price * item.quantity
+          ).toLocaleString('es-CO', { style: 'currency', currency: 'COP' })}`
+        ).join('\n');
+    
+        const shippingCost = total >= 100000 ? 0 : 10000;
+        const totalWithShipping = total + shippingCost;
+    
+        const deliveryInfo = deliveryDetails.address
+          ? `\nDirección de entrega: ${deliveryDetails.address}`
+          : '\nEntrega: Recoger en persona';
+        const phoneInfo = deliveryDetails.phone
+          ? `\nTeléfono: ${deliveryDetails.phone}`
+          : userDetails.phone
+          ? `\nTeléfono: ${userDetails.phone}`
+          : '';
+    
+        const message = `Hola, quiero realizar un pedido:\n\n${cartDetails}\n\nSubtotal: ${total.toLocaleString(
+          'es-CO',
+          { style: 'currency', currency: 'COP' }
+        )}\nEnvío: ${
+          shippingCost === 0
+            ? 'Gratis'
+            : shippingCost.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })
+        }\nTotal: ${totalWithShipping.toLocaleString('es-CO', {
+          style: 'currency',
+          currency: 'COP',
+        })}\n\nNombre: ${userDetails.fullName}${phoneInfo}${deliveryInfo}`;
+    
+        const phoneNumber = '573217905526';
+        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    
+        window.open(whatsappUrl, '_blank');
+        clearCart();
+        toast.success('Redirigiendo a WhatsApp para completar tu compra');
       }
+    
+      else if (paymentMethod === 'payu') {
+        try {
+          const referenceCode = `OUTSIDE_${Date.now()}`;
+          const payload = {
+            total: total.toFixed(2),
+            referenceCode,
+            description: 'Compra en Outside',
+            payerFullName: userDetails.fullName,
+            payerEmail: user.email,
+            payerPhone: userDetails.phone,
+            payerDocumentType: userDetails.documentType,
+            payerDocument: userDetails.document,
+            buyerFullName: userDetails.fullName,
+            buyerEmail: user.email,
+            buyerDocumentType: userDetails.documentType,
+            buyerDocument: userDetails.document,
+            telephone: deliveryDetails.phone || userDetails.phone,
+          };
+    
+          const response = await fetch('http://localhost:4000/create-payu-payment', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+          });
+    
+          const data = await response.json();
+    
+          // Redirige al usuario al formulario de pago
+          const form = document.createElement('form');
+          form.action = data.paymentUrl;
+          form.method = 'POST';
+          form.style.display = 'none';
+    
+          Object.entries(data.payuParams).forEach(([key, value]) => {
+            const input = document.createElement('input');
+            input.name = key;
+            input.value = value as string;
+            form.appendChild(input);
+          });
+    
+          document.body.appendChild(form);
+          form.submit();
+        } catch (error) {
+          console.error('Error al crear pago PayU:', error);
+          toast.error('No se pudo iniciar el pago con tarjeta');
+        }
+      }
+    } catch (error) {
+      console.error('Error al guardar la compra en la base de datos:', error);
+      toast.error('Error al procesar tu compra. Por favor, intenta de nuevo.');
     }
   };
   

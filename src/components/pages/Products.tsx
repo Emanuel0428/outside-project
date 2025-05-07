@@ -5,7 +5,7 @@ import { Search, ChevronDown, ChevronUp, Star } from 'lucide-react';
 import { Helmet } from 'react-helmet';
 import { lazy } from 'react';
 
-const NewReleases = lazy(() => import('@/components/sections/NewReleases'));
+const HeroProducts = lazy(() => import('@/components/sections/HeroProducts'));
 const BrandSection = lazy(() => import('@/components/sections/BrandSection'));
 
 interface Product {
@@ -136,7 +136,7 @@ const Products = () => {
 
   return (
     <>
-      <NewReleases />
+      <HeroProducts />
       <section id="products" className="min-h-screen bg-gradient-to-b from-black to-purple-900 py-20 px-6">
         <div className="max-w-7xl mx-auto">
           <Helmet>

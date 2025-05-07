@@ -67,22 +67,19 @@ const AdminDashboard = () => {
                 <p><strong>ID de compra:</strong> {purchase.id}</p>
                 <p><strong>Items:</strong></p>
                 <ul>
-                  {purchase.items.map((item, index) => (
-                    <li key={index}>
-                      {item.quantity}x {item.variant} ({item.price.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })})
-                    </li>
-                  ))}
+                  {Array.isArray(purchase.items) ? (
+                    purchase.items.map((item, index) => (
+                      <li key={index}>
+                        {item.quantity}x {item.variant} ({item.price.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })})
+                      </li>
+                    ))
+                  ) : (
+                    <li>No hay información detallada de los productos</li>
+                  )}
                 </ul>
                 <p><strong>Fecha:</strong> {new Date(purchase.date).toLocaleString('es-CO')}</p>
                 <p><strong>Total:</strong> {purchase.total.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })}</p>
                 <p><strong>Estado:</strong> {purchase.status}</p>
-                <ul className="mt-2">
-                  {purchase.items.map((item, index) => (
-                    <li key={index}>
-                      - {item.quantity}x {item.variant} ({item.price.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })})
-                    </li>
-                  ))}
-                </ul>
                 <div className="mt-4">
                   <label className="mr-2">Cambiar estado:</label>
                   <select

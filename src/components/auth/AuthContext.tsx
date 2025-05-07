@@ -28,6 +28,7 @@ interface AuthContextType {
   isAuthenticated: boolean; 
   isAdmin: boolean;
   login: (email: string, password: string, rememberMe?: boolean) => Promise<void>;
+  signInWithGoogle: () => Promise<void>;
   register: (
     email: string, 
     name: string, 
@@ -48,6 +49,13 @@ interface AuthContextType {
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+// Define useAuth fuera del componente AuthProvider para evitar problemas con HMR
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) throw new Error('useAuth must be used within an AuthProvider');
+  return context;
+};
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<ExtendedUser | null>(null);
@@ -158,8 +166,36 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       .select('*')
       .eq('user_id', user?.id)
       .order('created_at', { ascending: false });
-    if (error) console.error('Error fetching purchases:', error);
-    else setPurchaseHistory(data || []);
+    
+    if (error) {
+      console.error('Error fetching purchases:', error);
+      setPurchaseHistory([]);
+    } else {
+      // Procesar los datos para asegurar que items sea un array
+      const processedData = data?.map(purchase => {
+        // Intentamos parsear items si es un string
+        let parsedItems = [];
+        try {
+          if (typeof purchase.items === 'string') {
+            parsedItems = JSON.parse(purchase.items);
+          } else if (Array.isArray(purchase.items)) {
+            parsedItems = purchase.items;
+          }
+        } catch (e) {
+          console.error('Error parsing items:', e);
+        }
+
+        return {
+          ...purchase,
+          items: parsedItems,
+          date: purchase.date || purchase.created_at,
+          total: Number(purchase.total)
+        };
+      }) || [];
+      
+      console.log('Purchases processed:', processedData);
+      setPurchaseHistory(processedData);
+    }
   };
 
   const fetchAllPurchases = async () => {
@@ -172,13 +208,30 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       console.error('Error fetching all purchases:', error);
       setAllPurchases([]);
     } else {
-      const mappedPurchases = data.map((purchase) => ({
-        id: purchase.id,
-        date: purchase.date || purchase.created_at,
-        items: purchase.items,
-        total: Number(purchase.total),
-        status: purchase.status,
-      }));
+      // Procesar los datos para asegurar que items sea un array
+      const mappedPurchases = data?.map(purchase => {
+        // Intentamos parsear items si es un string
+        let parsedItems = [];
+        try {
+          if (typeof purchase.items === 'string') {
+            parsedItems = JSON.parse(purchase.items);
+          } else if (Array.isArray(purchase.items)) {
+            parsedItems = purchase.items;
+          }
+        } catch (e) {
+          console.error('Error parsing items:', e);
+        }
+
+        return {
+          id: purchase.id,
+          date: purchase.date || purchase.created_at,
+          items: parsedItems,
+          total: Number(purchase.total),
+          status: purchase.status,
+        };
+      }) || [];
+      
+      console.log('All purchases processed:', mappedPurchases);
       setAllPurchases(mappedPurchases);
     }
   };
@@ -193,6 +246,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       localStorage.removeItem('rememberMe');
       localStorage.removeItem('supabaseSession');
     }
+  };
+
+  const signInWithGoogle = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+    });
+    if (error) throw new Error(error.message);
   };
 
   const register = async (email: string, name: string, password: string,
@@ -230,15 +290,24 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     status: string = 'pending'
   ) => {
     if (!user) throw new Error('Debe iniciar sesión para realizar una compra');
+    
+    // Asegurarse de que items sea un array JSON válido
+    const itemsArray = Array.isArray(items) ? items : [];
+    
     const { error } = await supabase
       .from('purchases')
       .insert({
         user_id: user.id,
-        items,
+        items: itemsArray,
         total,
         status,
+        date: new Date().toISOString(),
+        created_at: new Date().toISOString()
       });
-    if (error) throw error;
+    if (error) {
+      console.error('Error al guardar la compra:', error);
+      throw error;
+    }
     await fetchPurchases();
     if (isAdmin) await fetchAllPurchases();
   };
@@ -246,25 +315,43 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const updatePurchaseStatus = async (purchaseId: string, status: string) => {
     if (!isAdmin) throw new Error('Solo los administradores pueden actualizar el estado de las compras');
 
-    const trimmedStatus = status.trim();
+    // Normalize status to store 
+    const statusMap: { [key: string]: string } = {
+      'Pendiente': 'pending',
+      'Pagado': 'paid',
+      'Enviado': 'shipped',
+      'Completado': 'completed',
+      'Rechazado': 'declined'
+    };
+    
+    // Use the mapped status if it exists, otherwise use the original
+    const normalizedStatus = statusMap[status] || status;
+    const trimmedStatus = normalizedStatus.trim();
 
-    const { error, data } = await supabase
-      .from('purchases')
-      .update({ status: trimmedStatus })
-      .match({ id: purchaseId })
-      .select('*');
+    console.log(`Actualizando estado de compra ${purchaseId} a ${trimmedStatus}`);
 
-    if (error) {
-      console.error('Error de Supabase:', error);
+    try {
+      const { error, data } = await supabase
+        .from('purchases')
+        .update({ status: trimmedStatus })
+        .eq('id', purchaseId)
+        .select();
+
+      if (error) {
+        console.error('Error de Supabase:', error);
+        throw error;
+      }
+
+      if (!data || data.length === 0) {
+        throw new Error('No se encontró la compra con el ID proporcionado o no se tiene permiso para actualizar');
+      }
+
+      await fetchPurchases();
+      await fetchAllPurchases();
+    } catch (error) {
+      console.error("Error al actualizar el estado:", error);
       throw error;
     }
-
-    if (!Array.isArray(data) || data.length === 0) {
-      throw new Error('No se encontró la compra con el ID proporcionado o no se tiene permiso para actualizar');
-    }
-
-    await fetchPurchases();
-    await fetchAllPurchases();
   };
 
   const resetPassword = async (email: string) => {
@@ -284,6 +371,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         isAuthenticated,
         isAdmin,
         login,
+        signInWithGoogle,
         register,
         logout,
         purchaseHistory,
@@ -298,11 +386,4 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       {children}
     </AuthContext.Provider>
   );
-};
-
-// eslint-disable-next-line react-refresh/only-export-components
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) throw new Error('useAuth must be used within an AuthProvider');
-  return context;
 };

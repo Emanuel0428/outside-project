@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/components/auth/AuthContext';
 import { toast } from 'react-toastify';
 import { motion } from 'framer-motion';
+import { FaGoogle } from 'react-icons/fa';
 
 interface LoginForm {
   email: string;
@@ -17,13 +18,15 @@ interface ResetForm {
 const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>();
   const { register: registerReset, handleSubmit: handleResetSubmit, formState: { errors: resetErrors } } = useForm<ResetForm>();
-  const { login, resetPassword } = useAuth();
+  const { login, resetPassword, signInWithGoogle } = useAuth();
   const navigate = useNavigate();
   const [showReset, setShowReset] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async (data: LoginForm) => {
     try {
+      setIsLoading(true);
       await login(data.email, data.password, rememberMe);
       toast.success('¡Inicio de sesión exitoso!');
       navigate('/');
@@ -33,6 +36,24 @@ const Login = () => {
       } else {
         toast.error('Error al iniciar sesión');
       }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      setIsLoading(true);
+      await signInWithGoogle();
+      // La redirección la maneja Supabase
+      toast.success('¡Inicio de sesión exitoso!');
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(error.message || 'Error al iniciar sesión con Google');
+      } else {
+        toast.error('Error al iniciar sesión con Google');
+      }
+      setIsLoading(false);
     }
   };
 
@@ -97,9 +118,20 @@ const Login = () => {
                   ¿Olvidaste tu contraseña?
                 </button>
               </div>
-              <button type="submit" className="w-full p-3 bg-purple-600 rounded hover:bg-purple-700 transition-colors">
-                Iniciar Sesión
-              </button>
+              <div className="flex items-center gap-2">
+                <button type="submit" className="flex-1 p-3 bg-purple-600 rounded hover:bg-purple-700 transition-colors">
+                  Iniciar Sesión
+                </button>
+                <button
+                  type="button"
+                  onClick={handleGoogleSignIn}
+                  className="p-3 bg-gray-800 border border-purple-400 rounded hover:bg-gray-700 transition-colors flex items-center justify-center"
+                  disabled={isLoading}
+                  title="Iniciar sesión con Google"
+                >
+                  <FaGoogle className="text-purple-400 text-xl" />
+                </button>
+              </div>
             </form>
             <p className="text-center mt-4 text-sm text-gray-400">
               ¿No tienes cuenta?{' '}
