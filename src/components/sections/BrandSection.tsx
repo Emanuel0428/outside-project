@@ -7,11 +7,11 @@ const brands = [
 
 const BrandSection = () => {
     return (
-            <section className="py-12 text-center bg-purple-900">
-            <h2 className="text-2xl md:text-3xl text-white font-medium mb-6 light:text-gray-300">
+            <section className="py-12 text-center scroll-section seamless-section" style={{ background: 'transparent' }}>
+            <h2 className="text-2xl mt-5 md:text-3xl text-purple-400 font-medium mb-6 light:text-gray-300">
             Nuestras Marcas
             </h2>
-            <div className="flex flex-wrap justify-center items-center gap-6">
+            <div className="mb-10 flex flex-wrap justify-center items-center gap-6">
             {brands.map((brand) => (
                 <img
                 key={brand.name}

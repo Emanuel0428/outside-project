@@ -66,15 +66,15 @@ const Profile = () => {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-black to-purple-900 py-20 px-6 text-white text-center">
+      <div className="min-h-screen py-20 px-6 text-white text-center scroll-section seamless-section" style={{ background: 'transparent' }}>
         Por favor, inicia sesión.
       </div>
     );
   }
 
   return (
-    <section className="min-h-screen bg-gradient-to-b from-black to-purple-900 py-20 px-6 text-white">
-      <div className="max-w-7xl mx-auto">
+    <section className="min-h-screen  py-20 px-6 text-white scroll-section seamless-section" style={{ background: 'transparent' }}>
+      <div className="max-w-7xl mx-auto mt-20 mb-10">
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-3xl font-bold">Mi Perfil</h2>
           <button

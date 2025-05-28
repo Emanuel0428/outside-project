@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
@@ -13,7 +13,7 @@ const HeroProducts = () => {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: 'El Estilo Outside: Cultura Urbana y Estilo Alternativo',
-    description: 'Descubre la filosofía y estilo único que hace de Outside una marca diferente en el mundo de los vaporizadores y la moda urbana.',
+    description: 'Descubre la filosofía y estilo único que hace de Outside una marca diferente en el mundo de los accesorios tecnológicos y la moda urbana.',
     image: 'https://outside-project.vercel.app/logo.webp',
     author: {
       '@type': 'Organization',
@@ -32,13 +32,13 @@ const HeroProducts = () => {
   };
 
   return (
-    <section id="outside-style" className="bg-gradient-to-b from-purple-900 to-black py-20 px-6 text-white min-h-screen">
+    <section id="outside-style" className="py-20 px-6 text-white min-h-screen scroll-section seamless-section" style={{ background: 'transparent' }}>
         <Helmet>
           <title>El Estilo Outside | Cultura Urbana y Estilo Alternativo</title>
-          <meta name="description" content="Descubre la filosofía y estilo único que hace de Outside una marca diferente en el mundo de los vaporizadores y la moda urbana." />
+          <meta name="description" content="Descubre la filosofía y estilo único que hace de Outside una marca diferente en el mundo de los accesorios tecnológicos y la moda urbana." />
           <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
         </Helmet>      
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto mt-20">
 
         {/* CTA Final */}
         <motion.div
@@ -143,7 +143,7 @@ const HeroProducts = () => {
                       <span className="text-white">SOMOS UNA CULTURA</span>
                     </h2>
                     <div className="prose prose-lg prose-invert mb-8 text-purple-100/90">
-                      <p>Vaporizadores premium y streetwear diseñados para quienes se atreven a ser diferentes. Únete a la comunidad que está redefiniendo el estilo urbano en Colombia.</p>
+                      <p>Accesorios tecnológicos premium y streetwear diseñados para quienes se atreven a ser diferentes. Únete a la comunidad que está redefiniendo el estilo urbano en Colombia.</p>
                     </div>
                     
                     <div className="flex flex-col sm:flex-row gap-4 md:gap-6 mb-8">
@@ -155,7 +155,7 @@ const HeroProducts = () => {
                             : "bg-transparent border border-purple-500/80 text-purple-200"
                         } px-6 py-4 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-purple-500/30`}
                       >
-                        <span className="relative z-10">Vaporizadores</span>
+                        <span className="relative z-10">Accesorios Tech</span>
                         <span className={`absolute inset-0 h-full w-full bg-gradient-to-br from-purple-500 to-indigo-600 opacity-0 transition-opacity duration-300 ${
                           activeCategory === "vapes" ? "opacity-100" : "group-hover:opacity-100"
                         }`}></span>
@@ -202,7 +202,7 @@ const HeroProducts = () => {
                       {/* Carruseles con cambio según selección */}
                       <div className="relative h-[350px] w-full">
                         <AnimatePresence mode="wait">
-                          {/* Carrusel de Vaporizadores */}
+                          {/* Carrusel de Accesorios Tech */}
                           {activeCategory === "vapes" && (
                             <motion.div
                               key="vapes-carousel"
@@ -222,18 +222,18 @@ const HeroProducts = () => {
                                   repeatType: "loop"
                                 }}
                               >
-                                {/* Productos de vaporizadores */}
+                                {/* Productos de accesorios tecnológicos */}
                                 <div className="flex-shrink-0 w-1/3 h-full p-4">
                                   <div className="relative h-full rounded-xl overflow-hidden border border-purple-500/30 bg-gradient-to-b from-black to-purple-900/20">
                                     <div className="absolute inset-0 flex items-center justify-center">
                                       <img 
                                         src="https://i.postimg.cc/T1CDj1tS/outside-rifbar-turbo-x-portada.webp" 
-                                        alt="Vaporizador RifBar Turbo X" 
+                                        alt="Dispositivo RifBar Turbo X" 
                                         className="h-[95%] w-auto max-w-[90%] object-contain drop-shadow-2xl transition-transform duration-500 hover:scale-110"
                                       />
                                     </div>
                                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-4">
-                                      <p className="text-xs font-mono text-purple-300 uppercase">Vaporizadores</p>
+                                      <p className="text-xs font-mono text-purple-300 uppercase">Accesorios Tech</p>
                                       <p className="text-base font-semibold text-white">RifBar Turbo X</p>
                                     </div>
                                   </div>
@@ -244,13 +244,13 @@ const HeroProducts = () => {
                                     <div className="absolute inset-0 flex items-center justify-center">
                                       <img 
                                         src="https://i.postimg.cc/HWR3gSQ9/outside-MTRX-portada.webp" 
-                                        alt="Vaporizador MTRX 25k" 
+                                        alt="Dispositivo MTRX 25k" 
                                         className="h-[95%] w-auto max-w-[90%] object-contain drop-shadow-2xl transition-transform duration-500 hover:scale-110"
                                       />
                                     </div>
                                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-4">
-                                      <p className="text-xs font-mono text-purple-300 uppercase">Vaporizadores</p>
-                                      <p className="text-base font-semibold text-white">MTRX 25k puffs</p>
+                                      <p className="text-xs font-mono text-purple-300 uppercase">Accesorios Tech</p>
+                                      <p className="text-base font-semibold text-white">MTRX 25k</p>
                                     </div>
                                   </div>
                                 </div>
@@ -260,12 +260,12 @@ const HeroProducts = () => {
                                     <div className="absolute inset-0 flex items-center justify-center">
                                       <img 
                                         src="https://i.postimg.cc/525jD8r8/outside-portada-Ai-RMEZ-Mars.webp" 
-                                        alt="Vaporizador AirMez Mars" 
+                                        alt="Dispositivo AirMez Mars" 
                                         className="h-[95%] w-auto max-w-[90%] object-contain drop-shadow-2xl transition-transform duration-500 hover:scale-110"
                                       />
                                     </div>
                                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-4">
-                                      <p className="text-xs font-mono text-purple-300 uppercase">Vaporizadores</p>
+                                      <p className="text-xs font-mono text-purple-300 uppercase">Accesorios Tech</p>
                                       <p className="text-base font-semibold text-white">AirMez Mars 20k</p>
                                     </div>
                                   </div>
@@ -276,12 +276,12 @@ const HeroProducts = () => {
                                     <div className="absolute inset-0 flex items-center justify-center">
                                       <img 
                                         src="https://i.postimg.cc/k4YzQKpX/outside-taijizen-judo-portada.webp" 
-                                        alt="Vaporizador Taijizen JuDo" 
+                                        alt="Dispositivo Taijizen JuDo" 
                                         className="h-[95%] w-auto max-w-[90%] object-contain drop-shadow-2xl transition-transform duration-500 hover:scale-110"
                                       />
                                     </div>
                                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-4">
-                                      <p className="text-xs font-mono text-purple-300 uppercase">Vaporizadores</p>
+                                      <p className="text-xs font-mono text-purple-300 uppercase">Accesorios Tech</p>
                                       <p className="text-base font-semibold text-white">Taijizen JuDo 24k</p>
                                     </div>
                                   </div>
@@ -421,4 +421,4 @@ const HeroProducts = () => {
   );
 };
 
-export default React.memo(HeroProducts);
+export default HeroProducts;

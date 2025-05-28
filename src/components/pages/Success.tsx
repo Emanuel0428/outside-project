@@ -51,7 +51,7 @@ const SuccessPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center text-white">
+    <div className="min-h-screen flex items-center justify-center text-white scroll-section seamless-section" style={{ background: 'transparent' }}>
       <div className="text-center p-6 max-w-md">
         <h1 className="text-3xl font-bold mb-4">Procesando tu pago...</h1>
         <p>Serás redirigido automáticamente en unos momentos</p>

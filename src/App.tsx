@@ -1,4 +1,5 @@
 import { useState, useEffect, lazy, Suspense, useCallback, Component } from 'react';
+import { useSmoothScroll } from '@/lib/hooks';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { CartProvider } from '@/context/CartContext';
 import { FavoritesProvider } from '@/context/FavoritesContext';
@@ -19,7 +20,6 @@ import { Analytics } from "@vercel/analytics/react";
 // Componentes cargados dinámicamente
 const Hero = lazy(() => import('@/components/sections/Hero'));
 const Products = lazy(() => import('@/components/pages/Products'));
-const Contact = lazy(() => import('@/components/sections/Contact'));
 const ProductDetail = lazy(() => import('@/components/pages/ProductDetail'));
 const Cart = lazy(() => import('@/components/assets/Cart'));
 const Favorites = lazy(() => import('@/components/pages/Favorites'));
@@ -36,8 +36,8 @@ const Success = lazy(() => import('@/components/pages/Success'));
 const Cancel = lazy(() => import('@/components/pages/Cancel'));
 const Pending = lazy(() => import('@/components/pages/Pending'));
 const WhatsappChat = lazy(() => import('@/components/assets/WhatsappChat'));
-const FeatureCardsAnimation = lazy(() => import('@/components/assets/FeatureCards'));
-const AboutUs = lazy(() => import('@/components/assets/AboutUs'));
+const HomePage = lazy(() => import('@/components/pages/HomePage'));
+const GlobalBackground = lazy(() => import('@/components/assets/GlobalBackground'));
 
 // Error Boundary para capturar errores de renderizado
 class ErrorBoundary extends Component<{ children: React.ReactNode }> {
@@ -84,7 +84,7 @@ const AppContent = ({ scrollTop }: { scrollTop: () => void }) => {
       <Suspense fallback={<Loader />}>
         <Routes>
           {/* Rutas públicas */}
-          <Route path="/" element={<><Hero /><FeatureCardsAnimation /><AboutUs /><Contact /></>} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/products" element={<Products />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/login" element={<Login />} />
@@ -124,6 +124,7 @@ const AppContent = ({ scrollTop }: { scrollTop: () => void }) => {
 
 function App() {
   const [showScroll, setShowScroll] = useState(false);
+  const { scrollToTop } = useSmoothScroll();
 
   const checkScrollTop = useCallback(() => {
     if (!showScroll && window.pageYOffset > 400) {
@@ -132,10 +133,6 @@ function App() {
       setShowScroll(false);
     }
   }, [showScroll]);
-
-  const scrollTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
   useEffect(() => {
     window.addEventListener('scroll', checkScrollTop);
@@ -149,13 +146,13 @@ function App() {
         <meta name="author" content="Outside Zone" />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Outside Zone" />
-        <meta property="og:title" content="Outside Zone - Tienda de Vaporizadores y Ropa Urbana" />
-        <meta property="og:description" content="Outside Zone es una marca que fusiona estilo urbano y cultura alternativa, ofreciendo una selección premium de vaporizadores y ropa de estilo urbano." />
+        <meta property="og:title" content="Outside Zone - Tienda Premium de Accesorios Urbanos y Moda" />
+        <meta property="og:description" content="Outside Zone es una marca líder que fusiona estilo urbano y cultura alternativa, ofreciendo productos premium de accesorios tecnológicos y moda urbana exclusiva en Colombia." />
         <meta property="og:image" content="https://outside-project.vercel.app/logo.webp" />
         <meta property="og:url" content="https://outside-project.vercel.app" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Outside Zone - Vaporizadores y Ropa Urbana" />
-        <meta name="twitter:description" content="Outside Zone es una marca que fusiona estilo urbano y cultura alternativa, con productos premium en vaporizadores y moda urbana." />
+        <meta name="twitter:title" content="Outside Zone - Accesorios Premium y Moda Urbana" />
+        <meta name="twitter:description" content="Outside Zone es una marca que fusiona estilo urbano y cultura alternativa, con productos premium en accesorios tecnológicos y moda urbana exclusiva." />
         <meta name="twitter:image" content="https://outside-project.vercel.app/logo.webp" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
@@ -189,19 +186,24 @@ function App() {
                 <Suspense fallback={<Loader />}>
                   <WhatsappChat />
                 </Suspense>
-                <div className="min-h-screen bg-black text-white light:bg-gray-100 light:text-black transition-colors overflow-hidden">
+                <div className="min-h-screen text-white light:bg-gray-100 light:text-black transition-colors overflow-hidden relative smooth-scroll" style={{ background: 'var(--gradient-primary)' }}>
+                  <Suspense fallback={null}>
+                    <GlobalBackground />
+                  </Suspense>
                   <Navbar />
-                  <AppContent scrollTop={scrollTop} />
+                  <AppContent scrollTop={scrollToTop} />
                   {showScroll && (
-                    <motion.button
-                      onClick={() => scrollTop()}
+                                          <motion.button
+                        onClick={() => scrollToTop()}
                       initial={{ opacity: 0, scale: 0 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      className="fixed bottom-8 left-8 p-3 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition-colors shadow-lg"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      className="fixed bottom-8 left-8 p-4 bg-gradient-secondary text-white rounded-full hover:shadow-glow-lg transition-all duration-300 shadow-glow border-2 border-transparent hover:border-purple-neon glow-effect"
                       style={{ zIndex: 100 }}
                       aria-label="Volver arriba"
                     >
-                      <ArrowUp className="h-6 w-6" />
+                      <ArrowUp className="h-6 w-6 animate-pulse-icon" />
                     </motion.button>
                   )}
                 </div>

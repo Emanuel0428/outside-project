@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useAuth } from '@/components/auth/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -42,7 +42,7 @@ const AdminDashboard = () => {
   };
 
   return (
-    <section className="min-h-screen bg-gradient-to-b from-black to-purple-900 py-20 px-6 text-white">
+    <section className="min-h-screen py-20 px-6 text-white scroll-section seamless-section" style={{ background: 'transparent' }}>
       <div className="max-w-7xl mx-auto">
         <h2 className="text-3xl font-bold mb-8">Panel de Administración</h2>
         <div className="mb-6">

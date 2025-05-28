@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import Particles from 'react-particles';
 import { loadFull } from 'tsparticles';
@@ -8,7 +8,7 @@ import { Book, Info, ShoppingCart, Share2, Star, ChevronRight } from 'lucide-rea
 import { Link } from 'react-router-dom';
 import Loader from '@/components/assets/Loader';
 
-const Articles: React.FC = () => {
+const Articles = () => {
   const [isLoading, setIsLoading] = useState(true);
   const controls = useAnimation();
   
@@ -52,7 +52,7 @@ const Articles: React.FC = () => {
   }
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-b from-black to-purple-900 text-white overflow-hidden">
+    <div className="relative min-h-screen text-white overflow-hidden scroll-section seamless-section" style={{ background: 'transparent' }}>
       <Helmet>
         <title>Guía Completa de Vapes y Vaporizadores 2025 | Outside Zone</title>
         <meta

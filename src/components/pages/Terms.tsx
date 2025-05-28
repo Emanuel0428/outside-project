@@ -1,21 +1,21 @@
-import React from 'react';
+
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 
-const Terms: React.FC = () => {
+const Terms = () => {
   return (
     <>
     <Helmet>
         <title>Términos y Condiciones - Outside Zone</title>
         <meta name="description" content="Lee los Términos y Condiciones de Outside Zone para entender las reglas y políticas de uso de nuestro sitio web." />
       </Helmet>
-    <section className="min-h-screen bg-gradient-to-b from-black to-purple-900 py-20 px-6">
+    <section className="min-h-screen  py-20 px-6 scroll-section seamless-section" style={{ background: 'transparent' }}>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="max-w-4xl mx-auto bg-gray-900 p-8 rounded-lg text-white"
+        className="max-w-4xl mt-20 mb-10 mx-auto bg-gray-900 p-8 rounded-lg text-white"
       >
         <h1 className="text-4xl font-bold mb-8 text-center">Términos y Condiciones</h1>
         <p className="text-gray-400 mb-6 italic text-center">

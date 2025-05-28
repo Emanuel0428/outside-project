@@ -137,19 +137,19 @@ const Products = () => {
   return (
     <>
       <HeroProducts />
-      <section id="products" className="min-h-screen bg-gradient-to-b from-black to-purple-900 py-20 px-6">
+      <section id="products" className="min-h-screen py-20 px-6 scroll-section seamless-section" style={{ background: 'transparent' }}>
         <div className="max-w-7xl mx-auto">
           <Helmet>
             <title>
               {category === 'vaporizers'
-                ? 'Vaporizadores y Vapes Premium - Outside Zone | Tienda Online'
+                ? 'Accesorios Tecnológicos Premium - Outside Zone | Tienda Online'
                 : 'Ropa Urbana y Streetwear - Outside Zone | Tienda Online'}
             </title>
             <meta
               name="description"
               content={
                 category === 'vaporizers'
-                  ? 'Explora nuestra selección de vaporizadores desechables de alta calidad en Outside Zone. Encuentra los mejores vapes con sabores intensos, diseños innovadores y entrega en toda Colombia.'
+                  ? 'Explora nuestra selección de accesorios tecnológicos premium en Outside Zone. Encuentra dispositivos innovadores con diseños exclusivos, tecnología avanzada y entrega en toda Colombia.'
                   : 'Descubre nuestra colección de ropa urbana en Outside Zone. Prendas modernas y cómodas para un estilo casual y funcional con envíos a todo Colombia.'
               }
             />
@@ -157,16 +157,16 @@ const Products = () => {
               name="keywords"
               content={
                 category === 'vaporizers'
-                  ? 'vaporizadores, vapes, vapeo, sabores vape, tienda de vapes, vapes desechables, vapes en Colombia, Rifbar, Taijizen, Orion Bar, Priv Bar'
+                  ? 'accesorios tecnológicos, dispositivos premium, tecnología portátil, gadgets modernos, accesorios urbanos, dispositivos Colombia, Rifbar, Taijizen, Orion Bar, Priv Bar'
                   : 'ropa urbana, sudaderas, camisas, pantalones cargo, moda casual, moda urbana Colombia, streetwear'
               }
             />
             <link rel="canonical" href={`https://outside-project.vercel.app/products?category=${category}`} />
-            <meta property="og:title" content={category === 'vaporizers' ? 'Vaporizadores Premium | Outside Zone' : 'Ropa Urbana | Outside Zone'} />
+            <meta property="og:title" content={category === 'vaporizers' ? 'Accesorios Tecnológicos Premium | Outside Zone' : 'Ropa Urbana | Outside Zone'} />
             <meta 
               property="og:description" 
               content={category === 'vaporizers' 
-                ? 'Explora nuestra selección premium de vaporizadores con los mejores sabores y envíos en toda Colombia.' 
+                ? 'Explora nuestra selección premium de accesorios tecnológicos con diseños innovadores y tecnología avanzada, envíos en toda Colombia.' 
                 : 'Descubre nuestra línea de ropa urbana con diseños exclusivos y calidad premium.'}
             />
             <meta property="og:url" content={`https://outside-project.vercel.app/products?category=${category}`} />
@@ -186,7 +186,7 @@ const Products = () => {
                   {
                     "@type": "ListItem",
                     "position": 2,
-                    "name": category === 'vaporizers' ? "Vaporizadores" : "Ropa",
+                    "name": category === 'vaporizers' ? "Accesorios Tecnológicos" : "Ropa",
                     "item": `https://outside-project.vercel.app/products?category=${category}`
                   }
                 ]
@@ -200,19 +200,19 @@ const Products = () => {
                   {
                     "@type": "Question",
                     "name": category === 'vaporizers' 
-                      ? "¿Cuánto duran los vaporizadores desechables?" 
+                      ? "¿Cuánto duran los dispositivos tecnológicos portátiles?" 
                       : "¿Qué tallas están disponibles en la ropa?",
                     "acceptedAnswer": {
                       "@type": "Answer",
                       "text": category === 'vaporizers'
-                        ? "La duración depende del modelo. Los vaporizadores con 10k puffs duran aproximadamente 2-3 semanas con uso moderado, mientras que los de 15k-24k puffs pueden durar hasta un mes."
+                        ? "La duración depende del modelo y uso. Los dispositivos con 10k de capacidad duran aproximadamente 2-3 semanas con uso moderado, mientras que los de 15k-24k pueden durar hasta un mes con tecnología optimizada."
                         : "Todas nuestras prendas están disponibles en tallas S, M, L y XL. Consulta la guía de tallas en cada producto para encontrar tu ajuste perfecto."
                     }
                   },
                   {
                     "@type": "Question",
                     "name": category === 'vaporizers'
-                      ? "¿Hacen envíos de vaporizadores a toda Colombia?"
+                      ? "¿Hacen envíos de accesorios tecnológicos a toda Colombia?"
                       : "¿Realizan envíos de ropa a todo Colombia?",
                     "acceptedAnswer": {
                       "@type": "Answer",
@@ -232,7 +232,7 @@ const Products = () => {
                 category === 'vaporizers' ? 'bg-purple-600 text-white' : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
               }`}
             >
-              Vaporizadores
+              Accesorios Tech
             </button>
             <button
               onClick={() => setCategory('clothing')}
@@ -409,7 +409,7 @@ const Products = () => {
                     </div>
                     <div className="flex items-center mb-4">
                       <span className="border border-purple-600 text-gray-300 text-xs font-semibold px-2 py-1 rounded">
-                        {product.category === 'vaporizers' ? 'Vaporizadores' : 'Ropa'}
+                        {product.category === 'vaporizers' ? 'Accesorios Tech' : 'Ropa'}
                       </span>
                       <div className="ml-auto flex items-center">
                         <Star className="h-4 w-4 fill-purple-600 text-purple-600" />
@@ -420,7 +420,7 @@ const Products = () => {
                       to={`/product/${product.id}`}
                       className="block w-full px-4 py-2 bg-purple-600 text-white rounded-lg text-center shadow-md transition-all duration-300 hover:bg-purple-700 hover:-translate-y-1 hover:shadow-lg"
                     >
-                      Añadir al Carrito
+                      Ver más
                     </Link>
                   </div>
                 </div>

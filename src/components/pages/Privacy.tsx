@@ -1,9 +1,9 @@
-import React from 'react';
+
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 
-const Privacy: React.FC = () => {
+const Privacy = () => {
   return (
     <>
       <Helmet>
@@ -13,12 +13,12 @@ const Privacy: React.FC = () => {
           content="Lee la Política de Privacidad de Outside Zone para entender cómo recopilamos, usamos y protegemos tu información personal."
         />
       </Helmet>
-      <section className="min-h-screen bg-gradient-to-b from-black to-purple-900 py-20 px-6">
+      <section className="min-h-screen py-20 px-6 scroll-section seamless-section" style={{ background: 'transparent' }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="max-w-4xl mx-auto bg-gray-900 p-8 rounded-lg text-white"
+          className="max-w-4xl mx-auto bg-gray-900 p-8 mt-20 mb-10 rounded-lg text-white"
         >
           <h1 className="text-4xl font-bold mb-8 text-center">Política de Privacidad</h1>
           <p className="text-gray-400 mb-6 italic text-center">

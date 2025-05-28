@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { products } from '@/data/products';
@@ -61,12 +61,12 @@ const ProductDetail = () => {
   }, [product, displayImage, variantArray]);
 
   if (!product) {
-    return <div className="min-h-screen bg-gradient-to-b from-black to-purple-900 py-20 px-6 text-white">Producto no encontrado</div>;
+    return <div className="min-h-screen py-20 px-6 text-white scroll-section seamless-section" style={{ background: 'transparent' }}>Producto no encontrado</div>;
   }
 
 
   return (
-    <section className="min-h-screen bg-gradient-to-b from-black to-purple-900 py-20 px-6 z-10">
+    <section className="min-h-screen py-20 px-6 z-10 scroll-section seamless-section" style={{ background: 'transparent' }}>
       <Helmet>
         <title>{product.metaTitle || `${product.name} | Vaporizador Premium - Outside Zone`}</title>
         <meta
@@ -144,7 +144,7 @@ const ProductDetail = () => {
           })}
         </script>
       </Helmet>
-      <div className="max-w-7xl mx-auto z-10">
+      <div className="max-w-7xl mx-auto z-10 mt-20 mb-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <div className="bg-gray-900 rounded-3xl p-8 h-fit">
             <img 
@@ -228,4 +228,4 @@ const ProductDetail = () => {
   );
 };
 
-export default React.memo(ProductDetail);
+export default ProductDetail;

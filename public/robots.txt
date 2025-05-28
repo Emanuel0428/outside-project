@@ -1,21 +1,110 @@
+# Robots.txt para Outside Zone - Optimizado para SEO
+# Última actualización: 2025-01-25
+
 User-agent: *
 Allow: /
+
+# Bloquear páginas privadas y admin
 Disallow: /admin/
 Disallow: /profile/
 Disallow: /success
 Disallow: /cancel
 Disallow: /pending
 Disallow: /access-denied
+Disallow: /cart
+Disallow: /favorites
+Disallow: /login
+Disallow: /register
+Disallow: /reset-password
 
-# Permitir a todos los bots rastrear estas páginas importantes
+# Permitir específicamente páginas importantes para SEO
 Allow: /articles
 Allow: /products
 Allow: /product/
 Allow: /terms
 Allow: /privacy
 
-# Sitemap
+# Bots específicos optimizados
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 5
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 10
+
+User-agent: facebookexternalhit
+Allow: /
+Allow: /product/
+Allow: /articles
+
+User-agent: Twitterbot
+Allow: /
+Allow: /product/
+Allow: /articles
+
+User-agent: LinkedInBot
+Allow: /
+Allow: /product/
+Allow: /articles
+
+# Bots de shopping para productos tecnológicos
+User-agent: Shopify-Partner
+Allow: /products
+Allow: /product/
+
+User-agent: Shopify-Mobile
+Allow: /products
+Allow: /product/
+
+User-agent: GoogleBot-Shopping
+Allow: /products
+Allow: /product/
+
+# Bloquear bots maliciosos comunes
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+# Archivos y directorios técnicos
+Disallow: /src/
+Disallow: /node_modules/
+Disallow: /.git/
+Disallow: /dist/
+Disallow: /build/
+Disallow: /*.json$
+Disallow: /*.map$
+Disallow: /sw.js
+Disallow: /service-worker.js
+Disallow: /workbox-*.js
+
+# Parámetros de URL a ignorar
+Disallow: /*?utm_source=*
+Disallow: /*?utm_medium=*
+Disallow: /*?utm_campaign=*
+Disallow: /*?ref=*
+Disallow: /*?source=*
+
+# Sitemap principal
 Sitemap: https://outside-project.vercel.app/sitemap.xml
 
-# Velocidad de rastreo
-Crawl-delay: 10
+# Sitemaps adicionales (futuro)
+# Sitemap: https://outside-project.vercel.app/sitemap-products.xml
+# Sitemap: https://outside-project.vercel.app/sitemap-articles.xml
+
+# Velocidad de rastreo optimizada
+Crawl-delay: 2
+
+# Información de contacto para webmasters
+# Contact: vapesoutside@outside-zone.com

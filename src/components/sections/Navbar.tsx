@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { Gem, Home, Package, ShoppingCart, User, X, Menu, Book } from 'lucide-react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
@@ -17,7 +17,7 @@ const ANIMATION_CONFIG = {
 };
 
 // NavLink component for consistent styling
-const NavLink: React.FC<{ to: string; onClick?: () => void; isActive: boolean; children: React.ReactNode }> = ({ to, onClick, isActive, children }) => (
+const NavLink = ({ to, onClick, isActive, children }: { to: string; onClick?: () => void; isActive: boolean; children: ReactNode }) => (
   <Link 
     to={to} 
     className={`${isActive ? 'text-purple-400' : 'text-white'} hover:text-purple-400 transition-colors flex items-center gap-2`}
@@ -28,7 +28,7 @@ const NavLink: React.FC<{ to: string; onClick?: () => void; isActive: boolean; c
 );
 
 // NavButton component for consistent styling
-const NavButton: React.FC<{ onClick: () => void; isActive: boolean; children: React.ReactNode }> = ({ onClick, isActive, children }) => (
+const NavButton = ({ onClick, isActive, children }: { onClick: () => void; isActive: boolean; children: ReactNode }) => (
   <button 
     onClick={onClick} 
     className={`${isActive ? 'text-purple-400' : 'text-white'} hover:text-purple-400 transition-colors flex items-center gap-2`}
@@ -92,7 +92,7 @@ const Navbar = () => {
     setIsAccountOpen(prev => !prev);
   }, []);
 
-  const renderAuthMenuItems = useCallback((closeMenu: React.MouseEventHandler<HTMLAnchorElement> | undefined) => (
+  const renderAuthMenuItems = useCallback((closeMenu: any) => (
     user ? (
       <>
         <Link to="/profile" className="block py-2 hover:text-purple-400" onClick={closeMenu}>
@@ -291,4 +291,4 @@ const Navbar = () => {
   );
 };
 
-export default React.memo(Navbar);
+export default Navbar;

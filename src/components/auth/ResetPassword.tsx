@@ -79,12 +79,12 @@ const ResetPassword = () => {
     }
   };
 
-  if (loading) return <div className="min-h-screen bg-black flex items-center justify-center text-white">Cargando...</div>;
+  if (loading) return <div className="min-h-screen flex items-center justify-center text-white scroll-section seamless-section" style={{ background: 'transparent' }}>Cargando...</div>;
 
   if (!isValidLink) return null;
 
   return (
-    <section className="min-h-screen bg-black py-20 px-6 flex items-center justify-center">
+    <section className="min-h-screen py-20 px-6 flex items-center justify-center scroll-section seamless-section" style={{ background: 'transparent' }}>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
